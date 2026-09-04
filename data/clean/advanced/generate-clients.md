@@ -1,4 +1,4 @@
-# Generating SDKs { #generating-sdks }
+# Generating SDKs
 
 Because **FastAPI** is based on the **OpenAPI** specification, its APIs can be described in a standard format that many tools understand.
 
@@ -6,7 +6,7 @@ This makes it easy to generate up-to-date **documentation**, client libraries (*
 
 In this guide, you'll learn how to generate a **TypeScript SDK** for your FastAPI backend.
 
-## Open Source SDK Generators { #open-source-sdk-generators }
+## Open Source SDK Generators
 
 A versatile option is the [OpenAPI Generator](https://openapi-generator.tech/), which supports **many programming languages** and can generate SDKs from your OpenAPI specification.
 
@@ -16,7 +16,7 @@ You can discover more SDK generators on [OpenAPI.Tools](https://openapi.tools/ca
 
 **Tip:** FastAPI automatically generates **OpenAPI 3.1** specifications, so any tool you use must support this version.
 
-## Create a TypeScript SDK { #create-a-typescript-sdk }
+## Create a TypeScript SDK
 
 Let's start with a simple FastAPI application:
 
@@ -47,7 +47,7 @@ async def get_items():
 
 Notice that the *path operations* define the models they use for request payload and response payload, using the models `Item` and `ResponseMessage`.
 
-### API Docs { #api-docs }
+### API Docs
 
 If you go to `/docs`, you will see that it has the **schemas** for the data to be sent in requests and received in responses:
 
@@ -57,7 +57,7 @@ That information is available in the app's **OpenAPI schema**, and then shown in
 
 That same information from the models that is included in OpenAPI is what can be used to **generate the client code**.
 
-### Hey API { #hey-api }
+### Hey API
 
 Once we have a FastAPI app with the models, we can use Hey API to generate a TypeScript client. The fastest way to do that is via npx.
 
@@ -69,7 +69,7 @@ This will generate a TypeScript SDK in `./src/client`.
 
 You can learn how to [install `@hey-api/openapi-ts`](https://heyapi.dev/openapi-ts/get-started) and read about the [generated output](https://heyapi.dev/openapi-ts/output) on their website.
 
-### Using the SDK { #using-the-sdk }
+### Using the SDK
 
 Now you can import and use the client code. It could look like this, notice that you get autocompletion for the methods:
 
@@ -81,7 +81,7 @@ You will have inline errors for the data that you send:
 
 The response object will also have autocompletion:
 
-## FastAPI App with Tags { #fastapi-app-with-tags }
+## FastAPI App with Tags
 
 In many cases, your FastAPI app will be bigger, and you will probably use tags to separate different groups of *path operations*.
 
@@ -120,7 +120,7 @@ async def create_user(user: User):
     return {"message": "User received"}
 '''
 
-### Generate a TypeScript Client with Tags { #generate-a-typescript-client-with-tags }
+### Generate a TypeScript Client with Tags
 
 If you generate a client for a FastAPI app using tags, it will normally also separate the client code based on the tags.
 
@@ -131,7 +131,7 @@ In this case, you have:
 * `ItemsService`
 * `UsersService`
 
-### Client Method Names { #client-method-names }
+### Client Method Names
 
 Right now, the generated method names like `createItemItemsPost` don't look very clean:
 
@@ -145,7 +145,7 @@ OpenAPI requires that each operation ID is unique across all the *path operation
 
 But I'll show you how to improve that next. 🤓
 
-## Custom Operation IDs and Better Method Names { #custom-operation-ids-and-better-method-names }
+## Custom Operation IDs and Better Method Names
 
 You can **modify** the way these operation IDs are **generated** to make them simpler and have **simpler method names** in the clients.
 
@@ -153,7 +153,7 @@ In this case, you will have to ensure that each operation ID is **unique** in so
 
 For example, you could make sure that each *path operation* has a tag, and then generate the operation ID based on the **tag** and the *path operation* **name** (the function name).
 
-### Custom Generate Unique ID Function { #custom-generate-unique-id-function }
+### Custom Generate Unique ID Function
 
 FastAPI uses a **unique ID** for each *path operation*, which is used for the **operation ID** and also for the names of any needed custom models, for requests or responses.
 
@@ -200,13 +200,13 @@ async def create_user(user: User):
     return {"message": "User received"}
 '''
 
-### Generate a TypeScript Client with Custom Operation IDs { #generate-a-typescript-client-with-custom-operation-ids }
+### Generate a TypeScript Client with Custom Operation IDs
 
 Now, if you generate the client again, you will see that it has the improved method names:
 
 As you see, the method names now have the tag and then the function name, now they don't include information from the URL path and the HTTP operation.
 
-### Preprocess the OpenAPI Specification for the Client Generator { #preprocess-the-openapi-specification-for-the-client-generator }
+### Preprocess the OpenAPI Specification for the Client Generator
 
 The generated code still has some **duplicated information**.
 
@@ -246,7 +246,7 @@ file_path.write_text(json.dumps(openapi_content))
 
 With that, the operation IDs would be renamed from things like `items-get_items` to just `get_items`, that way the client generator can generate simpler method names.
 
-### Generate a TypeScript Client with the Preprocessed OpenAPI { #generate-a-typescript-client-with-the-preprocessed-openapi }
+### Generate a TypeScript Client with the Preprocessed OpenAPI
 
 Since the end result is now in an `openapi.json` file, you need to update your input location:
 
@@ -256,7 +256,7 @@ npx @hey-api/openapi-ts -i ./openapi.json -o src/client
 
 After generating the new client, you would now have **clean method names**, with all the **autocompletion**, **inline errors**, etc:
 
-## Benefits { #benefits }
+## Benefits
 
 When using the automatically generated clients, you would get **autocompletion** for:
 

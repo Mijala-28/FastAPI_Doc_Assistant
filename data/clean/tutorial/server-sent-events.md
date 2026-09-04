@@ -1,4 +1,4 @@
-# Server-Sent Events (SSE) { #server-sent-events-sse }
+# Server-Sent Events (SSE)
 
 You can stream data to the client using **Server-Sent Events** (SSE).
 
@@ -6,7 +6,7 @@ This is similar to [Stream JSON Lines](stream-json-lines.md), but uses the `text
 
 **Note:** Added in FastAPI 0.135.0.
 
-## What are Server-Sent Events? { #what-are-server-sent-events }
+## What are Server-Sent Events?
 
 SSE is a standard for streaming data from the server to the client over HTTP.
 
@@ -25,7 +25,7 @@ SSE is commonly used for AI chat streaming, live notifications, logs and observa
 
 **Tip:** If you want to stream binary data, for example video or audio, check the advanced guide: [Stream Data](../advanced/stream-data.md).
 
-## Stream SSE with FastAPI { #stream-sse-with-fastapi }
+## Stream SSE with FastAPI
 
 To stream SSE with FastAPI, use `yield` in your *path operation function* and set `response_class=EventSourceResponse`.
 
@@ -117,7 +117,7 @@ def sse_items_no_async_no_annotation():
 
 **Tip:** As Pydantic will serialize it in the **Rust** side, you will get much higher **performance** than if you don't declare a return type.
 
-### Non-async *path operation functions* { #non-async-path-operation-functions }
+### Non-async *path operation functions*
 
 You can also use regular `def` functions (without `async`), and use `yield` the same way.
 
@@ -165,7 +165,7 @@ def sse_items_no_async_no_annotation():
         yield item
 '''
 
-### No Return Type { #no-return-type }
+### No Return Type
 
 You can also omit the return type. FastAPI will use the [`jsonable_encoder`](./encoder.md) to convert the data and send it.
 
@@ -209,7 +209,7 @@ def sse_items_no_async_no_annotation():
         yield item
 '''
 
-## `ServerSentEvent` { #serversentevent }
+## `ServerSentEvent`
 
 If you need to set SSE fields like `event`, `id`, `retry`, or `comment`, you can yield `ServerSentEvent` objects instead of plain data.
 
@@ -243,7 +243,7 @@ async def stream_items() -> AsyncIterable[ServerSentEvent]:
 
 The `data` field is always encoded as JSON. You can pass any value that can be serialized as JSON, including Pydantic models.
 
-## Raw Data { #raw-data }
+## Raw Data
 
 If you need to send data **without** JSON encoding, use `raw_data` instead of `data`.
 
@@ -270,7 +270,7 @@ async def stream_logs() -> AsyncIterable[ServerSentEvent]:
 
 **Note:** `data` and `raw_data` are mutually exclusive. You can only set one of them on each `ServerSentEvent`.
 
-## Resuming with `Last-Event-ID` { #resuming-with-last-event-id }
+## Resuming with `Last-Event-ID`
 
 When a browser reconnects after a connection drop, it sends the last received `id` in the `Last-Event-ID` header.
 
@@ -309,7 +309,7 @@ async def stream_items(
     yield ServerSentEvent(raw_data="[DONE]", event="done")
 '''
 
-## Technical Details { #technical-details }
+## Technical Details
 
 FastAPI implements some SSE best practices out of the box.
 

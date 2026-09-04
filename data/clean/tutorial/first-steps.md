@@ -1,4 +1,4 @@
-# First Steps { #first-steps }
+# First Steps
 
 The simplest FastAPI file could look like this:
 
@@ -62,7 +62,7 @@ INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 
 That line shows the URL where your app is being served on your local machine.
 
-### Check it { #check-it }
+### Check it
 
 Open your browser at [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
@@ -72,7 +72,7 @@ You will see the JSON response as:
 {"message": "Hello World"}
 ```
 
-### Interactive API docs { #interactive-api-docs }
+### Interactive API docs
 
 Now go to [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
 
@@ -80,7 +80,7 @@ You will see the automatic interactive API documentation (provided by [Swagger U
 
 ![Swagger UI](https://fastapi.tiangolo.com/img/index/index-01-swagger-ui-simple.png)
 
-### Alternative API docs { #alternative-api-docs }
+### Alternative API docs
 
 And now, go to [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc).
 
@@ -88,31 +88,31 @@ You will see the alternative automatic documentation (provided by [ReDoc](https:
 
 ![ReDoc](https://fastapi.tiangolo.com/img/index/index-02-redoc-simple.png)
 
-### OpenAPI { #openapi }
+### OpenAPI
 
 **FastAPI** generates a "schema" with all your API using the **OpenAPI** standard for defining APIs.
 
-#### "Schema" { #schema }
+#### "Schema"
 
 A "schema" is a definition or description of something. Not the code that implements it, but just an abstract description.
 
-#### API "schema" { #api-schema }
+#### API "schema"
 
 In this case, [OpenAPI](https://github.com/OAI/OpenAPI-Specification) is a specification that dictates how to define a schema of your API.
 
 This schema definition includes your API paths, the possible parameters they take, etc.
 
-#### Data "schema" { #data-schema }
+#### Data "schema"
 
 The term "schema" might also refer to the shape of some data, like a JSON content.
 
 In that case, it would mean the JSON attributes, and data types they have, etc.
 
-#### OpenAPI and JSON Schema { #openapi-and-json-schema }
+#### OpenAPI and JSON Schema
 
 OpenAPI defines an API schema for your API. And that schema includes definitions (or "schemas") of the data sent and received by your API using **JSON Schema**, the standard for JSON data schemas.
 
-#### Check the `openapi.json` { #check-the-openapi-json }
+#### Check the `openapi.json`
 
 If you are curious about what the raw OpenAPI schema looks like, FastAPI automatically generates a JSON (schema) with the descriptions of all your API.
 
@@ -139,7 +139,7 @@ It will show a JSON starting with something like:
 ...
 ```
 
-#### What is OpenAPI for { #what-is-openapi-for }
+#### What is OpenAPI for
 
 The OpenAPI schema is what powers the two interactive documentation systems included.
 
@@ -147,7 +147,7 @@ And there are dozens of alternatives, all based on OpenAPI. You could easily add
 
 You could also use it to generate code automatically, for clients that communicate with your API. For example, frontend, mobile or IoT applications.
 
-### Configure the app `entrypoint` in `pyproject.toml` { #configure-the-app-entrypoint-in-pyproject-toml }
+### Configure the app `entrypoint` in `pyproject.toml`
 
 You can configure where your app is located in a `pyproject.toml` file like:
 
@@ -184,7 +184,7 @@ which would be equivalent to:
 from backend.main import app
 ```
 
-### `fastapi dev` with path or with `--entrypoint` CLI option { #fastapi-dev-with-path-or-with-entrypoint-cli-option }
+### `fastapi dev` with path or with `--entrypoint` CLI option
 
 You can also pass the file path to the `fastapi dev` command, and it will guess the FastAPI app object to use:
 
@@ -202,7 +202,7 @@ But you would have to remember to pass the correct path\entrypoint every time yo
 
 Additionally, other tools might not be able to find it, for example the [VS Code Extension](../editor-support.md) or [FastAPI Cloud](https://fastapicloud.com), so it is recommended to use the `entrypoint` in `pyproject.toml`.
 
-### Deploy your app (optional) { #deploy-your-app-optional }
+### Deploy your app (optional)
 
 You can optionally deploy your FastAPI app to [FastAPI Cloud](https://fastapicloud.com) with a single command. 🚀
 
@@ -220,9 +220,9 @@ The CLI will automatically detect your FastAPI application and deploy it to the 
 
 That's it! Now you can access your app at that URL. ✨
 
-## Recap, step by step { #recap-step-by-step }
+## Recap, step by step
 
-### Step 1: import `FastAPI` { #step-1-import-fastapi }
+### Step 1: import `FastAPI`
 
 '''python
 from fastapi import FastAPI
@@ -238,7 +238,7 @@ async def root():
 
 **Note:** `FastAPI` is a class that inherits directly from `Starlette`.  You can use all the [Starlette](https://starlette.dev/) functionality with `FastAPI` too.
 
-### Step 2: create a `FastAPI` "instance" { #step-2-create-a-fastapi-instance }
+### Step 2: create a `FastAPI` "instance"
 
 '''python
 from fastapi import FastAPI
@@ -254,9 +254,9 @@ Here the `app` variable will be an "instance" of the class `FastAPI`.
 
 This will be the main point of interaction to create all your API.
 
-### Step 3: create a *path operation* { #step-3-create-a-path-operation }
+### Step 3: create a *path operation*
 
-#### Path { #path }
+#### Path
 
 "Path" here refers to the last part of the URL starting from the first `/`.
 
@@ -276,7 +276,7 @@ https://example.com/items/foo
 
 While building an API, the "path" is the main way to separate "concerns" and "resources".
 
-#### Operation { #operation }
+#### Operation
 
 "Operation" here refers to one of the HTTP "methods".
 
@@ -311,7 +311,7 @@ So, in OpenAPI, each of the HTTP methods is called an "operation".
 
 We are going to call them "**operations**" too.
 
-#### Define a *path operation decorator* { #define-a-path-operation-decorator }
+#### Define a *path operation decorator*
 
 '''python
 from fastapi import FastAPI
@@ -345,7 +345,7 @@ And the more exotic ones:
 
 **Tip:** You are free to use each operation (HTTP method) as you wish.  **FastAPI** doesn't enforce any specific meaning.  The information here is presented as a guideline, not a requirement.  For example, when using GraphQL you normally perform all the actions using only `POST` operations.
 
-### Step 4: define the **path operation function** { #step-4-define-the-path-operation-function }
+### Step 4: define the **path operation function**
 
 This is our "**path operation function**":
 
@@ -385,7 +385,7 @@ def root():
 
 **Note:** If you don't know the difference, check the [Async: *"In a hurry?"*](../async.md#in-a-hurry).
 
-### Step 5: return the content { #step-5-return-the-content }
+### Step 5: return the content
 
 '''python
 from fastapi import FastAPI
@@ -403,11 +403,11 @@ You can also return Pydantic models (you'll see more about that later).
 
 There are many other objects and models that will be automatically converted to JSON (including ORMs, etc). Try using your favorite ones, it's highly probable that they are already supported.
 
-### Step 6: Deploy it { #step-6-deploy-it }
+### Step 6: Deploy it
 
 Deploy your app to **[FastAPI Cloud](https://fastapicloud.com)** with one command: `fastapi deploy`. 🎉
 
-#### About FastAPI Cloud { #about-fastapi-cloud }
+#### About FastAPI Cloud
 
 **[FastAPI Cloud](https://fastapicloud.com)** is built by the same author and team behind **FastAPI**.
 
@@ -417,13 +417,13 @@ It brings the same **developer experience** of building apps with FastAPI to **d
 
 FastAPI Cloud is the primary sponsor and funding provider for the *FastAPI and friends* open source projects. ✨
 
-#### Deploy to other cloud providers { #deploy-to-other-cloud-providers }
+#### Deploy to other cloud providers
 
 FastAPI is open source and based on standards. You can deploy FastAPI apps to any cloud provider you choose.
 
 Follow your cloud provider's guides to deploy FastAPI apps with them. 🤓
 
-## Recap { #recap }
+## Recap
 
 * Import `FastAPI`.
 * Create an `app` instance.

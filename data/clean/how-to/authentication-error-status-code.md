@@ -1,4 +1,4 @@
-# Use Old 403 Authentication Error Status Codes { #use-old-403-authentication-error-status-codes }
+# Use Old 403 Authentication Error Status Codes
 
 Before FastAPI version `0.122.0`, when the integrated security utilities returned an error to the client after a failed authentication, they used the HTTP status code `403 Forbidden`.
 

@@ -1,4 +1,4 @@
-# OAuth2 with Password (and hashing), Bearer with JWT tokens { #oauth2-with-password-and-hashing-bearer-with-jwt-tokens }
+# OAuth2 with Password (and hashing), Bearer with JWT tokens
 
 Now that we have all the security flow, let's make the application actually secure, using JWT tokens and secure password hashing.
 
@@ -6,7 +6,7 @@ This code is something you can actually use in your application, save the passwo
 
 We are going to start from where we left in the previous chapter and increment it.
 
-## About JWT { #about-jwt }
+## About JWT
 
 JWT means "JSON Web Tokens".
 
@@ -26,7 +26,7 @@ After a week, the token will be expired and the user will not be authorized and 
 
 If you want to play with JWT tokens and see how they work, check [https://jwt.io](https://jwt.io/).
 
-## Install `PyJWT` { #install-pyjwt }
+## Install `PyJWT`
 
 We need to install `PyJWT` to generate and verify the JWT tokens in Python.
 
@@ -40,7 +40,7 @@ $ uv add pyjwt
 
 **Note:** If you are planning to use digital signature algorithms like RSA or ECDSA, you should install the cryptography library dependency `pyjwt[crypto]`.  You can read more about it in the [PyJWT Installation docs](https://pyjwt.readthedocs.io/en/latest/installation.html).
 
-## Password hashing { #password-hashing }
+## Password hashing
 
 "Hashing" means converting some content (a password in this case) into a sequence of bytes (just a string) that looks like gibberish.
 
@@ -48,13 +48,13 @@ Whenever you pass exactly the same content (exactly the same password) you get e
 
 But you cannot convert from the gibberish back to the password.
 
-### Why use password hashing { #why-use-password-hashing }
+### Why use password hashing
 
 If your database is stolen, the thief won't have your users' plaintext passwords, only the hashes.
 
 So, the thief won't be able to try to use that password in another system (as many users use the same password everywhere, this would be dangerous).
 
-## Install `pwdlib` { #install-pwdlib }
+## Install `pwdlib`
 
 pwdlib is a great Python package to handle password hashes.
 
@@ -72,7 +72,7 @@ $ uv add "pwdlib[argon2]"
 
 **Tip:** With `pwdlib`, you could even configure it to be able to read passwords created by **Django**, a **Flask** security plug-in or many others.  So, you would be able to, for example, share the same data from a Django application in a database with a FastAPI application. Or gradually migrate a Django application using the same database.  And your users would be able to login from your Django app or from your **FastAPI** app, at the same time.
 
-## Hash and verify the passwords { #hash-and-verify-the-passwords }
+## Hash and verify the passwords
 
 Import the tools we need from `pwdlib`.
 
@@ -229,7 +229,7 @@ This ensures the endpoint takes roughly the same amount of time to respond wheth
 
 **Note:** If you check the new (fake) database `fake_users_db`, you will see what the hashed password looks like now: `"$argon2id$v=19$m=65536,t=3,p=4$wagCPXjifgvUFBzq4hqe3w$CYaIb8sB+wtD+Vu/P4uod1+Qof8h+1g7bbDlBID48Rc"`.
 
-## Handle JWT tokens { #handle-jwt-tokens }
+## Handle JWT tokens
 
 Import the modules installed.
 
@@ -390,7 +390,7 @@ async def read_own_items(
     return [{"item_id": "Foo", "owner": current_user.username}]
 '''
 
-## Update the dependencies { #update-the-dependencies }
+## Update the dependencies
 
 Update `get_current_user` to receive the same token as before, but this time, using JWT tokens.
 
@@ -535,7 +535,7 @@ async def read_own_items(
     return [{"item_id": "Foo", "owner": current_user.username}]
 '''
 
-## Update the `/token` *path operation* { #update-the-token-path-operation }
+## Update the `/token` *path operation*
 
 Create a `timedelta` with the expiration time of the token.
 
@@ -678,7 +678,7 @@ async def read_own_items(
     return [{"item_id": "Foo", "owner": current_user.username}]
 '''
 
-### Technical details about the JWT "subject" `sub` { #technical-details-about-the-jwt-subject-sub }
+### Technical details about the JWT "subject" `sub`
 
 The JWT specification says that there's a key `sub`, with the subject of the token.
 
@@ -700,7 +700,7 @@ So, to avoid ID collisions, when creating the JWT token for the user, you could 
 
 The important thing to keep in mind is that the `sub` key should have a unique identifier across the entire application, and it should be a string.
 
-## Check it { #check-it }
+## Check it
 
 Run the server and go to the docs: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
 
@@ -730,7 +730,7 @@ If you open the developer tools, you could see how the data sent only includes t
 
 **Note:** Notice the header `Authorization`, with a value that starts with `Bearer `.
 
-## Advanced usage with `scopes` { #advanced-usage-with-scopes }
+## Advanced usage with `scopes`
 
 OAuth2 has the notion of "scopes".
 
@@ -740,7 +740,7 @@ Then you can give this token to a user directly or a third party, to interact wi
 
 You can learn how to use them and how they are integrated into **FastAPI** later in the **Advanced User Guide**.
 
-## Recap { #recap }
+## Recap
 
 With what you have seen up to now, you can set up a secure **FastAPI** application using standards like OAuth2 and JWT.
 

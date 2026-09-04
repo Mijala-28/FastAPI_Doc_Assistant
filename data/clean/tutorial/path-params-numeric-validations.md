@@ -1,8 +1,8 @@
-# Path Parameters and Numeric Validations { #path-parameters-and-numeric-validations }
+# Path Parameters and Numeric Validations
 
 In the same way that you can declare more validations and metadata for query parameters with `Query`, you can declare the same type of validations and metadata for path parameters with `Path`.
 
-## Import `Path` { #import-path }
+## Import `Path`
 
 First, import `Path` from `fastapi`, and import `Annotated`:
 
@@ -26,7 +26,7 @@ async def read_items(
 
 **Note:** FastAPI added support for `Annotated` (and started recommending it) in version 0.95.0.  If you have an older version, you would get errors when trying to use `Annotated`.  Make sure you [Upgrade the FastAPI version](../deployment/versions.md#upgrading-the-fastapi-versions) to at least 0.95.1 before using `Annotated`.
 
-## Declare metadata { #declare-metadata }
+## Declare metadata
 
 You can declare all the same parameters as for `Query`.
 
@@ -52,7 +52,7 @@ async def read_items(
 
 **Note:** A path parameter is always required as it has to be part of the path. Even if you declared it with `None` or set a default value, it would not affect anything, it would still be always required.
 
-## Order the parameters as you need { #order-the-parameters-as-you-need }
+## Order the parameters as you need
 
 **Tip:** This is probably not as important or necessary if you use `Annotated`.
 
@@ -102,7 +102,7 @@ async def read_items(
     return results
 '''
 
-## Order the parameters as you need, tricks { #order-the-parameters-as-you-need-tricks }
+## Order the parameters as you need, tricks
 
 **Tip:** This is probably not as important or necessary if you use `Annotated`.
 
@@ -134,7 +134,7 @@ async def read_items(*, item_id: int = Path(title="The ID of the item to get"), 
     return results
 '''
 
-### Better with `Annotated` { #better-with-annotated }
+### Better with `Annotated`
 
 Keep in mind that if you use `Annotated`, as you are not using function parameter default values, you won't have this problem, and you probably won't need to use `*`.
 
@@ -155,7 +155,7 @@ async def read_items(
     return results
 '''
 
-## Number validations: greater than or equal { #number-validations-greater-than-or-equal }
+## Number validations: greater than or equal
 
 With `Query` and `Path` (and others you'll see later) you can declare number constraints.
 
@@ -178,7 +178,7 @@ async def read_items(
     return results
 '''
 
-## Number validations: greater than and less than or equal { #number-validations-greater-than-and-less-than-or-equal }
+## Number validations: greater than and less than or equal
 
 The same applies for:
 
@@ -203,7 +203,7 @@ async def read_items(
     return results
 '''
 
-## Number validations: floats, greater than and less than { #number-validations-floats-greater-than-and-less-than }
+## Number validations: floats, greater than and less than
 
 Number validations also work for `float` values.
 
@@ -235,7 +235,7 @@ async def read_items(
     return results
 '''
 
-## Recap { #recap }
+## Recap
 
 With `Query`, `Path` (and others you haven't seen yet) you can declare metadata and string validations in the same ways as with [Query Parameters and String Validations](query-params-str-validations.md).
 

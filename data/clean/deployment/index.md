@@ -1,8 +1,8 @@
-# Deployment { #deployment }
+# Deployment
 
 Deploying a **FastAPI** application is relatively easy.
 
-## What Does Deployment Mean { #what-does-deployment-mean }
+## What Does Deployment Mean
 
 To **deploy** an application means to perform the necessary steps to make it **available to the users**.
 
@@ -10,7 +10,7 @@ For a **web API**, it normally involves putting it in a **remote machine**, with
 
 This is in contrast to the **development** stages, where you are constantly changing the code, breaking it and fixing it, stopping and restarting the development server, etc.
 
-## Deployment Strategies { #deployment-strategies }
+## Deployment Strategies
 
 There are several ways to do it depending on your specific use case and the tools that you use.
 

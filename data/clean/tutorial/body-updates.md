@@ -1,6 +1,6 @@
-# Body - Updates { #body-updates }
+# Body - Updates
 
-## Update replacing with `PUT` { #update-replacing-with-put }
+## Update replacing with `PUT`
 
 To update an item you can use the [HTTP `PUT`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT) operation.
 
@@ -39,7 +39,7 @@ async def update_item(item_id: str, item: Item):
 
 `PUT` is used to receive data that should replace the existing data.
 
-### Warning about replacing { #warning-about-replacing }
+### Warning about replacing
 
 That means that if you want to update the item `bar` using `PUT` with a body containing:
 
@@ -55,7 +55,7 @@ because it doesn't include the already stored attribute `"tax": 20.2`, the input
 
 And the data would be saved with that "new" `tax` of `10.5`.
 
-## Partial updates with `PATCH` { #partial-updates-with-patch }
+## Partial updates with `PATCH`
 
 You can also use the [HTTP `PATCH`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PATCH) operation to *partially* update data.
 
@@ -63,7 +63,7 @@ This means that you can send only the data that you want to update, leaving the 
 
 **Note:** `PATCH` is less commonly used and known than `PUT`.  And many teams use only `PUT`, even for partial updates.  You are **free** to use them however you want, **FastAPI** doesn't impose any restrictions.  But this guide shows you, more or less, how they are intended to be used.
 
-### Using Pydantic's `exclude_unset` parameter { #using-pydantics-exclude-unset-parameter }
+### Using Pydantic's `exclude_unset` parameter
 
 If you want to receive partial updates, it's very useful to use the parameter `exclude_unset` in Pydantic's model's `.model_dump()`.
 
@@ -107,7 +107,7 @@ async def update_item(item_id: str, item: Item) -> Item:
     return updated_item
 '''
 
-### Using Pydantic's `update` parameter { #using-pydantics-update-parameter }
+### Using Pydantic's `update` parameter
 
 Now, you can create a copy of the existing model using `.model_copy()`, and pass the `update` parameter with a `dict` containing the data to update.
 
@@ -147,7 +147,7 @@ async def update_item(item_id: str, item: Item) -> Item:
     return updated_item
 '''
 
-### Partial updates recap { #partial-updates-recap }
+### Partial updates recap
 
 In summary, to apply partial updates you would:
 

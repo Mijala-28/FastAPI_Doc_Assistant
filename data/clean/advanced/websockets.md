@@ -1,8 +1,8 @@
-# WebSockets { #websockets }
+# WebSockets
 
 You can use [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) with **FastAPI**.
 
-## Install `websockets` { #install-websockets }
+## Install `websockets`
 
 Add `websockets` (a Python library that makes it easy to use the "WebSocket" protocol) to your project:
 
@@ -12,9 +12,9 @@ $ uv add websockets
 ---> 100%
 ```
 
-## WebSockets client { #websockets-client }
+## WebSockets client
 
-### In production { #in-production }
+### In production
 
 In your production system, you probably have a frontend created with a modern framework like React, Vue.js or Angular.
 
@@ -85,7 +85,7 @@ async def websocket_endpoint(websocket: WebSocket):
         await websocket.send_text(f"Message text was: {data}")
 '''
 
-## Create a `websocket` { #create-a-websocket }
+## Create a `websocket`
 
 In your **FastAPI** application, create a `websocket`:
 
@@ -142,7 +142,7 @@ async def websocket_endpoint(websocket: WebSocket):
 
 **Note:** You could also use `from starlette.websockets import WebSocket`.  **FastAPI** provides the same `WebSocket` directly just as a convenience for you, the developer. But it comes directly from Starlette.
 
-## Await for messages and send messages { #await-for-messages-and-send-messages }
+## Await for messages and send messages
 
 In your WebSocket route you can `await` for messages and send messages.
 
@@ -199,7 +199,7 @@ async def websocket_endpoint(websocket: WebSocket):
 
 You can receive and send binary, text, and JSON data.
 
-## Try it { #try-it }
+## Try it
 
 Put your code in a file `main.py` and then run your application:
 
@@ -221,7 +221,7 @@ You can send (and receive) many messages:
 
 And all of them will use the same WebSocket connection.
 
-## Using `Depends` and others { #using-depends-and-others }
+## Using `Depends` and others
 
 In WebSocket endpoints you can import from `fastapi` and use:
 
@@ -327,7 +327,7 @@ async def websocket_endpoint(
 
 **Note:** As this is a WebSocket it doesn't really make sense to raise an `HTTPException`, instead we raise a `WebSocketException`.  You can use a closing code from the [valid codes defined in the specification](https://tools.ietf.org/html/rfc6455#section-7.4.1).
 
-### Try the WebSockets with dependencies { #try-the-websockets-with-dependencies }
+### Try the WebSockets with dependencies
 
 Run your application:
 
@@ -348,7 +348,7 @@ There you can set:
 
 With that you can connect the WebSocket and then send and receive messages:
 
-## Handling disconnections and multiple clients { #handling-disconnections-and-multiple-clients }
+## Handling disconnections and multiple clients
 
 When a WebSocket connection is closed, the `await websocket.receive_text()` will raise a `WebSocketDisconnect` exception, which you can then catch and handle like in this example.
 
@@ -445,7 +445,7 @@ Client #1596980209979 left the chat
 
 **Tip:** The app above is a minimal and simple example to demonstrate how to handle and broadcast messages to several WebSocket connections.  But keep in mind that, as everything is handled in memory, in a single list, it will only work while the process is running, and will only work with a single process.  If you need something easy to integrate with FastAPI but that is more robust, supported by Redis, PostgreSQL or others, check [encode/broadcaster](https://github.com/encode/broadcaster).
 
-## More info { #more-info }
+## More info
 
 To learn more about the options, check Starlette's documentation for:
 

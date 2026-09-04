@@ -1,4 +1,4 @@
-# Lifespan Events { #lifespan-events }
+# Lifespan Events
 
 You can define logic (code) that should be executed before the application **starts up**. This means that this code will be executed **once**, **before** the application **starts receiving requests**.
 
@@ -8,7 +8,7 @@ Because this code is executed before the application **starts** taking requests,
 
 This can be very useful for setting up **resources** that you need to use for the whole app, and that are **shared** among requests, and/or that you need to **clean up** afterwards. For example, a database connection pool, or loading a shared machine learning model.
 
-## Use Case { #use-case }
+## Use Case
 
 Let's start with an example **use case** and then see how to solve it with this.
 
@@ -22,7 +22,7 @@ You could load it at the top level of the module/file, but that would also mean 
 
 That's what we'll solve, let's load the model before the requests are handled, but only right before the application starts receiving requests, not while  the code is being loaded.
 
-## Lifespan { #lifespan }
+## Lifespan
 
 You can define this *startup* and *shutdown* logic using the `lifespan` parameter of the `FastAPI` app, and a "context manager" (I'll show you what that is in a second).
 
@@ -62,7 +62,7 @@ And then, right after the `yield`, we unload the model. This code will be execut
 
 **Tip:** The `shutdown` would happen when you are **stopping** the application.  Maybe you need to start a new version, or you just got tired of running it. 🤷
 
-### Lifespan function { #lifespan-function }
+### Lifespan function
 
 The first thing to notice, is that we are defining an async function with `yield`. This is very similar to Dependencies with `yield`.
 
@@ -96,7 +96,7 @@ The first part of the function, before the `yield`, will be executed **before** 
 
 And the part after the `yield` will be executed **after** the application has finished.
 
-### Async Context Manager { #async-context-manager }
+### Async Context Manager
 
 If you check, the function is decorated with an `@asynccontextmanager`.
 
@@ -174,7 +174,7 @@ async def predict(x: float):
     return {"result": result}
 '''
 
-## Alternative Events (deprecated) { #alternative-events-deprecated }
+## Alternative Events (deprecated)
 
 **Warning:** The recommended way to handle the *startup* and *shutdown* is using the `lifespan` parameter of the `FastAPI` app as described above. If you provide a `lifespan` parameter, `startup` and `shutdown` event handlers will no longer be called. It's all `lifespan` or all events, not both.  You can probably skip this part.
 
@@ -184,7 +184,7 @@ You can define event handlers (functions) that need to be executed before the ap
 
 These functions can be declared with `async def` or normal `def`.
 
-### `startup` event { #startup-event }
+### `startup` event
 
 To add a function that should be run before the application starts, declare it with the event `"startup"`:
 
@@ -211,7 +211,7 @@ You can add more than one event handler function.
 
 And your application won't start receiving requests until all the `startup` event handlers have completed.
 
-### `shutdown` event { #shutdown-event }
+### `shutdown` event
 
 To add a function that should be run when the application is shutting down, declare it with the event `"shutdown"`:
 
@@ -236,7 +236,7 @@ Here, the `shutdown` event handler function will write a text line `"Application
 
 **Tip:** Notice that in this case we are using a standard Python `open()` function that interacts with a file.  So, it involves I/O (input/output), that requires "waiting" for things to be written to disk.  But `open()` doesn't use `async` and `await`.  So, we declare the event handler function with standard `def` instead of `async def`.
 
-### `startup` and `shutdown` together { #startup-and-shutdown-together }
+### `startup` and `shutdown` together
 
 There's a high chance that the logic for your *startup* and *shutdown* is connected, you might want to start something and then finish it, acquire a resource and then release it, etc.
 
@@ -244,7 +244,7 @@ Doing that in separate functions that don't share logic or variables together is
 
 Because of that, it's now recommended to instead use the `lifespan` as explained above.
 
-## Technical Details { #technical-details }
+## Technical Details
 
 Just a technical detail for the curious nerds. 🤓
 
@@ -252,6 +252,6 @@ Underneath, in the ASGI technical specification, this is part of the [Lifespan P
 
 **Note:** You can read more about the Starlette `lifespan` handlers in [Starlette's  Lifespan' docs](https://starlette.dev/lifespan/).  Including how to handle lifespan state that can be used in other areas of your code.
 
-## Sub Applications { #sub-applications }
+## Sub Applications
 
 🚨 Keep in mind that these lifespan events (startup and shutdown) will only be executed for the main application, not for [Sub Applications - Mounts](sub-applications.md).

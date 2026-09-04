@@ -1,4 +1,4 @@
-# Query Parameter Models { #query-parameter-models }
+# Query Parameter Models
 
 If you have a group of **query parameters** that are related, you can create a **Pydantic model** to declare them.
 
@@ -6,7 +6,7 @@ This would allow you to **re-use the model** in **multiple places** and also to 
 
 **Note:** This is supported since FastAPI version `0.115.0`. 🤓
 
-## Query Parameters with a Pydantic Model { #query-parameters-with-a-pydantic-model }
+## Query Parameters with a Pydantic Model
 
 Declare the **query parameters** that you need in a **Pydantic model**, and then declare the parameter as `Query`:
 
@@ -31,11 +31,11 @@ async def read_items(filter_query: Annotated[FilterParams, Query()]):
 
 **FastAPI** will **extract** the data for **each field** from the **query parameters** in the request and give you the Pydantic model you defined.
 
-## Check the Docs { #check-the-docs }
+## Check the Docs
 
 You can see the query parameters in the docs UI at `/docs`:
 
-## Forbid Extra Query Parameters { #forbid-extra-query-parameters }
+## Forbid Extra Query Parameters
 
 In some special use cases (probably not very common), you might want to **restrict** the query parameters that you want to receive.
 
@@ -85,7 +85,7 @@ They will receive an **error** response telling them that the query parameter `t
 }
 ```
 
-## Summary { #summary }
+## Summary
 
 You can use **Pydantic models** to declare **query parameters** in **FastAPI**. 😎
 

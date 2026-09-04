@@ -1,4 +1,4 @@
-# About FastAPI versions { #about-fastapi-versions }
+# About FastAPI versions
 
 **FastAPI** is already being used in production in many applications and systems. And the test coverage is kept at 100%. But its development is still moving quickly.
 
@@ -8,7 +8,7 @@ That's why the current versions are still `0.x.x`, this reflects that each versi
 
 You can create production applications with **FastAPI** right now (and you have probably been doing it for some time), you just have to make sure that you use a version that works correctly with the rest of your code.
 
-## Pin your `fastapi` version { #pin-your-fastapi-version }
+## Pin your `fastapi` version
 
 The first thing you should do is to "pin" the version of **FastAPI** you are using to the specific latest version that you know works correctly for your application.
 

@@ -1,4 +1,4 @@
-# Additional Responses in OpenAPI { #additional-responses-in-openapi }
+# Additional Responses in OpenAPI
 
 **Warning:** This is a rather advanced topic.  If you are starting with **FastAPI**, you might not need this.
 
@@ -8,7 +8,7 @@ Those additional responses will be included in the OpenAPI schema, so they will 
 
 But for those additional responses you have to make sure you return a `Response` like `JSONResponse` directly, with your status code and content.
 
-## Additional Response with `model` { #additional-response-with-model }
+## Additional Response with `model`
 
 You can pass to your *path operation decorators* a parameter `responses`.
 
@@ -165,7 +165,7 @@ The schemas are referenced to another place inside the OpenAPI schema:
 }
 ```
 
-## Additional media types for the main response { #additional-media-types-for-the-main-response }
+## Additional media types for the main response
 
 You can use this same `responses` parameter to add different media types for the same main response.
 
@@ -203,7 +203,7 @@ async def read_item(item_id: str, img: bool | None = None):
 
 **Note:** Unless you specify a different media type explicitly in your `responses` parameter, FastAPI will assume the response has the same media type as the main response class (default `application/json`).  But if you have specified a custom response class with `None` as its media type, FastAPI will use `application/json` for any additional response that has an associated model.
 
-## Combining information { #combining-information }
+## Combining information
 
 You can also combine response information from multiple places, including the `response_model`, `status_code`, and `responses` parameters.
 
@@ -253,7 +253,7 @@ async def read_item(item_id: str):
 
 It will all be combined and included in your OpenAPI, and shown in the API docs:
 
-## Combine predefined responses and custom ones { #combine-predefined-responses-and-custom-ones }
+## Combine predefined responses and custom ones
 
 You might want to have some predefined responses that apply to many *path operations*, but you want to combine them with custom responses needed by each *path operation*.
 
@@ -310,7 +310,7 @@ async def read_item(item_id: str, img: bool | None = None):
         return {"id": "foo", "value": "there goes my hero"}
 '''
 
-## More information about OpenAPI responses { #more-information-about-openapi-responses }
+## More information about OpenAPI responses
 
 To see what exactly you can include in the responses, you can check these sections in the OpenAPI specification:
 

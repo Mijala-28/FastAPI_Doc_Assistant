@@ -1,4 +1,4 @@
-# Query Parameters { #query-parameters }
+# Query Parameters
 
 When you declare other function parameters that are not part of the path parameters, they are automatically interpreted as "query" parameters.
 
@@ -38,7 +38,7 @@ All the same processes that apply to path parameters also apply to query paramet
 * Data validation
 * Automatic documentation
 
-## Defaults { #defaults }
+## Defaults
 
 As query parameters are not a fixed part of a path, they can be optional and can have default values.
 
@@ -67,7 +67,7 @@ The parameter values in your function will be:
 * `skip=20`: because you set it in the URL
 * `limit=10`: because that was the default value
 
-## Optional parameters { #optional-parameters }
+## Optional parameters
 
 The same way, you can declare optional query parameters, by setting their default to `None`:
 
@@ -87,7 +87,7 @@ In this case, the function parameter `q` will be optional, and will be `None` by
 
 **Tip:** Also notice that **FastAPI** is smart enough to notice that the path parameter `item_id` is a path parameter and `q` is not, so, it's a query parameter.
 
-## Query parameter type conversion { #query-parameter-type-conversion }
+## Query parameter type conversion
 
 You can also declare `bool` types, and they will be converted:
 
@@ -140,7 +140,7 @@ http://127.0.0.1:8000/items/foo?short=yes
 
 or any other case variation (uppercase, first letter in uppercase, etc), your function will see the parameter `short` with a `bool` value of `True`. Otherwise as `False`.
 
-## Multiple path and query parameters { #multiple-path-and-query-parameters }
+## Multiple path and query parameters
 
 You can declare multiple path parameters and query parameters at the same time, **FastAPI** knows which is which.
 
@@ -167,7 +167,7 @@ async def read_user_item(
     return item
 '''
 
-## Required query parameters { #required-query-parameters }
+## Required query parameters
 
 When you declare a default value for non-path parameters (for now, we have only seen query parameters), then it is not required.
 

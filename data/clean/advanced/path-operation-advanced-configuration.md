@@ -1,6 +1,6 @@
-# Path Operation Advanced Configuration { #path-operation-advanced-configuration }
+# Path Operation Advanced Configuration
 
-## OpenAPI operationId { #openapi-operationid }
+## OpenAPI operationId
 
 **Warning:** If you are not an "expert" in OpenAPI, you probably don't need this.
 
@@ -18,7 +18,7 @@ async def read_items():
     return [{"item_id": "Foo"}]
 '''
 
-### Using the *path operation function* name as the operationId { #using-the-path-operation-function-name-as-the-operationid }
+### Using the *path operation function* name as the operationId
 
 If you want to use your APIs' function names as `operationId`s, you can pass a custom `generate_unique_id_function` to `FastAPI`.
 
@@ -40,7 +40,7 @@ async def read_items():
 
 **Warning:** If you do this, you have to make sure each one of your *path operation functions* has a unique name.  Even if they are in different modules (Python files).
 
-## Exclude from OpenAPI { #exclude-from-openapi }
+## Exclude from OpenAPI
 
 To exclude a *path operation* from the generated OpenAPI schema (and thus, from the automatic documentation systems), use the parameter `include_in_schema` and set it to `False`:
 
@@ -54,7 +54,7 @@ async def read_items():
     return [{"item_id": "Foo"}]
 '''
 
-## Advanced description from docstring { #advanced-description-from-docstring }
+## Advanced description from docstring
 
 You can limit the lines used from the docstring of a *path operation function* for OpenAPI.
 
@@ -91,7 +91,7 @@ async def create_item(item: Item) -> Item:
     return item
 '''
 
-## Additional Responses { #additional-responses }
+## Additional Responses
 
 You probably have seen how to declare the `response_model` and `status_code` for a *path operation*.
 
@@ -101,7 +101,7 @@ You can also declare additional responses with their models, status codes, etc.
 
 There's a whole chapter here in the documentation about it, you can read it at [Additional Responses in OpenAPI](additional-responses.md).
 
-## OpenAPI Extra { #openapi-extra }
+## OpenAPI Extra
 
 When you declare a *path operation* in your application, **FastAPI** automatically generates the relevant metadata about that *path operation* to be included in the OpenAPI schema.
 
@@ -117,7 +117,7 @@ This *path operation*-specific OpenAPI schema is normally generated automaticall
 
 You can extend the OpenAPI schema for a *path operation* using the parameter `openapi_extra`.
 
-### OpenAPI Extensions { #openapi-extensions }
+### OpenAPI Extensions
 
 This `openapi_extra` can be helpful, for example, to declare [OpenAPI Extensions](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.3.md#specificationExtensions):
 
@@ -164,7 +164,7 @@ And if you see the resulting OpenAPI (at `/openapi.json` in your API), you will 
 }
 ```
 
-### Custom OpenAPI *path operation* schema { #custom-openapi-path-operation-schema }
+### Custom OpenAPI *path operation* schema
 
 The dictionary in `openapi_extra` will be deeply merged with the automatically generated OpenAPI schema for the *path operation*.
 
@@ -220,7 +220,7 @@ In this example, we didn't declare any Pydantic model. In fact, the request body
 
 Nevertheless, we can declare the expected schema for the request body.
 
-### Custom OpenAPI content type { #custom-openapi-content-type }
+### Custom OpenAPI content type
 
 Using this same trick, you could use a Pydantic model to define the JSON Schema that is then included in the custom OpenAPI schema section for the *path operation*.
 

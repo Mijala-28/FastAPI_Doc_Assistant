@@ -1,8 +1,8 @@
-# Strict Content-Type Checking { #strict-content-type-checking }
+# Strict Content-Type Checking
 
 By default, **FastAPI** uses strict `Content-Type` header checking for JSON request bodies, this means that JSON requests **must** include a valid `Content-Type` header (e.g. `application/json`) in order for the body to be parsed as JSON.
 
-## CSRF Risk { #csrf-risk }
+## CSRF Risk
 
 This default behavior provides protection against a class of **Cross-Site Request Forgery (CSRF)** attacks in a very specific scenario.
 
@@ -16,7 +16,7 @@ This type of attack is mainly relevant when:
 * the application is running locally (e.g. on `localhost`) or in an internal network
 * and the application doesn't have any authentication, it expects that any request from the same network can be trusted.
 
-## Example Attack { #example-attack }
+## Example Attack
 
 Imagine you build a way to run a local AI agent.
 
@@ -59,7 +59,7 @@ Even though the host of the malicious website and the local app is different, th
 
 Then the malicious website could make the local AI agent send angry messages to the user's ex-boss... or worse. 😅
 
-## Open Internet { #open-internet }
+## Open Internet
 
 If your app is in the open internet, you wouldn't "trust the network" and let anyone send privileged requests without authentication.
 
@@ -69,7 +69,7 @@ In that case **this attack / risk doesn't apply to you**.
 
 This risk and attack is mainly relevant when the app runs on the **local network** and that is the **only assumed protection**.
 
-## Allowing Requests Without Content-Type { #allowing-requests-without-content-type }
+## Allowing Requests Without Content-Type
 
 If you need to support clients that don't send a `Content-Type` header, you can disable strict checking by setting `strict_content_type=False`:
 

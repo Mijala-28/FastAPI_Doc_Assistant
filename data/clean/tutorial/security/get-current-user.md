@@ -1,4 +1,4 @@
-# Get Current User { #get-current-user }
+# Get Current User
 
 In the previous chapter the security system (which is based on the dependency injection system) was giving the *path operation function* a `token` as a `str`:
 
@@ -21,7 +21,7 @@ But that is still not that useful.
 
 Let's make it give us the current user.
 
-## Create a user model { #create-a-user-model }
+## Create a user model
 
 First, let's create a Pydantic user model.
 
@@ -58,7 +58,7 @@ async def read_users_me(current_user: Annotated[User, Depends(get_current_user)]
     return current_user
 '''
 
-## Create a `get_current_user` dependency { #create-a-get-current-user-dependency }
+## Create a `get_current_user` dependency
 
 Let's create a dependency `get_current_user`.
 
@@ -99,7 +99,7 @@ async def read_users_me(current_user: Annotated[User, Depends(get_current_user)]
     return current_user
 '''
 
-## Get the user { #get-the-user }
+## Get the user
 
 `get_current_user` will use a (fake) utility function we created, that takes a token as a `str` and returns our Pydantic `User` model:
 
@@ -134,7 +134,7 @@ async def read_users_me(current_user: Annotated[User, Depends(get_current_user)]
     return current_user
 '''
 
-## Inject the current user { #inject-the-current-user }
+## Inject the current user
 
 So now we can use the same `Depends` with our `get_current_user` in the *path operation*:
 
@@ -177,7 +177,7 @@ This will help us inside of the function with all the completion and type checks
 
 **Tip:** The way this dependency system is designed allows us to have different dependencies (different "dependables") that all return a `User` model.  We are not restricted to having only one dependency that can return that type of data.
 
-## Other models { #other-models }
+## Other models
 
 You can now get the current user directly in the *path operation functions* and deal with the security mechanisms at the **Dependency Injection** level, using `Depends`.
 
@@ -193,7 +193,7 @@ You actually don't have users that log in to your application but robots, bots, 
 
 Just use any kind of model, any kind of class, any kind of database that you need for your application. **FastAPI** has you covered with the dependency injection system.
 
-## Code size { #code-size }
+## Code size
 
 This example might seem verbose. Keep in mind that we are mixing security, data models, utility functions and *path operations* in the same file.
 
@@ -240,7 +240,7 @@ async def read_users_me(current_user: Annotated[User, Depends(get_current_user)]
     return current_user
 '''
 
-## Recap { #recap }
+## Recap
 
 You can now get the current user directly in your *path operation function*.
 

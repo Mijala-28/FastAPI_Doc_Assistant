@@ -1,4 +1,4 @@
-# Server Workers - Uvicorn with Workers { #server-workers-uvicorn-with-workers }
+# Server Workers - Uvicorn with Workers
 
 Let's check back those deployment concepts from before:
 
@@ -19,7 +19,7 @@ Here I'll show you how to use **Uvicorn** with **worker processes** using the `f
 
 **Note:** If you are using containers, for example with Docker or Kubernetes, I'll tell you more about that in the next chapter: [FastAPI in Containers - Docker](docker.md).  In particular, when running on **Kubernetes** you will probably **not** want to use workers and instead run **a single Uvicorn process per container**, but I'll tell you about it later in that chapter.
 
-## Multiple Workers { #multiple-workers }
+## Multiple Workers
 
 You can start multiple workers with the `--workers` command line option:
 
@@ -97,7 +97,7 @@ The only new option here is `--workers` telling Uvicorn to start 4 worker proces
 
 You can also see that it shows the **PID** of each process, `27365` for the parent process (this is the **process manager**) and one for each worker process: `27368`, `27369`, `27370`, and `27367`.
 
-## Deployment Concepts { #deployment-concepts }
+## Deployment Concepts
 
 Here you saw how to use multiple **workers** to **parallelize** the execution of the application, take advantage of **multiple cores** in the CPU, and be able to serve **more requests**.
 
@@ -110,13 +110,13 @@ From the list of deployment concepts from above, using workers would mainly help
 * **Memory**
 * **Previous steps before starting**
 
-## Containers and Docker { #containers-and-docker }
+## Containers and Docker
 
 In the next chapter about [FastAPI in Containers - Docker](docker.md) I'll explain some strategies you could use to handle the other **deployment concepts**.
 
 I'll show you how to **build your own image from scratch** to run a single Uvicorn process. It is a simple process and is probably what you would want to do when using a distributed container management system like **Kubernetes**.
 
-## Recap { #recap }
+## Recap
 
 You can use multiple worker processes with the `--workers` CLI option with the `fastapi` or `uvicorn` commands to take advantage of **multi-core CPUs**, to run **multiple processes in parallel**.
 

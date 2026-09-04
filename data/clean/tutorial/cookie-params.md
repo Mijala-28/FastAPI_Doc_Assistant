@@ -1,8 +1,8 @@
-# Cookie Parameters { #cookie-parameters }
+# Cookie Parameters
 
 You can define Cookie parameters the same way you define `Query` and `Path` parameters.
 
-## Import `Cookie` { #import-cookie }
+## Import `Cookie`
 
 First import `Cookie`:
 
@@ -18,7 +18,7 @@ async def read_items(ads_id: Annotated[str | None, Cookie()] = None):
     return {"ads_id": ads_id}
 '''
 
-## Declare `Cookie` parameters { #declare-cookie-parameters }
+## Declare `Cookie` parameters
 
 Then declare the cookie parameters using the same structure as with `Path` and `Query`.
 
@@ -42,6 +42,6 @@ async def read_items(ads_id: Annotated[str | None, Cookie()] = None):
 
 **Note:** Have in mind that, as **browsers handle cookies** in special ways and behind the scenes, they **don't** easily allow **JavaScript** to touch them.  If you go to the **API docs UI** at `/docs` you will be able to see the **documentation** for cookies for your *path operations*.  But even if you **fill the data** and click "Execute", because the docs UI works with **JavaScript**, the cookies won't be sent, and you will see an **error** message as if you didn't write any values.
 
-## Recap { #recap }
+## Recap
 
 Declare cookies with `Cookie`, using the same common pattern as `Query` and `Path`.

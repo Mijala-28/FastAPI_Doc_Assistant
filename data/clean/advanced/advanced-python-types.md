@@ -1,8 +1,8 @@
-# Advanced Python Types { #advanced-python-types }
+# Advanced Python Types
 
 Here are some additional ideas that might be useful when working with Python types.
 
-## Using `Union` or `Optional` { #using-union-or-optional }
+## Using `Union` or `Optional`
 
 If your code for some reason can't use `|`, for example if it's not in a type annotation but in something like `response_model=`, instead of using the vertical bar (`|`) you can use `Union` from `typing`.
 

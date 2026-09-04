@@ -1,6 +1,6 @@
-# Advanced Dependencies { #advanced-dependencies }
+# Advanced Dependencies
 
-## Parameterized dependencies { #parameterized-dependencies }
+## Parameterized dependencies
 
 All the dependencies we have seen are a fixed function or class.
 
@@ -10,7 +10,7 @@ Let's imagine that we want to have a dependency that checks if the query paramet
 
 But we want to be able to parameterize that fixed content.
 
-## A "callable" instance { #a-callable-instance }
+## A "callable" instance
 
 In Python there's a way to make an instance of a class a "callable".
 
@@ -43,7 +43,7 @@ async def read_query_check(fixed_content_included: Annotated[bool, Depends(check
 
 In this case, this `__call__` is what **FastAPI** will use to check for additional parameters and sub-dependencies, and this is what will be called to pass a value to the parameter in your *path operation function* later.
 
-## Parameterize the instance { #parameterize-the-instance }
+## Parameterize the instance
 
 And now, we can use `__init__` to declare the parameters of the instance that we can use to "parameterize" the dependency:
 
@@ -72,7 +72,7 @@ async def read_query_check(fixed_content_included: Annotated[bool, Depends(check
 
 In this case, **FastAPI** won't ever touch or care about `__init__`, we will use it directly in our code.
 
-## Create an instance { #create-an-instance }
+## Create an instance
 
 We could create an instance of this class with:
 
@@ -101,7 +101,7 @@ async def read_query_check(fixed_content_included: Annotated[bool, Depends(check
 
 And that way we are able to "parameterize" our dependency, that now has `"bar"` inside of it, as the attribute `checker.fixed_content`.
 
-## Use the instance as a dependency { #use-the-instance-as-a-dependency }
+## Use the instance as a dependency
 
 Then, we could use this `checker` in a `Depends(checker)`, instead of `Depends(FixedContentQueryChecker)`, because the dependency is the instance, `checker`, not the class itself.
 
@@ -138,13 +138,13 @@ async def read_query_check(fixed_content_included: Annotated[bool, Depends(check
 
 **Tip:** All this might seem contrived. And it might not be very clear how it is useful yet.  These examples are intentionally simple, but show how it all works.  In the chapters about security, there are utility functions that are implemented in this same way.  If you understood all this, you already know how those utility tools for security work underneath.
 
-## Dependencies with `yield`, `HTTPException`, `except` and Background Tasks { #dependencies-with-yield-httpexception-except-and-background-tasks }
+## Dependencies with `yield`, `HTTPException`, `except` and Background Tasks
 
 **Warning:** You most probably don't need these technical details.  These details are useful mainly if you had a FastAPI application older than 0.121.0 and you are facing issues with dependencies with `yield`.
 
 Dependencies with `yield` have evolved over time to account for the different use cases and to fix some issues, here's a summary of what has changed.
 
-### Dependencies with `yield` and `scope` { #dependencies-with-yield-and-scope }
+### Dependencies with `yield` and `scope`
 
 In version 0.121.0, FastAPI added support for `Depends(scope="function")` for dependencies with `yield`.
 
@@ -154,7 +154,7 @@ And when using `Depends(scope="request")` (the default), the exit code after `yi
 
 You can read more about it in the docs for [Dependencies with `yield` - Early exit and `scope`](../tutorial/dependencies/dependencies-with-yield.md#early-exit-and-scope).
 
-### Dependencies with `yield` and `StreamingResponse`, Technical Details { #dependencies-with-yield-and-streamingresponse-technical-details }
+### Dependencies with `yield` and `StreamingResponse`, Technical Details
 
 Before FastAPI 0.118.0, if you used a dependency with `yield`, it would run the exit code after the *path operation function* returned but right before sending the response.
 
@@ -168,7 +168,7 @@ This behavior was reverted in 0.118.0, to make the exit code after `yield` be ex
 
 **Note:** As you will see below, this is very similar to the behavior before version 0.106.0, but with several improvements and bug fixes for corner cases.
 
-#### Use Cases with Early Exit Code { #use-cases-with-early-exit-code }
+#### Use Cases with Early Exit Code
 
 There are some use cases with specific conditions that could benefit from the old behavior of running the exit code of dependencies with `yield` before sending the response.
 
@@ -333,13 +333,13 @@ If you have a different use case that needs to exit early from a dependency with
 
 If there are compelling use cases for early closing in dependencies with `yield`, I would consider adding a new way to opt in to early closing.
 
-### Dependencies with `yield` and `except`, Technical Details { #dependencies-with-yield-and-except-technical-details }
+### Dependencies with `yield` and `except`, Technical Details
 
 Before FastAPI 0.110.0, if you used a dependency with `yield`, and then you captured an exception with `except` in that dependency, and you didn't raise the exception again, the exception would be automatically raised/forwarded to any exception handlers or the internal server error handler.
 
 This was changed in version 0.110.0 to fix unhandled memory consumption from forwarded exceptions without a handler (internal server errors), and to make it consistent with the behavior of regular Python code.
 
-### Background Tasks and Dependencies with `yield`, Technical Details { #background-tasks-and-dependencies-with-yield-technical-details }
+### Background Tasks and Dependencies with `yield`, Technical Details
 
 Before FastAPI 0.106.0, raising exceptions after `yield` was not possible, the exit code in dependencies with `yield` was executed *after* the response was sent, so [Exception Handlers](../tutorial/handling-errors.md#install-custom-exception-handlers) would have already run.
 

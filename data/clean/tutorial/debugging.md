@@ -1,8 +1,8 @@
-# Debugging { #debugging }
+# Debugging
 
 You can connect the debugger in your editor, for example with Visual Studio Code or PyCharm.
 
-## Call `uvicorn` { #call-uvicorn }
+## Call `uvicorn`
 
 In your FastAPI application, import and run `uvicorn` directly:
 
@@ -22,7 +22,7 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 '''
 
-### About `__name__ == "__main__"` { #about-name-main }
+### About `__name__ == "__main__"`
 
 The main purpose of the `__name__ == "__main__"` is to have some code that is executed when your file is called with:
 
@@ -36,7 +36,7 @@ but is not called when another file imports it, like in:
 from myapp import app
 ```
 
-#### More details { #more-details }
+#### More details
 
 Let's say your file is named `myapp.py`.
 
@@ -80,7 +80,7 @@ will not be executed.
 
 **Note:** For more information, check [the official Python docs](https://docs.python.org/3/library/__main__.html).
 
-## Run your code with your debugger { #run-your-code-with-your-debugger }
+## Run your code with your debugger
 
 Because you are running the Uvicorn server directly from your code, you can call your Python program (your FastAPI application) directly from the debugger.
 

@@ -1,4 +1,4 @@
-# Header Parameter Models { #header-parameter-models }
+# Header Parameter Models
 
 If you have a group of related **header parameters**, you can create a **Pydantic model** to declare them.
 
@@ -6,7 +6,7 @@ This would allow you to **re-use the model** in **multiple places** and also to 
 
 **Note:** This is supported since FastAPI version `0.115.0`. 🤓
 
-## Header Parameters with a Pydantic Model { #header-parameters-with-a-pydantic-model }
+## Header Parameters with a Pydantic Model
 
 Declare the **header parameters** that you need in a **Pydantic model**, and then declare the parameter as `Header`:
 
@@ -32,11 +32,11 @@ async def read_items(headers: Annotated[CommonHeaders, Header()]):
 
 **FastAPI** will **extract** the data for **each field** from the **headers** in the request and give you the Pydantic model you defined.
 
-## Check the Docs { #check-the-docs }
+## Check the Docs
 
 You can see the required headers in the docs UI at `/docs`:
 
-## Forbid Extra Headers { #forbid-extra-headers }
+## Forbid Extra Headers
 
 In some special use cases (probably not very common), you might want to **restrict** the headers that you want to receive.
 
@@ -81,7 +81,7 @@ For example, if the client tries to send a `tool` header with a value of `plumbu
 }
 ```
 
-## Disable Convert Underscores { #disable-convert-underscores }
+## Disable Convert Underscores
 
 The same way as with regular header parameters, when you have underscore characters in the parameter names, they are **automatically converted to hyphens**.
 
@@ -113,6 +113,6 @@ async def read_items(
 
 **Warning:** Before setting `convert_underscores` to `False`, bear in mind that some HTTP proxies and servers disallow the usage of headers with underscores.
 
-## Summary { #summary }
+## Summary
 
 You can use **Pydantic models** to declare **headers** in **FastAPI**. 😎

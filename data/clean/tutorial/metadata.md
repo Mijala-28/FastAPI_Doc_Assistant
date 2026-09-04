@@ -1,8 +1,8 @@
-# Metadata and Docs URLs { #metadata-and-docs-urls }
+# Metadata and Docs URLs
 
 You can customize several metadata configurations in your **FastAPI** application.
 
-## Metadata for API { #metadata-for-api }
+## Metadata for API
 
 You can set the following fields that are used in the OpenAPI specification and the automatic API docs UIs:
 
@@ -62,7 +62,7 @@ async def read_items():
 
 With this configuration, the automatic API docs would look like:
 
-## License identifier { #license-identifier }
+## License identifier
 
 Since OpenAPI 3.1.0 and FastAPI 0.99.0, you can also set the `license_info` with an `identifier` instead of a `url`.
 
@@ -108,7 +108,7 @@ async def read_items():
     return [{"name": "Katana"}]
 '''
 
-## Metadata for tags { #metadata-for-tags }
+## Metadata for tags
 
 You can also add additional metadata for the different tags used to group your path operations with the parameter `openapi_tags`.
 
@@ -122,7 +122,7 @@ Each dictionary can contain:
     * `description`: a `str` with a short description for the external docs.
     * `url` (**required**): a `str` with the URL for the external documentation.
 
-### Create metadata for tags { #create-metadata-for-tags }
+### Create metadata for tags
 
 Let's try that in an example with tags for `users` and `items`.
 
@@ -161,7 +161,7 @@ Notice that you can use Markdown inside of the descriptions, for example "login"
 
 **Tip:** You don't have to add metadata for all the tags that you use.
 
-### Use your tags { #use-your-tags }
+### Use your tags
 
 Use the `tags` parameter with your *path operations* (and `APIRouter`s) to assign them to different tags:
 
@@ -196,17 +196,17 @@ async def get_items():
 
 **Note:** Read more about tags in [Path Operation Configuration](path-operation-configuration.md#tags).
 
-### Check the docs { #check-the-docs }
+### Check the docs
 
 Now, if you check the docs, they will show all the additional metadata:
 
-### Order of tags { #order-of-tags }
+### Order of tags
 
 The order of each tag metadata dictionary also defines the order shown in the docs UI.
 
 For example, even though `users` would go after `items` in alphabetical order, it is shown before them, because we added their metadata as the first dictionary in the list.
 
-## OpenAPI URL { #openapi-url }
+## OpenAPI URL
 
 By default, the OpenAPI schema is served at `/openapi.json`.
 
@@ -226,7 +226,7 @@ async def read_items():
 
 If you want to disable the OpenAPI schema completely you can set `openapi_url=None`, that will also disable the documentation user interfaces that use it.
 
-## Docs URLs { #docs-urls }
+## Docs URLs
 
 You can configure the two documentation user interfaces included:
 

@@ -1,4 +1,4 @@
-# Testing { #testing }
+# Testing
 
 Thanks to [Starlette](https://starlette.dev/testclient/), testing **FastAPI** applications is easy and enjoyable.
 
@@ -6,7 +6,7 @@ It is based on [HTTPX](https://www.python-httpx.org), which in turn is designed 
 
 With it, you can use [pytest](https://docs.pytest.org/) directly with **FastAPI**.
 
-## Using `TestClient` { #using-testclient }
+## Using `TestClient`
 
 **Note:** To use `TestClient`, first install [`httpx`](https://www.python-httpx.org).  Add it to your project:  ```console $ uv add httpx ```
 
@@ -44,13 +44,13 @@ def test_read_main():
 
 **Tip:** If you want to call `async` functions in your tests apart from sending requests to your FastAPI application (e.g. asynchronous database functions), have a look at the [Async Tests](../advanced/async-tests.md) in the advanced tutorial.
 
-## Separating tests { #separating-tests }
+## Separating tests
 
 In a real application, you probably would have your tests in a different file.
 
 And your **FastAPI** application might also be composed of several files/modules, etc.
 
-### **FastAPI** app file { #fastapi-app-file }
+### **FastAPI** app file
 
 Let's say you have a file structure as described in [Bigger Applications](bigger-applications.md):
 
@@ -73,7 +73,7 @@ async def read_main():
     return {"msg": "Hello World"}
 '''
 
-### Testing file { #testing-file }
+### Testing file
 
 Then you could have a file `test_main.py` with your tests. It could live on the same Python package (the same directory with a `__init__.py` file):
 
@@ -102,11 +102,11 @@ def test_read_main():
 
 ...and have the code for the tests just like before.
 
-## Testing: extended example { #testing-extended-example }
+## Testing: extended example
 
 Now let's extend this example and add more details to see how to test different parts.
 
-### Extended **FastAPI** app file { #extended-fastapi-app-file }
+### Extended **FastAPI** app file
 
 Let's continue with the same file structure as before:
 
@@ -164,7 +164,7 @@ async def create_item(item: Item, x_token: Annotated[str, Header()]) -> Item:
     return item
 '''
 
-### Extended testing file { #extended-testing-file }
+### Extended testing file
 
 You could then update `test_main.py` with the extended tests:
 
@@ -246,7 +246,7 @@ For more information about how to pass data to the backend (using `httpx` or the
 
 **Note:** Note that the `TestClient` receives data that can be converted to JSON, not Pydantic models.  If you have a Pydantic model in your test and you want to send its data to the application during testing, you can use the `jsonable_encoder` described in [JSON Compatible Encoder](encoder.md).
 
-## Run it { #run-it }
+## Run it
 
 After that, you just need to install `pytest`.
 

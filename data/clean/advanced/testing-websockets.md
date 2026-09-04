@@ -1,4 +1,4 @@
-# Testing WebSockets { #testing-websockets }
+# Testing WebSockets
 
 You can use the same `TestClient` to test WebSockets.
 

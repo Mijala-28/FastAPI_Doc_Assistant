@@ -1,4 +1,4 @@
-# Configure Swagger UI { #configure-swagger-ui }
+# Configure Swagger UI
 
 You can configure some extra [Swagger UI parameters](https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/).
 
@@ -8,7 +8,7 @@ To configure them, pass the `swagger_ui_parameters` argument when creating the `
 
 FastAPI converts the configurations to **JSON** to make them compatible with JavaScript, as that's what Swagger UI needs.
 
-## Disable Syntax Highlighting { #disable-syntax-highlighting }
+## Disable Syntax Highlighting
 
 For example, you could disable syntax highlighting in Swagger UI.
 
@@ -28,7 +28,7 @@ async def read_user(username: str):
 
 ...and then Swagger UI won't show the syntax highlighting anymore:
 
-## Change the Theme { #change-the-theme }
+## Change the Theme
 
 The same way you could set the syntax highlighting theme with the key `"syntaxHighlight.theme"` (notice that it has a dot in the middle):
 
@@ -44,7 +44,7 @@ async def read_user(username: str):
 
 That configuration would change the syntax highlighting color theme:
 
-## Change Default Swagger UI Parameters { #change-default-swagger-ui-parameters }
+## Change Default Swagger UI Parameters
 
 FastAPI includes some default configuration parameters appropriate for most of the use cases.
 
@@ -66,11 +66,11 @@ async def read_user(username: str):
     return {"message": f"Hello {username}"}
 '''
 
-## Other Swagger UI Parameters { #other-swagger-ui-parameters }
+## Other Swagger UI Parameters
 
 To see all the other possible configurations you can use, read the official [docs for Swagger UI parameters](https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/).
 
-## JavaScript-only settings { #javascript-only-settings }
+## JavaScript-only settings
 
 Swagger UI also allows other configurations to be **JavaScript-only** objects (for example, JavaScript functions).
 

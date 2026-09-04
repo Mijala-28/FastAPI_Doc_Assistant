@@ -1,4 +1,4 @@
-# Tutorial - User Guide { #tutorial-user-guide }
+# Tutorial - User Guide
 
 This tutorial shows you how to use **FastAPI** with most of its features, step by step.
 
@@ -6,7 +6,7 @@ Each section gradually builds on the previous ones, but it's structured to separ
 
 It is also built to work as a future reference so you can come back and see exactly what you need.
 
-## Run the code { #run-the-code }
+## Run the code
 
 All the code blocks can be copied and used directly (they are actually tested Python files).
 
@@ -54,7 +54,7 @@ Using it in your editor is what really shows you the benefits of FastAPI, seeing
 
 ---
 
-## Install FastAPI { #install-fastapi }
+## Install FastAPI
 
 The first step is to set up your project and add FastAPI.
 
@@ -104,7 +104,7 @@ Read the [Virtual Environments guide](https://tiangolo.com/guides/virtual-enviro
 
 ///
 
-## AI Agent Skills { #ai-agent-skills }
+## AI Agent Skills
 
 FastAPI includes an official skill for AI coding agents. It is bundled with the package, so its guidance stays aligned with the version of FastAPI installed in your project and updates when you update FastAPI.
 
@@ -118,7 +118,7 @@ uvx library-skills
 
 The skill is compatible with Codex, Claude Code, Cursor, GitHub Copilot, Gemini CLI, Pi, OpenCode, and most other coding agents. For Claude Code, select `.claude/skills` when asked where to install the skill.
 
-## Advanced User Guide { #advanced-user-guide }
+## Advanced User Guide
 
 There is also an **Advanced User Guide** that you can read later after this **Tutorial - User Guide**.
 

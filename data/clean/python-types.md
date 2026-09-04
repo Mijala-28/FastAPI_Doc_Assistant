@@ -1,4 +1,4 @@
-# Python Types Intro { #python-types-intro }
+# Python Types Intro
 
 Python has support for optional "type hints" (also called "type annotations").
 
@@ -14,7 +14,7 @@ But even if you never use **FastAPI**, you would benefit from learning a bit abo
 
 **Note:** If you are a Python expert, and you already know everything about type hints, skip to the next chapter.
 
-## Motivation { #motivation }
+## Motivation
 
 Let's start with a simple example:
 
@@ -46,7 +46,7 @@ def get_full_name(first_name, last_name):
 print(get_full_name("john", "doe"))
 '''
 
-### Edit it { #edit-it }
+### Edit it
 
 It's a very simple program.
 
@@ -64,7 +64,7 @@ You type the first parameter of the function, `first_name`, then a dot (`.`) and
 
 But, sadly, you get nothing useful:
 
-### Add types { #add-types }
+### Add types
 
 Let's modify a single line from the previous version.
 
@@ -110,7 +110,7 @@ At the same point, you try to trigger the autocomplete with `Ctrl+Space` and you
 
 With that, you can scroll, seeing the options, until you find the one that "rings a bell":
 
-## More motivation { #more-motivation }
+## More motivation
 
 Check this function, it already has type hints:
 
@@ -130,13 +130,13 @@ def get_name_with_age(name: str, age: int):
     return name_with_age
 '''
 
-## Declaring types { #declaring-types }
+## Declaring types
 
 You just saw the main place to declare type hints. As function parameters.
 
 This is also the main place you would use them with **FastAPI**.
 
-### Simple types { #simple-types }
+### Simple types
 
 You can declare all the standard Python types, not only `str`.
 
@@ -152,7 +152,7 @@ def get_items(item_a: str, item_b: int, item_c: float, item_d: bool, item_e: byt
     return item_a, item_b, item_c, item_d, item_e
 '''
 
-### `typing` module { #typing-module }
+### `typing` module
 
 For some additional use cases, you might need to import some things from the standard library `typing` module, for example when you want to declare that something has "any type", you can use `Any` from `typing`:
 
@@ -163,7 +163,7 @@ def some_function(data: Any):
     print(data)
 ```
 
-### Generic types { #generic-types }
+### Generic types
 
 Some types can take "type parameters" in square brackets, to define their internal types, for example a "list of strings" would be declared `list[str]`.
 
@@ -176,7 +176,7 @@ You can use the same builtin types as generics (with square brackets and types i
 * `set`
 * `dict`
 
-#### List { #list }
+#### List
 
 For example, let's define a variable to be a `list` of `str`.
 
@@ -204,7 +204,7 @@ Notice that the variable `item` is one of the elements in the list `items`.
 
 And still, the editor knows it is a `str`, and provides support for that.
 
-#### Tuple and Set { #tuple-and-set }
+#### Tuple and Set
 
 You would do the same to declare `tuple`s and `set`s:
 
@@ -218,7 +218,7 @@ This means:
 * The variable `items_t` is a `tuple` with 3 items, an `int`, another `int`, and a `str`.
 * The variable `items_s` is a `set`, and each of its items is of type `bytes`.
 
-#### Dict { #dict }
+#### Dict
 
 To define a `dict`, you pass 2 type parameters, separated by commas.
 
@@ -239,7 +239,7 @@ This means:
     * The keys of this `dict` are of type `str` (let's say, the name of each item).
     * The values of this `dict` are of type `float` (let's say, the price of each item).
 
-#### Union { #union }
+#### Union
 
 You can declare that a variable can be any of **several types**, for example, an `int` or a `str`.
 
@@ -253,7 +253,7 @@ This is called a "union", because the variable can be anything in the union of t
 
 This means that `item` could be an `int` or a `str`.
 
-#### Possibly `None` { #possibly-none }
+#### Possibly `None`
 
 You can declare that a value could have a type, like `str`, but that it could also be `None`.
 
@@ -267,7 +267,7 @@ You can declare that a value could have a type, like `str`, but that it could al
 
 Using `str | None` instead of just `str` will let the editor help you detect errors where you could be assuming that a value is always a `str`, when it could actually be `None` too.
 
-### Classes as types { #classes-as-types }
+### Classes as types
 
 You can also declare a class as the type of a variable.
 
@@ -299,7 +299,7 @@ Notice that this means "`one_person` is an **instance** of the class `Person`".
 
 It doesn't mean "`one_person` is the **class** called `Person`".
 
-## Pydantic models { #pydantic-models }
+## Pydantic models
 
 [Pydantic](https://pydantic.dev/docs/) is a Python library to perform data validation.
 
@@ -342,7 +342,7 @@ print(user.id)
 
 You will see a lot more of all this in practice in the [Tutorial - User Guide](tutorial/index.md).
 
-## Type Hints with Metadata Annotations { #type-hints-with-metadata-annotations }
+## Type Hints with Metadata Annotations
 
 Python also has a feature that allows putting **additional metadata** in these type hints using `Annotated`.
 
@@ -367,7 +367,7 @@ Later you will see how **powerful** it can be.
 
 **Tip:** The fact that this is **standard Python** means that you will still get the **best possible developer experience** in your editor, with the tools you use to analyze and refactor your code, etc. ✨  And also that your code will be very compatible with many other Python tools and libraries. 🚀
 
-## Type hints in **FastAPI** { #type-hints-in-fastapi }
+## Type hints in **FastAPI**
 
 **FastAPI** takes advantage of these type hints to do several things.
 

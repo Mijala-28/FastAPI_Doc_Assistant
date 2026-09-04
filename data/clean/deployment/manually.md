@@ -1,6 +1,6 @@
-# Run a Server Manually { #run-a-server-manually }
+# Run a Server Manually
 
-## Use the `fastapi run` Command { #use-the-fastapi-run-command }
+## Use the `fastapi run` Command
 
 In short, use `fastapi run` to serve your FastAPI application:
 
@@ -38,7 +38,7 @@ That would work for most of the cases. 😎
 
 You could use that command for example to start your **FastAPI** app in a container, in a server, etc.
 
-## ASGI Servers { #asgi-servers }
+## ASGI Servers
 
 Let's go a little deeper into the details.
 
@@ -53,7 +53,7 @@ There are several alternatives, including:
 * [Daphne](https://github.com/django/daphne): the ASGI server built for Django Channels.
 * [Granian](https://github.com/emmett-framework/granian): A Rust HTTP server for Python applications.
 
-## Server Machine and Server Program { #server-machine-and-server-program }
+## Server Machine and Server Program
 
 There's a small detail about names to keep in mind. 💡
 
@@ -63,7 +63,7 @@ Just keep in mind that when you read "server" in general, it could refer to one 
 
 When referring to the remote machine, it's common to call it **server**, but also **machine**, **VM** (virtual machine), **node**. Those all refer to some type of remote machine, normally running Linux, where you run programs.
 
-## Install the Server Program { #install-the-server-program }
+## Install the Server Program
 
 When you install FastAPI, it comes with a production server, Uvicorn, and you can start it with the `fastapi run` command.
 
@@ -83,7 +83,7 @@ A similar process would apply to any other ASGI server program.
 
 **Tip:** By adding the `standard`, Uvicorn will install and use some recommended extra dependencies.  That includes `uvloop`, the high-performance drop-in replacement for `asyncio`, that provides the big concurrency performance boost.  When you add FastAPI with something like `uv add "fastapi[standard]"` you already get `uvicorn[standard]` as well.
 
-## Run the Server Program { #run-the-server-program }
+## Run the Server Program
 
 If you installed an ASGI server manually, you would normally need to pass an import string in a special format for it to import your FastAPI application:
 
@@ -99,7 +99,7 @@ Each alternative ASGI server program would have a similar command, you can read 
 
 **Warning:** Uvicorn and other servers support a `--reload` option that is useful during development.  The `--reload` option consumes much more resources, is more unstable, etc.  It helps a lot during **development**, but you **shouldn't** use it in **production**.
 
-## Deployment Concepts { #deployment-concepts }
+## Deployment Concepts
 
 These examples run the server program (e.g Uvicorn), starting **a single process**, listening on all the IPs (`0.0.0.0`) on a predefined port (e.g. `80`).
 

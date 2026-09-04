@@ -1,8 +1,8 @@
-# JSON with Bytes as Base64 { #json-with-bytes-as-base64 }
+# JSON with Bytes as Base64
 
 If your app needs to receive and send JSON data, but you need to include binary data in it, you can encode it as base64.
 
-## Base64 vs Files { #base64-vs-files }
+## Base64 vs Files
 
 Consider first if you can use [Request Files](../tutorial/request-files.md) for uploading binary data and [Custom Response - FileResponse](./custom-response.md#fileresponse) for sending binary data, instead of encoding it in JSON.
 
@@ -12,7 +12,7 @@ Base64 can encode binary data in strings, but to do it, it needs to use more cha
 
 Use base64 only if you definitely need to include binary data in JSON, and you can't use files for that.
 
-## Pydantic `bytes` { #pydantic-bytes }
+## Pydantic `bytes`
 
 You can declare a Pydantic model with `bytes` fields, and then use `val_json_bytes` in the model config to tell it to use base64 to *validate* input JSON data, as part of that validation it will decode the base64 string into bytes.
 
@@ -82,7 +82,7 @@ You will receive a response like:
 }
 ```
 
-## Pydantic `bytes` for Output Data { #pydantic-bytes-for-output-data }
+## Pydantic `bytes` for Output Data
 
 You can also use `bytes` fields with `ser_json_bytes` in the model config for output data, and Pydantic will *serialize* the bytes as base64 when generating the JSON response.
 
@@ -128,7 +128,7 @@ def post_data_in_out(body: DataInputOutput) -> DataInputOutput:
     return body
 '''
 
-## Pydantic `bytes` for Input and Output Data { #pydantic-bytes-for-input-and-output-data }
+## Pydantic `bytes` for Input and Output Data
 
 And of course, you can use the same model configured to use base64 to handle both input (*validate*) with `val_json_bytes` and output (*serialize*) with `ser_json_bytes` when receiving and sending JSON data.
 

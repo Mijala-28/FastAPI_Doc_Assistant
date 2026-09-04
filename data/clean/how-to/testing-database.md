@@ -1,4 +1,4 @@
-# Testing a Database { #testing-a-database }
+# Testing a Database
 
 You can study about databases, SQL, and SQLModel in the [SQLModel docs](https://sqlmodel.tiangolo.com/). 🤓
 

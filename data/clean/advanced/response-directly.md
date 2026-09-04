@@ -1,4 +1,4 @@
-# Return a Response Directly { #return-a-response-directly }
+# Return a Response Directly
 
 When you create a **FastAPI** *path operation* you can normally return any data from it: a `dict`, a `list`, a Pydantic model, a database model, etc.
 
@@ -10,7 +10,7 @@ You could also create a `JSONResponse` directly and return it.
 
 **Tip:** You will normally have much better performance using a [Response Model](../tutorial/response-model.md) than returning a `JSONResponse` directly, as that way it serializes the data using Pydantic, in Rust.
 
-## Return a `Response` { #return-a-response }
+## Return a `Response`
 
 You can return a `Response` or any sub-class of it.
 
@@ -24,7 +24,7 @@ This gives you a lot of **flexibility**. You can return any data type, override 
 
 It also gives you a lot of **responsibility**. You have to make sure that the data you return is correct, in the correct format, that it can be serialized, etc.
 
-## Using the `jsonable_encoder` in a `Response` { #using-the-jsonable-encoder-in-a-response }
+## Using the `jsonable_encoder` in a `Response`
 
 Because **FastAPI** doesn't make any changes to a `Response` you return, you have to make sure its contents are ready for it.
 
@@ -55,7 +55,7 @@ def update_item(id: str, item: Item):
 
 **Note:** You could also use `from starlette.responses import JSONResponse`.  **FastAPI** provides the same `starlette.responses` as `fastapi.responses` just as a convenience for you, the developer. But most of the available responses come directly from Starlette.
 
-## Returning a custom `Response` { #returning-a-custom-response }
+## Returning a custom `Response`
 
 The example above shows all the parts you need, but it's not very useful yet, as you could have just returned the `item` directly, and **FastAPI** would put it in a `JSONResponse` for you, converting it to a `dict`, etc. All that by default.
 
@@ -85,7 +85,7 @@ def get_legacy_data():
     return Response(content=data, media_type="application/xml")
 '''
 
-## How a Response Model Works { #how-a-response-model-works }
+## How a Response Model Works
 
 When you declare a [Response Model - Return Type](../tutorial/response-model.md) in a path operation, **FastAPI** will use it to serialize the data to JSON, using Pydantic.
 
@@ -120,7 +120,7 @@ When using a `response_model` or return type, FastAPI won't use the `jsonable_en
 
 Instead it takes the JSON bytes generated with Pydantic using the response model (or return type) and returns a `Response` with the right media type for JSON directly (`application/json`).
 
-## Notes { #notes }
+## Notes
 
 When you return a `Response` directly its data is not validated, converted (serialized), or documented automatically.
 

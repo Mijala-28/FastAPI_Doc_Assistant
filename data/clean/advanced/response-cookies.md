@@ -1,6 +1,6 @@
-# Response Cookies { #response-cookies }
+# Response Cookies
 
-## Use a `Response` parameter { #use-a-response-parameter }
+## Use a `Response` parameter
 
 You can declare a parameter of type `Response` in your *path operation function*.
 
@@ -25,7 +25,7 @@ And if you declared a `response_model`, it will still be used to filter and conv
 
 You can also declare the `Response` parameter in dependencies, and set cookies (and headers) in them.
 
-## Return a `Response` directly { #return-a-response-directly }
+## Return a `Response` directly
 
 You can also create cookies when returning a `Response` directly in your code.
 
@@ -49,7 +49,7 @@ def create_cookie():
 
 **Tip:** Keep in mind that if you return a response directly instead of using the `Response` parameter, FastAPI will return it directly.  So, you will have to make sure your data is of the correct type. E.g. it is compatible with JSON, if you are returning a `JSONResponse`.  And also that you are not sending any data that should have been filtered by a `response_model`.
 
-### More info { #more-info }
+### More info
 
 **Note:** You could also use `from starlette.responses import Response` or `from starlette.responses import JSONResponse`.  **FastAPI** provides the same `starlette.responses` as `fastapi.responses` just as a convenience for you, the developer. But most of the available responses come directly from Starlette.  And as the `Response` can be used frequently to set headers and cookies, **FastAPI** also provides it at `fastapi.Response`.
 

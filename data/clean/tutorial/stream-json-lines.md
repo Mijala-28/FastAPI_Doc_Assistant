@@ -1,10 +1,10 @@
-# Stream JSON Lines { #stream-json-lines }
+# Stream JSON Lines
 
 You could have a sequence of data that you would like to send in a "**stream**", you could do it with **JSON Lines**.
 
 **Note:** Added in FastAPI 0.134.0.
 
-## What is a Stream? { #what-is-a-stream }
+## What is a Stream?
 
 "**Streaming**" data means that your app will start sending data items to the client without waiting for the entire sequence of items to be ready.
 
@@ -30,7 +30,7 @@ sequenceDiagram
 
 It could even be an infinite stream, where you keep sending data.
 
-## JSON Lines { #json-lines }
+## JSON Lines
 
 In these cases, it's common to send "**JSON Lines**", which is a format where you send one JSON object per line.
 
@@ -48,13 +48,13 @@ It's very similar to a JSON array (equivalent of a Python list), but instead of 
 
 **Note:** Because each JSON object will be separated by a new line, they can't contain literal new line characters in their content, but they can contain escaped new lines (`\n`), which is part of the JSON standard.  But normally you won't have to worry about it, it's done automatically, continue reading. 🤓
 
-## Use Cases { #use-cases }
+## Use Cases
 
 You could use this to stream data from an **AI LLM** service, from **logs** or **telemetry**, or from other types of data that can be structured in **JSON** items.
 
 **Tip:** If you want to stream binary data, for example video or audio, check the advanced guide: [Stream Data](../advanced/stream-data.md).
 
-## Stream JSON Lines with FastAPI { #stream-json-lines-with-fastapi }
+## Stream JSON Lines with FastAPI
 
 To stream JSON Lines with FastAPI you can, instead of using `return` in your *path operation function*, use `yield` to produce each item in turn.
 
@@ -142,7 +142,7 @@ If you declare the return type, FastAPI will use it to **validate** the data, **
 
 **Tip:** As Pydantic will serialize it in the **Rust** side, you will get much higher **performance** than if you don't declare a return type.
 
-### Non-async *path operation functions* { #non-async-path-operation-functions }
+### Non-async *path operation functions*
 
 You can also use regular `def` functions (without `async`), and use `yield` the same way.
 
@@ -189,7 +189,7 @@ def stream_items_no_async_no_annotation():
         yield item
 '''
 
-### No Return Type { #no-return-type }
+### No Return Type
 
 You can also omit the return type. FastAPI will then use the [`jsonable_encoder`](./encoder.md) to convert the data to something that can be serialized to JSON and then send it as JSON Lines.
 
@@ -232,6 +232,6 @@ def stream_items_no_async_no_annotation():
         yield item
 '''
 
-## Server-Sent Events (SSE) { #server-sent-events-sse }
+## Server-Sent Events (SSE)
 
 FastAPI also has first-class support for Server-Sent Events (SSE), which are quite similar but with a couple of extra details. You can learn about them in the next chapter: [Server-Sent Events (SSE)](server-sent-events.md). 🤓

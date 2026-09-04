@@ -1,4 +1,4 @@
-# FastAPI in Containers - Docker { #fastapi-in-containers-docker }
+# FastAPI in Containers - Docker
 
 When deploying FastAPI applications a common approach is to build a **Linux container image**. It's normally done using [**Docker**](https://www.docker.com/). You can then deploy that container image in one of a few possible ways.
 
@@ -25,7 +25,7 @@ CMD ["fastapi", "run", "app/main.py", "--port", "80"]
 # CMD ["fastapi", "run", "app/main.py", "--port", "80", "--proxy-headers"]
 ```
 
-## What is a Container { #what-is-a-container }
+## What is a Container
 
 Containers (mainly Linux containers) are a very **lightweight** way to package applications including all their dependencies and necessary files while keeping them isolated from other containers (other applications or components) in the same system.
 
@@ -35,7 +35,7 @@ This way, containers consume **little resources**, an amount comparable to runni
 
 Containers also have their own **isolated** running processes (commonly just one process), file system, and network, simplifying deployment, security, development, etc.
 
-## What is a Container Image { #what-is-a-container-image }
+## What is a Container Image
 
 A **container** is run from a **container image**.
 
@@ -49,7 +49,7 @@ A container image is comparable to the **program** file and contents, e.g. `pyth
 
 And the **container** itself (in contrast to the **container image**) is the actual running instance of the image, comparable to a **process**. In fact, a container is running only when it has a **process running** (and normally it's only a single process). The container stops when there's no process running in it.
 
-## Container Images { #container-images }
+## Container Images
 
 Docker has been one of the main tools to create and manage **container images** and **containers**.
 
@@ -72,7 +72,7 @@ So, you would run **multiple containers** with different things, like a database
 
 All the container management systems (like Docker or Kubernetes) have these networking features integrated into them.
 
-## Containers and Processes { #containers-and-processes }
+## Containers and Processes
 
 A **container image** normally includes in its metadata the default program or command that should be run when the **container** is started and the parameters to be passed to that program. Very similar to what would be if it was in the command line.
 
@@ -84,7 +84,7 @@ A container normally has a **single process**, but it's also possible to start s
 
 But it's not possible to have a running container without **at least one running process**. If the main process stops, the container stops.
 
-## Build a Docker Image for FastAPI { #build-a-docker-image-for-fastapi }
+## Build a Docker Image for FastAPI
 
 Okay, let's build something now! 🚀
 
@@ -96,7 +96,7 @@ This is what you would want to do in **most cases**, for example:
 * When running on a **Raspberry Pi**
 * Using a cloud service that would run a container image for you, etc.
 
-### Package Requirements { #package-requirements }
+### Package Requirements
 
 When you manage your project with `uv`, its direct dependencies are declared in `pyproject.toml` and the exact resolved versions are stored in `uv.lock`.
 
@@ -109,7 +109,7 @@ $ uv add "fastapi[standard]" pydantic
 
 **Note:** The Dockerfile below uses `pip` inside the container. You can export the locked dependencies from your uv project to the `requirements.txt` format it expects:    ```console $ uv export --format requirements-txt --no-dev --no-emit-project --output-file requirements.txt ```    The generated `requirements.txt` is an export for the container build. Continue managing dependencies with `uv add` and regenerate it when `uv.lock` changes.
 
-### Create the **FastAPI** Code { #create-the-fastapi-code }
+### Create the **FastAPI** Code
 
 * Create an `app` directory and enter it.
 * Create an empty file `__init__.py`.
@@ -129,7 +129,7 @@ def read_item(item_id: int, q: str | None = None):
     return {"item_id": item_id, "q": q}
 ```
 
-### Dockerfile { #dockerfile }
+### Dockerfile
 
 Now in the same project directory create a file `Dockerfile` with:
 
@@ -193,7 +193,7 @@ CMD ["fastapi", "run", "app/main.py", "--port", "80"]
 
 **Warning:** Make sure to **always** use the **exec form** of the `CMD` instruction, as explained below.
 
-#### Use `CMD` - Exec Form { #use-cmd-exec-form }
+#### Use `CMD` - Exec Form
 
 The [`CMD`](https://docs.docker.com/reference/dockerfile/#cmd) Docker instruction can be written using two forms:
 
@@ -217,7 +217,7 @@ You can read more about it in the [Docker docs for shell and exec form](https://
 
 This can be quite noticeable when using `docker compose`. See this Docker Compose FAQ section for more technical details: [Why do my services take 10 seconds to recreate or stop?](https://docs.docker.com/compose/faq/#why-do-my-services-take-10-seconds-to-recreate-or-stop).
 
-#### Directory Structure { #directory-structure }
+#### Directory Structure
 
 You should now have a directory structure like:
 
@@ -230,7 +230,7 @@ You should now have a directory structure like:
 └── requirements.txt
 ```
 
-#### Behind a TLS Termination Proxy { #behind-a-tls-termination-proxy }
+#### Behind a TLS Termination Proxy
 
 If you are running your container behind a TLS Termination Proxy (load balancer) like Nginx or Traefik, add the option `--proxy-headers`, this will tell Uvicorn (through the FastAPI CLI) to trust the headers sent by that proxy telling it that the application is running behind HTTPS, etc.
 
@@ -238,7 +238,7 @@ If you are running your container behind a TLS Termination Proxy (load balancer)
 CMD ["fastapi", "run", "app/main.py", "--proxy-headers", "--port", "80"]
 ```
 
-#### Docker Cache { #docker-cache }
+#### Docker Cache
 
 There's an important trick in this `Dockerfile`, we first copy the **file with the dependencies alone**, not the rest of the code. Let me tell you why that is.
 
@@ -270,7 +270,7 @@ Then, near the end of the `Dockerfile`, we copy all the code. As this is what **
 COPY ./app /code/app
 ```
 
-### Build the Docker Image { #build-the-docker-image }
+### Build the Docker Image
 
 Now that all the files are in place, let's build the container image.
 
@@ -285,7 +285,7 @@ $ docker build -t myimage .
 
 **Tip:** Notice the `.` at the end, it's equivalent to `./`, it tells Docker the directory to use to build the container image.  In this case, it's the same current directory (`.`).
 
-### Start the Docker Container { #start-the-docker-container }
+### Start the Docker Container
 
 * Run a container based on your image:
 
@@ -293,7 +293,7 @@ $ docker build -t myimage .
 $ docker run -d --name mycontainer -p 80:80 myimage
 ```
 
-## Check it { #check-it }
+## Check it
 
 You should be able to check it in your Docker container's URL, for example: [http://192.168.99.100/items/5?q=somequery](http://192.168.99.100/items/5?q=somequery) or [http://127.0.0.1/items/5?q=somequery](http://127.0.0.1/items/5?q=somequery) (or equivalent, using your Docker host).
 
@@ -303,7 +303,7 @@ You will see something like:
 {"item_id": 5, "q": "somequery"}
 ```
 
-## Interactive API docs { #interactive-api-docs }
+## Interactive API docs
 
 Now you can go to [http://192.168.99.100/docs](http://192.168.99.100/docs) or [http://127.0.0.1/docs](http://127.0.0.1/docs) (or equivalent, using your Docker host).
 
@@ -311,7 +311,7 @@ You will see the automatic interactive API documentation (provided by [Swagger U
 
 ![Swagger UI](https://fastapi.tiangolo.com/img/index/index-01-swagger-ui-simple.png)
 
-## Alternative API docs { #alternative-api-docs }
+## Alternative API docs
 
 And you can also go to [http://192.168.99.100/redoc](http://192.168.99.100/redoc) or [http://127.0.0.1/redoc](http://127.0.0.1/redoc) (or equivalent, using your Docker host).
 
@@ -319,7 +319,7 @@ You will see the alternative automatic documentation (provided by [ReDoc](https:
 
 ![ReDoc](https://fastapi.tiangolo.com/img/index/index-02-redoc-simple.png)
 
-## Build a Docker Image with a Single-File FastAPI { #build-a-docker-image-with-a-single-file-fastapi }
+## Build a Docker Image with a Single-File FastAPI
 
 If your FastAPI is a single file, for example, `main.py` without an `./app` directory, your file structure could look like this:
 
@@ -354,7 +354,7 @@ CMD ["fastapi", "run", "main.py", "--port", "80"]
 
 When you pass the file to `fastapi run` it will detect automatically that it is a single file and not part of a package and will know how to import it and serve your FastAPI app. 😎
 
-## Deployment Concepts { #deployment-concepts }
+## Deployment Concepts
 
 Let's talk again about some of the same [Deployment Concepts](concepts.md) in terms of containers.
 
@@ -371,7 +371,7 @@ Let's review these **deployment concepts** in terms of containers:
 * Memory
 * Previous steps before starting
 
-## HTTPS { #https }
+## HTTPS
 
 If we focus just on the **container image** for a FastAPI application (and later the running **container**), HTTPS normally would be handled **externally** by another tool.
 
@@ -381,7 +381,7 @@ It could be another container, for example with [Traefik](https://traefik.io/), 
 
 Alternatively, HTTPS could be handled by a cloud provider as one of their services (while still running the application in a container).
 
-## Running on Startup and Restarts { #running-on-startup-and-restarts }
+## Running on Startup and Restarts
 
 There is normally another tool in charge of **starting and running** your container.
 
@@ -391,7 +391,7 @@ In most (or all) cases, there's a simple option to enable running the container 
 
 Without using containers, making applications run on startup and with restarts can be cumbersome and difficult. But when **working with containers** in most cases that functionality is included by default. ✨
 
-## Replication - Number of Processes { #replication-number-of-processes }
+## Replication - Number of Processes
 
 If you have a cluster of machines with **Kubernetes**, Docker Swarm Mode, Nomad, or another similar complex system to manage distributed containers on multiple machines, then you will probably want to **handle replication** at the **cluster level** instead of using a **process manager** (like Uvicorn with workers) in each container.
 
@@ -399,7 +399,7 @@ One of those distributed container management systems like Kubernetes normally h
 
 In those cases, you would probably want to build a **Docker image from scratch** as [explained above](#dockerfile), installing your dependencies, and running **a single Uvicorn process** instead of using multiple Uvicorn workers.
 
-### Load Balancer { #load-balancer }
+### Load Balancer
 
 When using containers, you would normally have some component **listening on the main port**. It could possibly be another container that is also a **TLS Termination Proxy** to handle **HTTPS** or some similar tool.
 
@@ -409,7 +409,7 @@ As this component would take the **load** of requests and distribute that among 
 
 And when working with containers, the same system you use to start and manage them would already have internal tools to transmit the **network communication** (e.g. HTTP requests) from that **load balancer** (that could also be a **TLS Termination Proxy**) to the container(s) with your app.
 
-### One Load Balancer - Multiple Worker Containers { #one-load-balancer-multiple-worker-containers }
+### One Load Balancer - Multiple Worker Containers
 
 When working with **Kubernetes** or similar distributed container management systems, using their internal networking mechanisms would allow the single **load balancer** that is listening on the main **port** to transmit communication (requests) to possibly **multiple containers** running your app.
 
@@ -419,7 +419,7 @@ And the distributed container system with the **load balancer** would **distribu
 
 And normally this **load balancer** would be able to handle requests that go to *other* apps in your cluster (e.g. to a different domain, or under a different URL path prefix), and would transmit that communication to the right containers for *that other* application running in your cluster.
 
-### One Process per Container { #one-process-per-container }
+### One Process per Container
 
 In this type of scenario, you probably would want to have **a single (Uvicorn) process per container**, as you would already be handling replication at the cluster level.
 
@@ -427,7 +427,7 @@ So, in this case, you **would not** want to have multiple workers in the contain
 
 Having another process manager inside the container (as would be with multiple workers) would only add **unnecessary complexity** that you are most probably already taking care of with your cluster system.
 
-### Containers with Multiple Processes and Special Cases { #containers-with-multiple-processes-and-special-cases }
+### Containers with Multiple Processes and Special Cases
 
 Of course, there are **special cases** where you could want to have **a container** with several **Uvicorn worker processes** inside.
 
@@ -452,11 +452,11 @@ CMD ["fastapi", "run", "app/main.py", "--port", "80", "--workers", "4"]
 
 Here are some examples of when that could make sense:
 
-#### A Simple App { #a-simple-app }
+#### A Simple App
 
 You could want a process manager in the container if your application is **simple enough** that you can run it on a **single server**, not a cluster.
 
-#### Docker Compose { #docker-compose }
+#### Docker Compose
 
 You could be deploying to a **single server** (not a cluster) with **Docker Compose**, so you wouldn't have an easy way to manage replication of containers (with Docker Compose) while preserving the shared network and **load balancing**.
 
@@ -473,7 +473,7 @@ The main point is, **none** of these are **rules written in stone** that you hav
 * Memory
 * Previous steps before starting
 
-## Memory { #memory }
+## Memory
 
 If you run **a single process per container** you will have a more or less well-defined, stable, and limited amount of memory consumed by each of those containers (more than one if they are replicated).
 
@@ -483,11 +483,11 @@ If your application is **simple**, this will probably **not be a problem**, and 
 
 If you run **multiple processes per container** you will have to make sure that the number of processes started doesn't **consume more memory** than what is available.
 
-## Previous Steps Before Starting and Containers { #previous-steps-before-starting-and-containers }
+## Previous Steps Before Starting and Containers
 
 If you are using containers (e.g. Docker, Kubernetes), then there are two main approaches you can use.
 
-### Multiple Containers { #multiple-containers }
+### Multiple Containers
 
 If you have **multiple containers**, probably each one running a **single process** (for example, in a **Kubernetes** cluster), then you would probably want to have a **separate container** doing the work of the **previous steps** in a single container, running a single process, **before** running the replicated worker containers.
 
@@ -495,11 +495,11 @@ If you have **multiple containers**, probably each one running a **single proces
 
 If in your use case there's no problem in running those previous steps **multiple times in parallel** (for example if you are not running database migrations, but just checking if the database is ready yet), then you could also just put them in each container right before starting the main process.
 
-### Single Container { #single-container }
+### Single Container
 
 If you have a simple setup, with a **single container** that then starts multiple **worker processes** (or also just one process), then you could run those previous steps in the same container, right before starting the process with the app.
 
-### Base Docker Image { #base-docker-image }
+### Base Docker Image
 
 There used to be an official FastAPI Docker image: [tiangolo/uvicorn-gunicorn-fastapi](https://github.com/tiangolo/uvicorn-gunicorn-fastapi-docker). But it is now deprecated. ⛔️
 
@@ -511,7 +511,7 @@ And if you need to have multiple workers, you can simply use the `--workers` com
 
 **Note:** The Docker image was created when Uvicorn didn't support managing and restarting dead workers, so it was needed to use Gunicorn with Uvicorn, which added quite some complexity, just to have Gunicorn manage and restart the Uvicorn worker processes.  But now that Uvicorn (and the `fastapi` command) support using `--workers`, there's no reason to use a base Docker image instead of building your own (it's pretty much the same amount of code 😅).
 
-## Deploy the Container Image { #deploy-the-container-image }
+## Deploy the Container Image
 
 After having a Container (Docker) Image there are several ways to deploy it.
 
@@ -523,11 +523,11 @@ For example:
 * With another tool like Nomad
 * With a cloud service that takes your container image and deploys it
 
-## Docker Image with `uv` { #docker-image-with-uv }
+## Docker Image with `uv`
 
 If you are using [uv](https://github.com/astral-sh/uv) to install and manage your project, you can follow their [uv Docker guide](https://docs.astral.sh/uv/guides/integration/docker/).
 
-## Recap { #recap }
+## Recap
 
 Using container systems (e.g. with **Docker** and **Kubernetes**) it becomes fairly straightforward to handle all the **deployment concepts**:
 

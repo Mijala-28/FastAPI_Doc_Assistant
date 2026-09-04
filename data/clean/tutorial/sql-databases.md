@@ -1,4 +1,4 @@
-# SQL (Relational) Databases { #sql-relational-databases }
+# SQL (Relational) Databases
 
 **FastAPI** doesn't require you to use a SQL (relational) database. But you can use **any database** that you want.
 
@@ -24,7 +24,7 @@ Later, for your production application, you might want to use a database server 
 
 This is a very simple and short tutorial, if you want to learn about databases in general, about SQL, or more advanced features, go to the [SQLModel docs](https://sqlmodel.tiangolo.com/).
 
-## Install `SQLModel` { #install-sqlmodel }
+## Install `SQLModel`
 
 Add `sqlmodel` to your project:
 
@@ -33,13 +33,13 @@ $ uv add sqlmodel
 ---> 100%
 ```
 
-## Create the App with a Single Model { #create-the-app-with-a-single-model }
+## Create the App with a Single Model
 
 We'll create the simplest first version of the app with a single **SQLModel** model first.
 
 Later we'll improve it increasing security and versatility with **multiple models** below. 🤓
 
-### Create Models { #create-models }
+### Create Models
 
 Import `SQLModel` and create a database model:
 
@@ -123,7 +123,7 @@ There are a few differences:
 
     SQLModel will know that something declared as `str` will be a SQL column of type `TEXT` (or `VARCHAR`, depending on the database).
 
-### Create an Engine { #create-an-engine }
+### Create an Engine
 
 A SQLModel `engine` (underneath it's actually a SQLAlchemy `engine`) is what **holds the connections** to the database.
 
@@ -199,7 +199,7 @@ Using `check_same_thread=False` allows FastAPI to use the same SQLite database i
 
 Don't worry, with the way the code is structured, we'll make sure we use **a single SQLModel *session* per request** later, this is actually what the `check_same_thread` is trying to achieve.
 
-### Create the Tables { #create-the-tables }
+### Create the Tables
 
 We then add a function that uses `SQLModel.metadata.create_all(engine)` to **create the tables** for all the *table models*.
 
@@ -269,7 +269,7 @@ def delete_hero(hero_id: int, session: SessionDep):
     return {"ok": True}
 '''
 
-### Create a Session Dependency { #create-a-session-dependency }
+### Create a Session Dependency
 
 A **`Session`** is what stores the **objects in memory** and keeps track of any changes needed in the data, then it **uses the `engine`** to communicate with the database.
 
@@ -343,7 +343,7 @@ def delete_hero(hero_id: int, session: SessionDep):
     return {"ok": True}
 '''
 
-### Create Database Tables on Startup { #create-database-tables-on-startup }
+### Create Database Tables on Startup
 
 We will create the database tables when the application starts.
 
@@ -419,7 +419,7 @@ For production you would probably use a migration script that runs before you st
 
 **Tip:** SQLModel will have migration utilities wrapping Alembic, but for now, you can use [Alembic](https://alembic.sqlalchemy.org/en/latest/) directly.
 
-### Create a Hero { #create-a-hero }
+### Create a Hero
 
 Because each SQLModel model is also a Pydantic model, you can use it in the same **type annotations** that you could use Pydantic models.
 
@@ -495,7 +495,7 @@ def delete_hero(hero_id: int, session: SessionDep):
 
 Here we use the `SessionDep` dependency (a `Session`) to add the new `Hero` to the `Session` instance, commit the changes to the database, refresh the data in the `hero`, and then return it.
 
-### Read Heroes { #read-heroes }
+### Read Heroes
 
 We can **read** `Hero`s from the database using a `select()`. We can include a `limit` and `offset` to paginate the results.
 
@@ -565,7 +565,7 @@ def delete_hero(hero_id: int, session: SessionDep):
     return {"ok": True}
 '''
 
-### Read One Hero { #read-one-hero }
+### Read One Hero
 
 We can **read** a single `Hero`.
 
@@ -635,7 +635,7 @@ def delete_hero(hero_id: int, session: SessionDep):
     return {"ok": True}
 '''
 
-### Delete a Hero { #delete-a-hero }
+### Delete a Hero
 
 We can also **delete** a `Hero`.
 
@@ -705,7 +705,7 @@ def delete_hero(hero_id: int, session: SessionDep):
     return {"ok": True}
 '''
 
-### Run the App { #run-the-app }
+### Run the App
 
 You can run the app:
 
@@ -717,7 +717,7 @@ INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 
 Then go to the `/docs` UI, you will see that **FastAPI** is using these **models** to **document** the API, and it will use them to **serialize** and **validate** the data too.
 
-## Update the App with Multiple Models { #update-the-app-with-multiple-models }
+## Update the App with Multiple Models
 
 Now let's **refactor** this app a bit to increase **security** and **versatility**.
 
@@ -729,7 +729,7 @@ Additionally, we create a `secret_name` for the hero, but so far, we are returni
 
 We'll fix these things by adding a few **extra models**. Here's where SQLModel will shine. ✨
 
-### Create Multiple Models { #create-multiple-models }
+### Create Multiple Models
 
 In **SQLModel**, any model class that has `table=True` is a **table model**.
 
@@ -737,7 +737,7 @@ And any model class that doesn't have `table=True` is a **data model**, these on
 
 With SQLModel, we can use **inheritance** to **avoid duplicating** all the fields in all the cases.
 
-#### `HeroBase` - the base class { #herobase-the-base-class }
+#### `HeroBase` - the base class
 
 Let's start with a `HeroBase` model that has all the **fields that are shared** by all the models:
 
@@ -835,7 +835,7 @@ def delete_hero(hero_id: int, session: SessionDep):
     return {"ok": True}
 '''
 
-#### `Hero` - the *table model* { #hero-the-table-model }
+#### `Hero` - the *table model*
 
 Then let's create `Hero`, the actual *table model*, with the **extra fields** that are not always in the other models:
 
@@ -940,7 +940,7 @@ def delete_hero(hero_id: int, session: SessionDep):
     return {"ok": True}
 '''
 
-#### `HeroPublic` - the public *data model* { #heropublic-the-public-data-model }
+#### `HeroPublic` - the public *data model*
 
 Next, we create a `HeroPublic` model, this is the one that will be **returned** to the clients of the API.
 
@@ -1049,7 +1049,7 @@ def delete_hero(hero_id: int, session: SessionDep):
     return {"ok": True}
 '''
 
-#### `HeroCreate` - the *data model* to create a hero { #herocreate-the-data-model-to-create-a-hero }
+#### `HeroCreate` - the *data model* to create a hero
 
 Now we create a `HeroCreate` model, this is the one that will **validate** the data from the clients.
 
@@ -1156,7 +1156,7 @@ def delete_hero(hero_id: int, session: SessionDep):
     return {"ok": True}
 '''
 
-#### `HeroUpdate` - the *data model* to update a hero { #heroupdate-the-data-model-to-update-a-hero }
+#### `HeroUpdate` - the *data model* to update a hero
 
 We didn't have a way to **update a hero** in the previous version of the app, but now with **multiple models**, we can do it. 🎉
 
@@ -1263,7 +1263,7 @@ def delete_hero(hero_id: int, session: SessionDep):
     return {"ok": True}
 '''
 
-### Create with `HeroCreate` and return a `HeroPublic` { #create-with-herocreate-and-return-a-heropublic }
+### Create with `HeroCreate` and return a `HeroPublic`
 
 Now that we have **multiple models**, we can update the parts of the app that use them.
 
@@ -1366,7 +1366,7 @@ def delete_hero(hero_id: int, session: SessionDep):
 
 **Tip:** Now we use `response_model=HeroPublic` instead of the **return type annotation** `-> HeroPublic` because the value that we are returning is actually *not* a `HeroPublic`.  If we had declared `-> HeroPublic`, your editor and linter would complain (rightfully so) that you are returning a `Hero` instead of a `HeroPublic`.  By declaring it in `response_model` we are telling **FastAPI** to do its thing, without interfering with the type annotations and the help from your editor and other tools.
 
-### Read Heroes with `HeroPublic` { #read-heroes-with-heropublic }
+### Read Heroes with `HeroPublic`
 
 We can do the same as before to **read** `Hero`s, again, we use `response_model=list[HeroPublic]` to ensure that the data is validated and serialized correctly.
 
@@ -1461,7 +1461,7 @@ def delete_hero(hero_id: int, session: SessionDep):
     return {"ok": True}
 '''
 
-### Read One Hero with `HeroPublic` { #read-one-hero-with-heropublic }
+### Read One Hero with `HeroPublic`
 
 We can **read** a single hero:
 
@@ -1556,7 +1556,7 @@ def delete_hero(hero_id: int, session: SessionDep):
     return {"ok": True}
 '''
 
-### Update a Hero with `HeroUpdate` { #update-a-hero-with-heroupdate }
+### Update a Hero with `HeroUpdate`
 
 We can **update a hero**. For this we use an HTTP `PATCH` operation.
 
@@ -1655,7 +1655,7 @@ def delete_hero(hero_id: int, session: SessionDep):
     return {"ok": True}
 '''
 
-### Delete a Hero Again { #delete-a-hero-again }
+### Delete a Hero Again
 
 **Deleting** a hero stays pretty much the same.
 
@@ -1752,7 +1752,7 @@ def delete_hero(hero_id: int, session: SessionDep):
     return {"ok": True}
 '''
 
-### Run the App Again { #run-the-app-again }
+### Run the App Again
 
 You can run the app again:
 
@@ -1764,7 +1764,7 @@ INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 
 If you go to the `/docs` API UI, you will see that it is now updated, and it won't expect to receive the `id` from the client when creating a hero, etc.
 
-## Recap { #recap }
+## Recap
 
 You can use [**SQLModel**](https://sqlmodel.tiangolo.com/) to interact with a SQL database and simplify the code with *data models*  and *table models*.
 

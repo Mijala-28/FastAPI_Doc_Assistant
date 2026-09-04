@@ -1,4 +1,4 @@
-# Extra Models { #extra-models }
+# Extra Models
 
 Continuing with the previous example, it will be common to have more than one related model.
 
@@ -10,7 +10,7 @@ This is especially the case for user models, because:
 
 **Danger:** Never store user's plaintext passwords. Always store a "secure hash" that you can then verify.  If you don't know, you will learn what a "password hash" is in the [security chapters](security/simple-oauth2.md#password-hashing).
 
-## Multiple models { #multiple-models }
+## Multiple models
 
 Here's a general idea of what the models could look like with their password fields and the places where they are used:
 
@@ -52,9 +52,9 @@ async def create_user(user_in: UserIn):
     return user_saved
 '''
 
-### About `**user_in.model_dump()` { #about-user-in-model-dump }
+### About `**user_in.model_dump()`
 
-#### Pydantic's `.model_dump()` { #pydantics-model-dump }
+#### Pydantic's `.model_dump()`
 
 `user_in` is a Pydantic model of class `UserIn`.
 
@@ -91,7 +91,7 @@ we would get a Python `dict` with:
 }
 ```
 
-#### Unpacking a `dict` { #unpacking-a-dict }
+#### Unpacking a `dict`
 
 If we take a `dict` like `user_dict` and pass it to a function (or class) with `**user_dict`, Python will "unpack" it. It will pass the keys and values of the `user_dict` directly as key-value arguments.
 
@@ -123,7 +123,7 @@ UserInDB(
 )
 ```
 
-#### A Pydantic model from the contents of another { #a-pydantic-model-from-the-contents-of-another }
+#### A Pydantic model from the contents of another
 
 As in the example above we got `user_dict` from `user_in.model_dump()`, this code:
 
@@ -142,7 +142,7 @@ UserInDB(**user_in.model_dump())
 
 So, we get a Pydantic model from the data in another Pydantic model.
 
-#### Unpacking a `dict` and extra keywords { #unpacking-a-dict-and-extra-keywords }
+#### Unpacking a `dict` and extra keywords
 
 And then adding the extra keyword argument `hashed_password=hashed_password`, like in:
 
@@ -164,7 +164,7 @@ UserInDB(
 
 **Warning:** The supporting additional functions `fake_password_hasher` and `fake_save_user` are just to demo a possible flow of the data, but they of course are not providing any real security.
 
-## Reduce duplication { #reduce-duplication }
+## Reduce duplication
 
 Reducing code duplication is one of the core ideas in **FastAPI**.
 
@@ -215,7 +215,7 @@ async def create_user(user_in: UserIn):
     return user_saved
 '''
 
-## `Union` or `anyOf` { #union-or-anyof }
+## `Union` or `anyOf`
 
 You can declare a response to be the `Union` of two or more types, that means, that the response would be any of them.
 
@@ -256,7 +256,7 @@ async def read_item(item_id: str):
     return items[item_id]
 '''
 
-### `Union` in Python 3.10 { #union-in-python-3-10 }
+### `Union` in Python 3.10
 
 In this example we pass `Union[PlaneItem, CarItem]` as the value of the argument `response_model`.
 
@@ -270,7 +270,7 @@ some_variable: PlaneItem | CarItem
 
 But if we put that in the assignment `response_model=PlaneItem | CarItem` we would get an error, because Python would try to perform an **invalid operation** between `PlaneItem` and `CarItem` instead of interpreting that as a type annotation.
 
-## List of models { #list-of-models }
+## List of models
 
 The same way, you can declare responses of lists of objects.
 
@@ -296,7 +296,7 @@ async def read_items():
     return items
 '''
 
-## Response with arbitrary `dict` { #response-with-arbitrary-dict }
+## Response with arbitrary `dict`
 
 You can also declare a response using a plain arbitrary `dict`, declaring just the type of the keys and values, without using a Pydantic model.
 
@@ -314,7 +314,7 @@ async def read_keyword_weights():
     return {"foo": 2.3, "bar": 3.4}
 '''
 
-## Recap { #recap }
+## Recap
 
 Use multiple Pydantic models and inherit freely for each case.
 

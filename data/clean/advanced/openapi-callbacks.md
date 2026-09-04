@@ -1,4 +1,4 @@
-# OpenAPI Callbacks { #openapi-callbacks }
+# OpenAPI Callbacks
 
 You could create an API with a *path operation* that could trigger a request to an *external API* created by someone else (probably the same developer that would be *using* your API).
 
@@ -6,7 +6,7 @@ The process that happens when your API app calls the *external API* is named a "
 
 In this case, you could want to document how that external API *should* look. What *path operation* it should have, what body it should expect, what response it should return, etc.
 
-## An app with callbacks { #an-app-with-callbacks }
+## An app with callbacks
 
 Let's see all this with an example.
 
@@ -23,7 +23,7 @@ Then your API will (let's imagine):
 * Send a notification back to the API user (the external developer).
     * This will be done by sending a POST request (from *your API*) to some *external API* provided by that external developer (this is the "callback").
 
-## The normal **FastAPI** app { #the-normal-fastapi-app }
+## The normal **FastAPI** app
 
 Let's first see how the normal API app would look before adding the callback.
 
@@ -83,7 +83,7 @@ def create_invoice(invoice: Invoice, callback_url: HttpUrl | None = None):
 
 The only new thing is the `callbacks=invoices_callback_router.routes` as an argument to the *path operation decorator*. We'll see what that is next.
 
-## Documenting the callback { #documenting-the-callback }
+## Documenting the callback
 
 The actual callback code will depend heavily on your own API app.
 
@@ -106,7 +106,7 @@ This example doesn't implement the callback itself (that could be just a line of
 
 **Tip:** The actual callback is just an HTTP request.  When implementing the callback yourself, you could use something like [HTTPX](https://www.python-httpx.org) or [Requests](https://requests.readthedocs.io/).
 
-## Write the callback documentation code { #write-the-callback-documentation-code }
+## Write the callback documentation code
 
 This code won't be executed in your app, we only need it to *document* how that *external API* should look.
 
@@ -116,7 +116,7 @@ So we are going to use that same knowledge to document how the *external API* sh
 
 **Tip:** When writing the code to document a callback, it might be useful to imagine that you are that *external developer*. And that you are currently implementing the *external API*, not *your API*.  Temporarily adopting this point of view (of the *external developer*) can help you feel like it's more obvious where to put the parameters, the Pydantic model for the body, for the response, etc. for that *external API*.
 
-### Create a callback `APIRouter` { #create-a-callback-apirouter }
+### Create a callback `APIRouter`
 
 First create a new `APIRouter` that will contain one or more callbacks.
 
@@ -168,7 +168,7 @@ def create_invoice(invoice: Invoice, callback_url: HttpUrl | None = None):
     return {"msg": "Invoice received"}
 '''
 
-### Create the callback *path operation* { #create-the-callback-path-operation }
+### Create the callback *path operation*
 
 To create the callback *path operation* use the same `APIRouter` you created above.
 
@@ -230,7 +230,7 @@ There are 2 main differences from a normal *path operation*:
 * It doesn't need to have any actual code, because your app will never call this code. It's only used to document the *external API*. So, the function could just have `pass`.
 * The *path* can contain an [OpenAPI 3 expression](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#key-expression) (see more below) where it can use variables with parameters and parts of the original request sent to *your API*.
 
-### The callback path expression { #the-callback-path-expression }
+### The callback path expression
 
 The callback *path* can have an [OpenAPI 3 expression](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#key-expression) that can contain parts of the original request sent to *your API*.
 
@@ -281,7 +281,7 @@ and it would expect a response from that *external API* with a JSON body like:
 
 **Tip:** Notice how the callback URL used contains the URL received as a query parameter in `callback_url` (`https://www.external.org/events`) and also the invoice `id` from inside of the JSON body (`2expen51ve`).
 
-### Add the callback router { #add-the-callback-router }
+### Add the callback router
 
 At this point you have the *callback path operation(s)* needed (the one(s) that the *external developer*  should implement in the *external API*) in the callback router you created above.
 
@@ -337,7 +337,7 @@ def create_invoice(invoice: Invoice, callback_url: HttpUrl | None = None):
 
 **Tip:** Notice that you are not passing the router itself (`invoices_callback_router`) to `callbacks=`, but its `.routes`, as in `invoices_callback_router.routes`. FastAPI will use those routes to generate the callback OpenAPI documentation.
 
-### Check the docs { #check-the-docs }
+### Check the docs
 
 Now you can start your app and go to [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
 

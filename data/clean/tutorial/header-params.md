@@ -1,8 +1,8 @@
-# Header Parameters { #header-parameters }
+# Header Parameters
 
 You can define Header parameters the same way you define `Query`, `Path` and `Cookie` parameters.
 
-## Import `Header` { #import-header }
+## Import `Header`
 
 First import `Header`:
 
@@ -18,7 +18,7 @@ async def read_items(user_agent: Annotated[str | None, Header()] = None):
     return {"User-Agent": user_agent}
 '''
 
-## Declare `Header` parameters { #declare-header-parameters }
+## Declare `Header` parameters
 
 Then declare the header parameters using the same structure as with `Path`, `Query` and `Cookie`.
 
@@ -40,7 +40,7 @@ async def read_items(user_agent: Annotated[str | None, Header()] = None):
 
 **Note:** To declare headers, you need to use `Header`, because otherwise the parameters would be interpreted as query parameters.
 
-## Automatic conversion { #automatic-conversion }
+## Automatic conversion
 
 `Header` has a little extra functionality on top of what `Path`, `Query` and `Cookie` provide.
 
@@ -72,7 +72,7 @@ async def read_items(
 
 **Warning:** Before setting `convert_underscores` to `False`, bear in mind that some HTTP proxies and servers disallow the usage of headers with underscores.
 
-## Duplicate headers { #duplicate-headers }
+## Duplicate headers
 
 It is possible to receive duplicate headers. That means, the same header with multiple values.
 
@@ -112,7 +112,7 @@ The response would be like:
 }
 ```
 
-## Recap { #recap }
+## Recap
 
 Declare headers with `Header`, using the same common pattern as `Query`, `Path` and `Cookie`.
 

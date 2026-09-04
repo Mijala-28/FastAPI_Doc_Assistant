@@ -1,4 +1,4 @@
-# Path Parameters { #path-parameters }
+# Path Parameters
 
 You can declare path "parameters" or "variables" with the same syntax used by Python format strings:
 
@@ -20,7 +20,7 @@ So, if you run this example and go to [http://127.0.0.1:8000/items/foo](http://1
 {"item_id":"foo"}
 ```
 
-## Path parameters with types { #path-parameters-with-types }
+## Path parameters with types
 
 You can declare the type of a path parameter in the function, using standard Python type annotations:
 
@@ -38,7 +38,7 @@ In this case, `item_id` is declared to be an `int`.
 
 **Tip:** This will give you editor support inside of your function, with error checks, completion, etc.
 
-## Data conversion { #data-conversion }
+## Data conversion
 
 If you run this example and open your browser at [http://127.0.0.1:8000/items/3](http://127.0.0.1:8000/items/3), you will see a response of:
 
@@ -48,7 +48,7 @@ If you run this example and open your browser at [http://127.0.0.1:8000/items/3]
 
 **Tip:** Notice that the value your function received (and returned) is `3`, as a Python `int`, not a string `"3"`.  So, with that type declaration, **FastAPI** gives you automatic request "parsing".
 
-## Data validation { #data-validation }
+## Data validation
 
 But if you go to the browser at [http://127.0.0.1:8000/items/foo](http://127.0.0.1:8000/items/foo), you will see a nice HTTP error of:
 
@@ -74,13 +74,13 @@ The same error would appear if you provided a `float` instead of an `int`, as in
 
 **Tip:** So, with the same Python type declaration, **FastAPI** gives you data validation.  Notice that the error also clearly states exactly the point where the validation didn't pass.  This is incredibly helpful while developing and debugging code that interacts with your API.
 
-## Documentation { #documentation }
+## Documentation
 
 And when you open your browser at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs), you will see an automatic, interactive, API documentation like:
 
 **Tip:** Again, just with that same Python type declaration, **FastAPI** gives you automatic, interactive documentation (integrating Swagger UI).  Notice that the path parameter is declared to be an integer.
 
-## Standards-based benefits, alternative documentation { #standards-based-benefits-alternative-documentation }
+## Standards-based benefits, alternative documentation
 
 And because the generated schema is from the [OpenAPI](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md) standard, there are many compatible tools.
 
@@ -88,7 +88,7 @@ Because of this, **FastAPI** itself provides an alternative API documentation (u
 
 The same way, there are many compatible tools. Including code generation tools for many languages.
 
-## Pydantic { #pydantic }
+## Pydantic
 
 All the data validation is performed under the hood by [Pydantic](https://pydantic.dev/docs/), so you get all the benefits from it. And you know you are in good hands.
 
@@ -96,7 +96,7 @@ You can use the same type declarations with `str`, `float`, `bool` and many othe
 
 Several of these are explored in the next chapters of the tutorial.
 
-## Order matters { #order-matters }
+## Order matters
 
 When creating *path operations*, you can find situations where you have a fixed path.
 
@@ -140,11 +140,11 @@ async def read_users2():
 
 The first one will always be used since the path matches first.
 
-## Predefined values { #predefined-values }
+## Predefined values
 
 If you have a *path operation* that receives a *path parameter*, but you want the possible valid *path parameter* values to be predefined, you can use a standard Python `Enum`.
 
-### Create an `Enum` class { #create-an-enum-class }
+### Create an `Enum` class
 
 Import `Enum` and create a sub-class that inherits from `str` and from `Enum`.
 
@@ -177,7 +177,7 @@ async def get_model(model_name: ModelName):
 
 **Tip:** If you are wondering, "AlexNet", "ResNet", and "LeNet" are just names of Machine Learning models.
 
-### Declare a *path parameter* { #declare-a-path-parameter }
+### Declare a *path parameter*
 
 Then create a *path parameter* with a type annotation using the enum class you created (`ModelName`):
 
@@ -204,15 +204,15 @@ async def get_model(model_name: ModelName):
     return {"model_name": model_name, "message": "Have some residuals"}
 '''
 
-### Check the docs { #check-the-docs }
+### Check the docs
 
 Because the available values for the *path parameter* are predefined, the interactive docs can show them nicely:
 
-### Working with Python *enumerations* { #working-with-python-enumerations }
+### Working with Python *enumerations*
 
 The value of the *path parameter* will be an *enumeration member*.
 
-#### Compare *enumeration members* { #compare-enumeration-members }
+#### Compare *enumeration members*
 
 You can compare it with the *enumeration member* in your created enum `ModelName`:
 
@@ -239,7 +239,7 @@ async def get_model(model_name: ModelName):
     return {"model_name": model_name, "message": "Have some residuals"}
 '''
 
-#### Get the *enumeration value* { #get-the-enumeration-value }
+#### Get the *enumeration value*
 
 You can get the actual value (a `str` in this case) using `model_name.value`, or in general, `your_enum_member.value`:
 
@@ -268,7 +268,7 @@ async def get_model(model_name: ModelName):
 
 **Tip:** You could also access the value `"lenet"` with `ModelName.lenet.value`.
 
-#### Return *enumeration members* { #return-enumeration-members }
+#### Return *enumeration members*
 
 You can return *enum members* from your *path operation*, even nested in a JSON body (e.g. a `dict`).
 
@@ -306,7 +306,7 @@ In your client you will get a JSON response like:
 }
 ```
 
-## Path parameters containing paths { #path-parameters-containing-paths }
+## Path parameters containing paths
 
 Let's say you have a *path operation* with a path `/files/{file_path}`.
 
@@ -314,7 +314,7 @@ But you need `file_path` itself to contain a *path*, like `home/johndoe/myfile.t
 
 So, the URL for that file would be something like: `/files/home/johndoe/myfile.txt`.
 
-### OpenAPI support { #openapi-support }
+### OpenAPI support
 
 OpenAPI doesn't support a way to declare a *path parameter* to contain a *path* inside, as that could lead to scenarios that are difficult to test and define.
 
@@ -322,7 +322,7 @@ Nevertheless, you can still do it in **FastAPI**, using one of the internal tool
 
 And the docs would still work, although not adding any documentation telling that the parameter should contain a path.
 
-### Path convertor { #path-convertor }
+### Path convertor
 
 Using an option directly from Starlette you can declare a *path parameter* containing a *path* using a URL like:
 
@@ -346,7 +346,7 @@ async def read_file(file_path: str):
 
 **Tip:** You might need the parameter to contain `/home/johndoe/myfile.txt`, with a leading slash (`/`).  In that case, the URL would be: `/files//home/johndoe/myfile.txt`, with a double slash (`//`) between `files` and `home`.
 
-## Recap { #recap }
+## Recap
 
 With **FastAPI**, by using short, intuitive and standard Python type declarations, you get:
 

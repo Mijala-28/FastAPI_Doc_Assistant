@@ -1,10 +1,10 @@
-# Request Files { #request-files }
+# Request Files
 
 You can define files to be uploaded by the client using `File`.
 
 **Note:** To receive uploaded files, first install [`python-multipart`](https://github.com/Kludex/python-multipart).  Add it to your project:  ```console $ uv add python-multipart ```  This is because uploaded files are sent as "form data".
 
-## Import `File` { #import-file }
+## Import `File`
 
 Import `File` and `UploadFile` from `fastapi`:
 
@@ -24,7 +24,7 @@ async def create_upload_file(file: UploadFile):
     return {"filename": file.filename}
 '''
 
-## Define `File` Parameters { #define-file-parameters }
+## Define `File` Parameters
 
 Create file parameters the same way you would for `Body` or `Form`:
 
@@ -56,7 +56,7 @@ Keep in mind that this means that the whole contents will be stored in memory. T
 
 But there are several cases in which you might benefit from using `UploadFile`.
 
-## File Parameters with `UploadFile` { #file-parameters-with-uploadfile }
+## File Parameters with `UploadFile`
 
 Define a file parameter with a type of `UploadFile`:
 
@@ -86,7 +86,7 @@ Using `UploadFile` has several advantages over `bytes`:
 * It has a [file-like](https://docs.python.org/3/glossary.html#term-file-like-object) `async` interface.
 * It exposes an actual Python [`SpooledTemporaryFile`](https://docs.python.org/3/library/tempfile.html#tempfile.SpooledTemporaryFile) object that you can pass directly to other libraries that expect a file-like object.
 
-### `UploadFile` { #uploadfile }
+### `UploadFile`
 
 `UploadFile` has the following attributes:
 
@@ -121,7 +121,7 @@ contents = myfile.file.read()
 
 **Note:** **FastAPI**'s `UploadFile` inherits directly from **Starlette**'s `UploadFile`, but adds some necessary parts to make it compatible with **Pydantic** and the other parts of FastAPI.
 
-## What is "Form Data" { #what-is-form-data }
+## What is "Form Data"
 
 The way HTML forms (``) send the data to the server normally uses a "special" encoding for that data, it's different from JSON.
 
@@ -131,7 +131,7 @@ The way HTML forms (``) send the data to the server normally uses a "special" en
 
 **Warning:** You can declare multiple `File` and `Form` parameters in a *path operation*, but you can't also declare `Body` fields that you expect to receive as JSON, as the request will have the body encoded using `multipart/form-data` instead of `application/json`.  This is not a limitation of **FastAPI**, it's part of the HTTP protocol.
 
-## Optional File Upload { #optional-file-upload }
+## Optional File Upload
 
 You can make a file optional by using standard type annotations and setting a default value of `None`:
 
@@ -157,7 +157,7 @@ async def create_upload_file(file: UploadFile | None = None):
         return {"filename": file.filename}
 '''
 
-## `UploadFile` with Additional Metadata { #uploadfile-with-additional-metadata }
+## `UploadFile` with Additional Metadata
 
 You can also use `File()` with `UploadFile`, for example, to set additional metadata:
 
@@ -179,7 +179,7 @@ async def create_upload_file(
     return {"filename": file.filename}
 '''
 
-## Multiple File Uploads { #multiple-file-uploads }
+## Multiple File Uploads
 
 It's possible to upload several files at the same time.
 
@@ -215,7 +215,7 @@ You will receive, as declared, a `list` of `bytes` or `UploadFile`s.
 
 **Note:** You could also use `from starlette.responses import HTMLResponse`.  **FastAPI** provides the same `starlette.responses` as `fastapi.responses` just as a convenience for you, the developer. But most of the available responses come directly from Starlette.
 
-### Multiple File Uploads with Additional Metadata { #multiple-file-uploads-with-additional-metadata }
+### Multiple File Uploads with Additional Metadata
 
 And the same way as before, you can use `File()` to set additional parameters, even for `UploadFile`:
 
@@ -249,6 +249,6 @@ async def main():
     return HTMLResponse(content=content)
 '''
 
-## Recap { #recap }
+## Recap
 
 Use `File`, `bytes`, and `UploadFile` to declare files to be uploaded in the request, sent as form data.

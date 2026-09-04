@@ -1,4 +1,4 @@
-# Custom Docs UI Static Assets (Self-Hosting) { #custom-docs-ui-static-assets-self-hosting }
+# Custom Docs UI Static Assets (Self-Hosting)
 
 The API docs use **Swagger UI** and **ReDoc**, and each of those need some JavaScript and CSS files.
 
@@ -6,13 +6,13 @@ By default, those files are served from a CDN.
 
 But it's possible to customize it, you can set a specific CDN, or serve the files yourself.
 
-## Custom CDN for JavaScript and CSS { #custom-cdn-for-javascript-and-css }
+## Custom CDN for JavaScript and CSS
 
 Let's say that you want to use a different CDN, for example you want to use `https://unpkg.com/`.
 
 This could be useful if for example you live in a country that restricts some URLs.
 
-### Disable the automatic docs { #disable-the-automatic-docs }
+### Disable the automatic docs
 
 The first step is to disable the automatic docs, as by default, those use the default CDN.
 
@@ -55,7 +55,7 @@ async def read_user(username: str):
     return {"message": f"Hello {username}"}
 '''
 
-### Include the custom docs { #include-the-custom-docs }
+### Include the custom docs
 
 Now you can create the *path operations* for the custom docs.
 
@@ -108,7 +108,7 @@ async def read_user(username: str):
 
 **Tip:** The *path operation* for `swagger_ui_redirect` is a helper for when you use OAuth2.  If you integrate your API with an OAuth2 provider, you will be able to authenticate and come back to the API docs with the acquired credentials. And interact with it using the real OAuth2 authentication.  Swagger UI will handle it behind the scenes for you, but it needs this "redirect" helper.
 
-### Create a *path operation* to test it { #create-a-path-operation-to-test-it }
+### Create a *path operation* to test it
 
 Now, to be able to test that everything works, create a *path operation*:
 
@@ -149,17 +149,17 @@ async def read_user(username: str):
     return {"message": f"Hello {username}"}
 '''
 
-### Test it { #test-it }
+### Test it
 
 Now, you should be able to go to your docs at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs), and reload the page, it will load those assets from the new CDN.
 
-## Self-hosting JavaScript and CSS for docs { #self-hosting-javascript-and-css-for-docs }
+## Self-hosting JavaScript and CSS for docs
 
 Self-hosting the JavaScript and CSS could be useful if, for example, you need your app to keep working even while offline, without open Internet access, or in a local network.
 
 Here you'll see how to serve those files yourself, in the same FastAPI app, and configure the docs to use them.
 
-### Project file structure { #project-file-structure }
+### Project file structure
 
 Let's say your project file structure looks like this:
 
@@ -182,7 +182,7 @@ Your new file structure could look like this:
 └── static/
 ```
 
-### Download the files { #download-the-files }
+### Download the files
 
 Download the static files needed for the docs and put them on that `static/` directory.
 
@@ -210,7 +210,7 @@ After that, your file structure could look like:
     └── swagger-ui.css
 ```
 
-### Serve the static files { #serve-the-static-files }
+### Serve the static files
 
 * Import `StaticFiles`.
 * "Mount" a `StaticFiles()` instance in a specific path.
@@ -255,7 +255,7 @@ async def read_user(username: str):
     return {"message": f"Hello {username}"}
 '''
 
-### Test the static files { #test-the-static-files }
+### Test the static files
 
 Start your application and go to [http://127.0.0.1:8000/static/redoc.standalone.js](http://127.0.0.1:8000/static/redoc.standalone.js).
 
@@ -273,7 +273,7 @@ That confirms that you are being able to serve static files from your app, and t
 
 Now we can configure the app to use those static files for the docs.
 
-### Disable the automatic docs for static files { #disable-the-automatic-docs-for-static-files }
+### Disable the automatic docs for static files
 
 The same as when using a custom CDN, the first step is to disable the automatic docs, as those use the CDN by default.
 
@@ -319,7 +319,7 @@ async def read_user(username: str):
     return {"message": f"Hello {username}"}
 '''
 
-### Include the custom docs for static files { #include-the-custom-docs-for-static-files }
+### Include the custom docs for static files
 
 And the same way as with a custom CDN, now you can create the *path operations* for the custom docs.
 
@@ -375,7 +375,7 @@ async def read_user(username: str):
 
 **Tip:** The *path operation* for `swagger_ui_redirect` is a helper for when you use OAuth2.  If you integrate your API with an OAuth2 provider, you will be able to authenticate and come back to the API docs with the acquired credentials. And interact with it using the real OAuth2 authentication.  Swagger UI will handle it behind the scenes for you, but it needs this "redirect" helper.
 
-### Create a *path operation* to test static files { #create-a-path-operation-to-test-static-files }
+### Create a *path operation* to test static files
 
 Now, to be able to test that everything works, create a *path operation*:
 
@@ -419,7 +419,7 @@ async def read_user(username: str):
     return {"message": f"Hello {username}"}
 '''
 
-### Test Static Files UI { #test-static-files-ui }
+### Test Static Files UI
 
 Now, you should be able to disconnect your WiFi, go to your docs at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs), and reload the page.
 

@@ -1,4 +1,4 @@
-# Request Body { #request-body }
+# Request Body
 
 When you need to send data from a client (let's say, a browser) to your API, you send it as a **request body**.
 
@@ -10,7 +10,7 @@ To declare a **request** body, you use [Pydantic](https://pydantic.dev/docs/) mo
 
 **Note:** To send data, you should use one of: `POST` (the most common), `PUT`, `DELETE` or `PATCH`.  Sending a body with a `GET` request has an undefined behavior in the specifications, nevertheless, it is supported by FastAPI, only for very complex/extreme use cases.  As it is discouraged, the interactive docs with Swagger UI won't show the documentation for the body when using `GET`, and proxies in the middle might not support it.
 
-## Import Pydantic's `BaseModel` { #import-pydantics-basemodel }
+## Import Pydantic's `BaseModel`
 
 First, you need to import `BaseModel` from `pydantic`:
 
@@ -31,7 +31,7 @@ async def create_item(item: Item):
     return item
 '''
 
-## Create your data model { #create-your-data-model }
+## Create your data model
 
 Then you declare your data model as a class that inherits from `BaseModel`.
 
@@ -76,7 +76,7 @@ For example, this model above declares a JSON "`object`" (or Python `dict`) like
 }
 ```
 
-## Declare it as a parameter { #declare-it-as-a-parameter }
+## Declare it as a parameter
 
 To add it to your *path operation*, declare it the same way you declared path and query parameters:
 
@@ -99,7 +99,7 @@ async def create_item(item: Item):
 
 ...and declare its type as the model you created, `Item`.
 
-## Results { #results }
+## Results
 
 With just that Python type declaration, **FastAPI** will:
 
@@ -112,13 +112,13 @@ With just that Python type declaration, **FastAPI** will:
 * Generate [JSON Schema](https://json-schema.org) definitions for your model, you can also use them anywhere else you like if it makes sense for your project.
 * Those schemas will be part of the generated OpenAPI schema, and used by the automatic documentation UIs.
 
-## Automatic docs { #automatic-docs }
+## Automatic docs
 
 The JSON Schemas of your models will be part of your OpenAPI generated schema, and will be shown in the interactive API docs:
 
 And will also be used in the API docs inside each *path operation* that needs them:
 
-## Editor support { #editor-support }
+## Editor support
 
 In your editor, inside your function you will get type hints and completion everywhere (this wouldn't happen if you received a `dict` instead of a Pydantic model):
 
@@ -136,7 +136,7 @@ But you would get the same editor support with [PyCharm](https://www.jetbrains.c
 
 **Tip:** If you use [PyCharm](https://www.jetbrains.com/pycharm/) as your editor, you can use the [Pydantic PyCharm Plugin](https://github.com/koxudaxi/pydantic-pycharm-plugin/).  It improves editor support for Pydantic models, with:  * auto-completion * type checks * refactoring * searching * inspections
 
-## Use the model { #use-the-model }
+## Use the model
 
 Inside of the function, you can access all the attributes of the model object directly:
 
@@ -161,7 +161,7 @@ async def create_item(item: Item):
     return item_dict
 '''
 
-## Request body + path parameters { #request-body-path-parameters }
+## Request body + path parameters
 
 You can declare path parameters and request body at the same time.
 
@@ -184,7 +184,7 @@ async def update_item(item_id: int, item: Item):
     return {"item_id": item_id, **item.model_dump()}
 '''
 
-## Request body + path + query parameters { #request-body-path-query-parameters }
+## Request body + path + query parameters
 
 You can also declare **body**, **path** and **query** parameters, all at the same time.
 
@@ -218,6 +218,6 @@ The function parameters will be recognized as follows:
 
 **Note:** FastAPI will know that the value of `q` is not required because of the default value `= None`.  The `str | None` is not used by FastAPI to determine that the value is not required, it will know it's not required because it has a default value of `= None`.  But adding the type annotations will allow your editor to give you better support and detect errors.
 
-## Without Pydantic { #without-pydantic }
+## Without Pydantic
 
 If you don't want to use Pydantic models, you can also use **Body** parameters. See the docs for [Body - Multiple Parameters: Singular values in body](body-multiple-params.md#singular-values-in-body).

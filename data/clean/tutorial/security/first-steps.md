@@ -1,4 +1,4 @@
-# Security - First Steps { #security-first-steps }
+# Security - First Steps
 
 Let's imagine that you have your **backend** API in some domain.
 
@@ -12,11 +12,11 @@ But let's save you the time of reading the full long specification just to find 
 
 Let's use the tools provided by **FastAPI** to handle security.
 
-## How it looks { #how-it-looks }
+## How it looks
 
 Let's first just use the code and see how it works, and then we'll come back to understand what's happening.
 
-## Create `main.py` { #create-main-py }
+## Create `main.py`
 
 Copy the example in a file `main.py`:
 
@@ -35,7 +35,7 @@ async def read_items(token: Annotated[str, Depends(oauth2_scheme)]):
     return {"token": token}
 '''
 
-## Run it { #run-it }
+## Run it
 
 **Note:** The [`python-multipart`](https://github.com/Kludex/python-multipart) package is automatically installed with **FastAPI** when you run the `uv add "fastapi[standard]"` command.  However, if you use the `uv add fastapi` command, the `python-multipart` package is not included by default.  To install it manually, add it to your project with:  ```console $ uv add python-multipart ```  This is because **OAuth2** uses "form data" for sending the `username` and `password`.
 
@@ -47,7 +47,7 @@ $ uv run fastapi dev
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 ```
 
-## Check it { #check-it }
+## Check it
 
 Go to the interactive docs at: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
 
@@ -67,7 +67,7 @@ It can be used by third party applications and systems.
 
 And it can also be used by yourself, to debug, check and test the same application.
 
-## The `password` flow { #the-password-flow }
+## The `password` flow
 
 Now let's go back a bit and understand what all that is.
 
@@ -93,7 +93,7 @@ So, let's review it from that simplified point of view:
     * So, to authenticate with our API, it sends a header `Authorization` with a value of `Bearer ` plus the token.
     * If the token contains `foobar`, the content of the `Authorization` header would be: `Bearer foobar`.
 
-## **FastAPI**'s `OAuth2PasswordBearer` { #fastapis-oauth2passwordbearer }
+## **FastAPI**'s `OAuth2PasswordBearer`
 
 **FastAPI** provides several tools, at different levels of abstraction, to implement these security features.
 
@@ -136,7 +136,7 @@ oauth2_scheme(some, parameters)
 
 So, it can be used with `Depends`.
 
-### Use it { #use-it }
+### Use it
 
 Now you can pass that `oauth2_scheme` in a dependency with `Depends`.
 
@@ -161,7 +161,7 @@ This dependency will provide a `str` that is assigned to the parameter `token` o
 
 **Note:** **FastAPI** will know that it can use the class `OAuth2PasswordBearer` (declared in a dependency) to define the security scheme in OpenAPI because it inherits from `fastapi.security.oauth2.OAuth2`, which in turn inherits from `fastapi.security.base.SecurityBase`.  All the security utilities that integrate with OpenAPI (and the automatic API docs) inherit from `SecurityBase`, that's how **FastAPI** can know how to integrate them in OpenAPI.
 
-## What it does { #what-it-does }
+## What it does
 
 It will go and look in the request for that `Authorization` header, check if the value is `Bearer ` plus some token, and will return the token as a `str`.
 
@@ -173,6 +173,6 @@ You can try it already in the interactive docs:
 
 We are not verifying the validity of the token yet, but that's a start already.
 
-## Recap { #recap }
+## Recap
 
 So, in just 3 or 4 extra lines, you already have some primitive form of security.

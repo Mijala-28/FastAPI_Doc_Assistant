@@ -1,10 +1,10 @@
-# Behind a Proxy { #behind-a-proxy }
+# Behind a Proxy
 
 In many situations, you would use a **proxy** like Traefik or Nginx in front of your FastAPI app.
 
 These proxies could handle HTTPS certificates and other things.
 
-## Proxy Forwarded Headers { #proxy-forwarded-headers }
+## Proxy Forwarded Headers
 
 A **proxy** in front of your application would normally set some headers on the fly before sending the requests to your **server** to let the server know that the request was **forwarded** by the proxy, letting it know the original (public) URL, including the domain, that it is using HTTPS, etc.
 
@@ -14,7 +14,7 @@ But for security, as the server doesn't know it is behind a trusted proxy, it wo
 
 **Note:** The proxy headers are:  * [X-Forwarded-For](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Forwarded-For) * [X-Forwarded-Proto](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Forwarded-Proto) * [X-Forwarded-Host](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Forwarded-Host)
 
-### Enable Proxy Forwarded Headers { #enable-proxy-forwarded-headers }
+### Enable Proxy Forwarded Headers
 
 You can start FastAPI CLI with the *CLI Option* `--forwarded-allow-ips` and pass the IP addresses that should be trusted to read those forwarded headers.
 
@@ -28,7 +28,7 @@ $ uv run fastapi run --forwarded-allow-ips="*"
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 ```
 
-### Redirects with HTTPS { #redirects-with-https }
+### Redirects with HTTPS
 
 For example, let's say you define a *path operation* `/items/`:
 
@@ -56,7 +56,7 @@ https://mysuperapp.com/items/
 
 **Tip:** If you want to learn more about HTTPS, check the guide [About HTTPS](../deployment/https.md).
 
-### How Proxy Forwarded Headers Work { #how-proxy-forwarded-headers-work }
+### How Proxy Forwarded Headers Work
 
 Here's a visual representation of how the **proxy** adds forwarded headers between the client and the **application server**:
 
@@ -89,7 +89,7 @@ These headers preserve information about the original request that would otherwi
 
 When **FastAPI CLI** is configured with `--forwarded-allow-ips`, it trusts these headers and uses them, for example to generate the correct URLs in redirects.
 
-## Proxy with a stripped path prefix { #proxy-with-a-stripped-path-prefix }
+## Proxy with a stripped path prefix
 
 You could have a proxy that adds a path prefix to your application.
 
@@ -159,7 +159,7 @@ The docs UI would also need the OpenAPI schema to declare that this API `server`
 
 In this example, the "Proxy" could be something like **Traefik**. And the server would be something like FastAPI CLI with **Uvicorn**, running your FastAPI application.
 
-### Providing the `root_path` { #providing-the-root-path }
+### Providing the `root_path`
 
 To achieve this, you can use the command line option `--root-path` like:
 
@@ -173,7 +173,7 @@ If you use Hypercorn, it also has the option `--root-path`.
 
 **Note:** The ASGI specification defines a `root_path` for this use case.  And the `--root-path` command line option provides that `root_path`.
 
-### Checking the current `root_path` { #checking-the-current-root-path }
+### Checking the current `root_path`
 
 You can get the current `root_path` used by your application for each request, it is part of the `scope` dictionary (that's part of the ASGI spec).
 
@@ -206,7 +206,7 @@ The response would be something like:
 }
 ```
 
-### Setting the `root_path` in the FastAPI app { #setting-the-root-path-in-the-fastapi-app }
+### Setting the `root_path` in the FastAPI app
 
 Alternatively, if you don't have a way to provide a command line option like `--root-path` or equivalent, you can set the `root_path` parameter when creating your FastAPI app:
 
@@ -222,7 +222,7 @@ def read_main(request: Request):
 
 Passing the `root_path` to `FastAPI` would be the equivalent of passing the `--root-path` command line option to Uvicorn or Hypercorn.
 
-### About `root_path` { #about-root-path }
+### About `root_path`
 
 Keep in mind that the server (Uvicorn) won't use that `root_path` for anything else than passing it to the app.
 
@@ -239,7 +239,7 @@ So, it won't expect to be accessed at `http://127.0.0.1:8000/api/v1/app`.
 
 Uvicorn will expect the proxy to access Uvicorn at `http://127.0.0.1:8000/app`, and then it would be the proxy's responsibility to add the extra `/api/v1` prefix on top.
 
-## About proxies with a stripped path prefix { #about-proxies-with-a-stripped-path-prefix }
+## About proxies with a stripped path prefix
 
 Keep in mind that a proxy with stripped path prefix is only one of the ways to configure it.
 
@@ -247,7 +247,7 @@ Probably in many cases the default will be that the proxy doesn't have a strippe
 
 In a case like that (without a stripped path prefix), the proxy would listen on something like `https://myawesomeapp.com`, and then if the browser goes to `https://myawesomeapp.com/api/v1/app` and your server (e.g. Uvicorn) listens on `http://127.0.0.1:8000` the proxy (without a stripped path prefix) would access Uvicorn at the same path: `http://127.0.0.1:8000/api/v1/app`.
 
-## Testing locally with Traefik { #testing-locally-with-traefik }
+## Testing locally with Traefik
 
 You can easily run the experiment locally with a stripped path prefix using [Traefik](https://docs.traefik.io/).
 
@@ -314,7 +314,7 @@ $ uv run fastapi run main.py --forwarded-allow-ips="*" --root-path /api/v1
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 ```
 
-### Check the responses { #check-the-responses }
+### Check the responses
 
 Now, if you go to the URL with the port for Uvicorn: [http://127.0.0.1:8000/app](http://127.0.0.1:8000/app), you will see the normal response:
 
@@ -346,7 +346,7 @@ And the version without the path prefix (`http://127.0.0.1:8000/app`), provided 
 
 That demonstrates how the Proxy (Traefik) uses the path prefix and how the server (Uvicorn) uses the `root_path` from the option `--root-path`.
 
-### Check the docs UI { #check-the-docs-ui }
+### Check the docs UI
 
 But here's the fun part. ✨
 
@@ -362,7 +362,7 @@ Right as we wanted it. ✔️
 
 This is because FastAPI uses this `root_path` to create the default `server` in OpenAPI with the URL provided by `root_path`.
 
-## Additional servers { #additional-servers }
+## Additional servers
 
 **Warning:** This is a more advanced use case. Feel free to skip it.
 
@@ -423,7 +423,7 @@ In the docs UI at [http://127.0.0.1:9999/api/v1/docs](http://127.0.0.1:9999/api/
 
 **Note:** The `servers` property in the OpenAPI specification is optional.  If you don't specify the `servers` parameter and `root_path` is equal to `/`, the `servers` property in the generated OpenAPI schema will be omitted entirely by default, which is the equivalent of a single server with a `url` value of `/`.
 
-### Disable automatic server from `root_path` { #disable-automatic-server-from-root-path }
+### Disable automatic server from `root_path`
 
 If you don't want **FastAPI** to include an automatic server using the `root_path`, you can use the parameter `root_path_in_servers=False`:
 
@@ -446,7 +446,7 @@ def read_main(request: Request):
 
 and then it won't include it in the OpenAPI schema.
 
-## Mounting a sub-application { #mounting-a-sub-application }
+## Mounting a sub-application
 
 If you need to mount a sub-application (as described in [Sub Applications - Mounts](sub-applications.md)) while also using a proxy with `root_path`, you can do it normally, as you would expect.
 

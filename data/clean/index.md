@@ -3,7 +3,7 @@ include_yaml:
   sponsors: data/sponsors.yml
 ---
 
-# FastAPI { #fastapi }
+# FastAPI
 
 .md-content .md-typeset h1 { display: none; }
 
@@ -42,21 +42,21 @@ The key features are:
 
 * estimation based on tests conducted by an internal development team, building production applications.
 
-## Sponsors { #sponsors }
+## Sponsors
 
-### Keystone Sponsor { #keystone-sponsor }
+### Keystone Sponsor
 
 {% for sponsor in sponsors.keystone -%}
 
 {% endfor -%}
 
-### Gold Sponsors { #gold-sponsors }
+### Gold Sponsors
 
 {% for sponsor in sponsors.gold -%}
 
 {% endfor -%}
 
-### Silver Sponsors { #silver-sponsors }
+### Silver Sponsors
 
 {% for sponsor in sponsors.silver -%}
 
@@ -64,7 +64,7 @@ The key features are:
 
 [Other sponsors](https://fastapi.tiangolo.com/fastapi-people/#sponsors)
 
-## Opinions { #opinions }
+## Opinions
 
   
     
@@ -122,24 +122,24 @@ Deon Pillsbury - Cisco (ref)
 
 ---
 
-## FastAPI mini documentary { #fastapi-mini-documentary }
+## FastAPI mini documentary
 
 There's a [FastAPI mini documentary](https://www.youtube.com/watch?v=mpR8ngthqiE) released at the end of 2025, you can watch it online:
 
-## **Typer**, the FastAPI of CLIs { #typer-the-fastapi-of-clis }
+## **Typer**, the FastAPI of CLIs
 
 If you are building a CLI app to be used in the terminal instead of a web API, check out [**Typer**](https://typer.tiangolo.com/).
 
 **Typer** is FastAPI's little sibling. And it's intended to be the **FastAPI of CLIs**. ⌨️ 🚀
 
-## Requirements { #requirements }
+## Requirements
 
 FastAPI stands on the shoulders of giants:
 
 * [Starlette](https://starlette.dev/) for the web parts.
 * [Pydantic](https://pydantic.dev/docs/) for the data parts.
 
-## Installation { #installation }
+## Installation
 
 First, [install `uv`](https://docs.astral.sh/uv/getting-started/installation/), and then add FastAPI to your project:
 
@@ -153,9 +153,9 @@ $ uv add "fastapi[standard]"
 
 If you prefer to use `pip`, install `fastapi[standard]` inside a virtual environment. See the [installation guide](tutorial/#install-fastapi) for the alternative steps.
 
-## Example { #example }
+## Example
 
-### Create it { #create-it }
+### Create it
 
 Create a file `main.py` with:
 
@@ -195,7 +195,7 @@ async def read_item(item_id: int, q: str | None = None):
 
 If you don't know, check the _"In a hurry?"_ section about [`async` and `await` in the docs](https://fastapi.tiangolo.com/async/#in-a-hurry).
 
-### Run it { #run-it }
+### Run it
 
 Run the server with:
 
@@ -230,7 +230,7 @@ By default, `fastapi dev` will start with auto-reload enabled for local developm
 
 You can read more about it in the [FastAPI CLI docs](https://fastapi.tiangolo.com/fastapi-cli/).
 
-### Check it { #check-it }
+### Check it
 
 Open your browser at [http://127.0.0.1:8000/items/5?q=somequery](http://127.0.0.1:8000/items/5?q=somequery).
 
@@ -247,7 +247,7 @@ You already created an API that:
 * The _path_ `/items/{item_id}` has a _path parameter_ `item_id` that should be an `int`.
 * The _path_ `/items/{item_id}` has an optional `str` _query parameter_ `q`.
 
-### Interactive API docs { #interactive-api-docs }
+### Interactive API docs
 
 Now go to [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
 
@@ -255,7 +255,7 @@ You will see the automatic interactive API documentation (provided by [Swagger U
 
 ![Swagger UI](https://fastapi.tiangolo.com/img/index/index-01-swagger-ui-simple.png)
 
-### Alternative API docs { #alternative-api-docs }
+### Alternative API docs
 
 And now, go to [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc).
 
@@ -263,7 +263,7 @@ You will see the alternative automatic documentation (provided by [ReDoc](https:
 
 ![ReDoc](https://fastapi.tiangolo.com/img/index/index-02-redoc-simple.png)
 
-## Example upgrade { #example-upgrade }
+## Example upgrade
 
 Now modify the file `main.py` to receive a body from a `PUT` request.
 
@@ -295,7 +295,7 @@ def update_item(item_id: int, item: Item):
 
 The `fastapi dev` server should reload automatically.
 
-### Interactive API docs upgrade { #interactive-api-docs-upgrade }
+### Interactive API docs upgrade
 
 Now go to [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
 
@@ -311,7 +311,7 @@ Now go to [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
 
 ![Swagger UI interaction](https://fastapi.tiangolo.com/img/index/index-05-swagger-04.png)
 
-### Alternative API docs upgrade { #alternative-api-docs-upgrade }
+### Alternative API docs upgrade
 
 And now, go to [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc).
 
@@ -319,7 +319,7 @@ And now, go to [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc).
 
 ![ReDoc](https://fastapi.tiangolo.com/img/index/index-06-redoc-02.png)
 
-### Recap { #recap }
+### Recap
 
 In summary, you declare **once** the types of parameters, body, etc. as function parameters.
 
@@ -431,7 +431,7 @@ For a more complete example including more features, see the Tutorial - User Gui
     * **Cookie Sessions**
     * ...and more.
 
-### Deploy your app (optional) { #deploy-your-app-optional }
+### Deploy your app (optional)
 
 You can optionally deploy your FastAPI app to [FastAPI Cloud](https://fastapicloud.com) with a single command. 🚀
 
@@ -449,7 +449,7 @@ The CLI will automatically detect your FastAPI application and deploy it to the 
 
 That's it! Now you can access your app at that URL. ✨
 
-#### About FastAPI Cloud { #about-fastapi-cloud }
+#### About FastAPI Cloud
 
 **[FastAPI Cloud](https://fastapicloud.com)** is built by the same author and team behind **FastAPI**.
 
@@ -459,23 +459,23 @@ It brings the same **developer experience** of building apps with FastAPI to **d
 
 FastAPI Cloud is the primary sponsor and funding provider for the *FastAPI and friends* open source projects. ✨
 
-#### Deploy to other cloud providers { #deploy-to-other-cloud-providers }
+#### Deploy to other cloud providers
 
 FastAPI is open source and based on standards. You can deploy FastAPI apps to any cloud provider you choose.
 
 Follow your cloud provider's guides to deploy FastAPI apps with them. 🤓
 
-## Performance { #performance }
+## Performance
 
 Independent TechEmpower benchmarks show **FastAPI** applications running under Uvicorn as [one of the fastest Python frameworks available](https://www.techempower.com/benchmarks/#section=test&runid=7464e520-0dc2-473d-bd34-dbdfd7e85911&hw=ph&test=query&l=zijzen-7), only below Starlette and Uvicorn themselves (used internally by FastAPI). (*)
 
 To understand more about it, see the section [Benchmarks](https://fastapi.tiangolo.com/benchmarks/).
 
-## Dependencies { #dependencies }
+## Dependencies
 
 FastAPI depends on Pydantic and Starlette.
 
-### `standard` Dependencies { #standard-dependencies }
+### `standard` Dependencies
 
 When you install FastAPI with `uv add "fastapi[standard]"` it comes with the `standard` group of optional dependencies:
 
@@ -495,15 +495,15 @@ Used by FastAPI:
 * `fastapi-cli[standard]` - to provide the `fastapi` command.
     * This includes `fastapi-cloud-cli`, which allows you to deploy your FastAPI application to [FastAPI Cloud](https://fastapicloud.com).
 
-### Without `standard` Dependencies { #without-standard-dependencies }
+### Without `standard` Dependencies
 
 If you don't want to include the `standard` optional dependencies, you can install with `uv add fastapi` instead of `uv add "fastapi[standard]"`.
 
-### Without `fastapi-cloud-cli` { #without-fastapi-cloud-cli }
+### Without `fastapi-cloud-cli`
 
 If you want to install FastAPI with the standard dependencies but without the `fastapi-cloud-cli`, you can install with `uv add "fastapi[standard-no-fastapi-cloud-cli]"`.
 
-### Additional Optional Dependencies { #additional-optional-dependencies }
+### Additional Optional Dependencies
 
 There are some additional dependencies you might want to install.
 
@@ -517,6 +517,6 @@ Additional optional FastAPI dependencies:
 * [`orjson`](https://github.com/ijl/orjson) - Required if you want to use `ORJSONResponse`.
 * [`ujson`](https://github.com/ultrajson/ultrajson) - Required if you want to use `UJSONResponse`.
 
-## License { #license }
+## License
 
 This project is licensed under the terms of the MIT license.

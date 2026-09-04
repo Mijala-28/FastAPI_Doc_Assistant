@@ -1,10 +1,10 @@
-# Including WSGI - Flask, Django, others { #including-wsgi-flask-django-others }
+# Including WSGI - Flask, Django, others
 
 You can mount WSGI applications as you saw with [Sub Applications - Mounts](sub-applications.md), [Behind a Proxy](behind-a-proxy.md).
 
 For that, you can use the `WSGIMiddleware` and use it to wrap your WSGI application, for example, Flask, Django, etc.
 
-## Using `WSGIMiddleware` { #using-wsgimiddleware }
+## Using `WSGIMiddleware`
 
 **Note:** This requires adding `a2wsgi` to your project, for example with `uv add a2wsgi`.
 
@@ -38,7 +38,7 @@ app.mount("/v1", WSGIMiddleware(flask_app))
 
 **Note:** Previously, it was recommended to use `WSGIMiddleware` from `fastapi.middleware.wsgi`, but it is now deprecated.  It's advised to use the `a2wsgi` package instead. The usage remains the same.  Just ensure that you have the `a2wsgi` package installed and import `WSGIMiddleware` correctly from `a2wsgi`.
 
-## Check it { #check-it }
+## Check it
 
 Now, every request under the path `/v1/` will be handled by the Flask application.
 

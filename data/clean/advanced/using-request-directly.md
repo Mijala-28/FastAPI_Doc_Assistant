@@ -1,4 +1,4 @@
-# Using the Request Directly { #using-the-request-directly }
+# Using the Request Directly
 
 Up to now, you have been declaring the parts of the request that you need with their types.
 
@@ -13,7 +13,7 @@ And by doing so, **FastAPI** is validating that data, converting it and generati
 
 But there are situations where you might need to access the `Request` object directly.
 
-## Details about the `Request` object { #details-about-the-request-object }
+## Details about the `Request` object
 
 As **FastAPI** is actually **Starlette** underneath, with a layer of several tools on top, you can use Starlette's [`Request`](https://starlette.dev/requests/) object directly when you need to.
 
@@ -23,7 +23,7 @@ Although any other parameter declared normally (for example, the body with a Pyd
 
 But there are specific cases where it's useful to get the `Request` object.
 
-## Use the `Request` object directly { #use-the-request-object-directly }
+## Use the `Request` object directly
 
 Let's imagine you want to get the client's IP address/host inside of your *path operation function*.
 
@@ -44,7 +44,7 @@ By declaring a *path operation function* parameter with the type being the `Requ
 
 **Tip:** Note that in this case, we are declaring a path parameter beside the request parameter.  So, the path parameter will be extracted, validated, converted to the specified type and annotated with OpenAPI.  The same way, you can declare any other parameter as normally, and additionally, get the `Request` too.
 
-## `Request` documentation { #request-documentation }
+## `Request` documentation
 
 You can read more details about the [`Request` object in the official Starlette documentation site](https://starlette.dev/requests/).
 

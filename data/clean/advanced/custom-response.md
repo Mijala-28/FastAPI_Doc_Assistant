@@ -1,4 +1,4 @@
-# Custom Response - HTML, Stream, File, others { #custom-response-html-stream-file-others }
+# Custom Response - HTML, Stream, File, others
 
 By default, **FastAPI** will return JSON responses.
 
@@ -12,7 +12,7 @@ The contents that you return from your *path operation function* will be put ins
 
 **Note:** If you use a response class with no media type, FastAPI will expect your response to have no content, so it will not document the response format in its generated OpenAPI docs.
 
-## JSON Responses { #json-responses }
+## JSON Responses
 
 By default FastAPI returns JSON responses.
 
@@ -22,7 +22,7 @@ If you don't declare a response model, FastAPI will use the `jsonable_encoder` e
 
 If you declare a `response_class` with a JSON media type (`application/json`), like is the case with the `JSONResponse`, the data you return will be automatically converted (and filtered) with any Pydantic `response_model` that you declared in the *path operation decorator*. But the data won't be serialized to JSON bytes with Pydantic, instead it will be converted with the `jsonable_encoder` and then passed to the `JSONResponse` class, which will serialize it to bytes using the standard JSON library in Python.
 
-### JSON Performance { #json-performance }
+### JSON Performance
 
 In short, if you want the maximum performance, use a [Response Model](../tutorial/response-model.md) and don't declare a `response_class` in the *path operation decorator*.
 
@@ -51,7 +51,7 @@ async def read_items() -> list[Item]:
     ]
 '''
 
-## HTML Response { #html-response }
+## HTML Response
 
 To return a response with HTML directly from **FastAPI**, use `HTMLResponse`.
 
@@ -80,7 +80,7 @@ async def read_items():
 
 **Note:** The parameter `response_class` will also be used to define the "media type" of the response.  In this case, the HTTP header `Content-Type` will be set to `text/html`.  And it will be documented as such in OpenAPI.
 
-### Return a `Response` { #return-a-response }
+### Return a `Response`
 
 As seen in [Return a Response directly](response-directly.md), you can also override the response directly in your *path operation*, by returning it.
 
@@ -111,13 +111,13 @@ async def read_items():
 
 **Note:** Of course, the actual `Content-Type` header, status code, etc, will come from the `Response` object you returned.
 
-### Document in OpenAPI and override `Response` { #document-in-openapi-and-override-response }
+### Document in OpenAPI and override `Response`
 
 If you want to override the response from inside of the function but at the same time document the "media type" in OpenAPI, you can use the `response_class` parameter AND return a `Response` object.
 
 The `response_class` will then be used only to document the OpenAPI *path operation*, but your `Response` will be used as is.
 
-#### Return an `HTMLResponse` directly { #return-an-htmlresponse-directly }
+#### Return an `HTMLResponse` directly
 
 For example, it could be something like:
 
@@ -151,7 +151,7 @@ By returning the result of calling `generate_html_response()`, you are already r
 
 But as you passed the `HTMLResponse` in the `response_class` too, **FastAPI** will know how to document it in OpenAPI and the interactive docs as HTML with `text/html`:
 
-## Available responses { #available-responses }
+## Available responses
 
 Here are some of the available responses.
 
@@ -159,7 +159,7 @@ Keep in mind that you can use `Response` to return anything else, or even create
 
 **Note:** You could also use `from starlette.responses import HTMLResponse`.  **FastAPI** provides the same `starlette.responses` as `fastapi.responses` just as a convenience for you, the developer. But most of the available responses come directly from Starlette.
 
-### `Response` { #response }
+### `Response`
 
 The main `Response` class, all the other responses inherit from it.
 
@@ -194,11 +194,11 @@ def get_legacy_data():
     return Response(content=data, media_type="application/xml")
 '''
 
-### `HTMLResponse` { #htmlresponse }
+### `HTMLResponse`
 
 Takes some text or bytes and returns an HTML response, as you read above.
 
-### `PlainTextResponse` { #plaintextresponse }
+### `PlainTextResponse`
 
 Takes some text or bytes and returns a plain text response.
 
@@ -213,7 +213,7 @@ async def main():
     return "Hello World"
 '''
 
-### `JSONResponse` { #jsonresponse }
+### `JSONResponse`
 
 Takes some data and returns an `application/json` encoded response.
 
@@ -221,7 +221,7 @@ This is the default response used in **FastAPI**, as you read above.
 
 **Note:** But if you declare a response model or return type, that will be used directly to serialize the data to JSON, and a response with the right media type for JSON will be returned directly, without using the `JSONResponse` class.  This is the ideal way to get the best performance.
 
-### `RedirectResponse` { #redirectresponse }
+### `RedirectResponse`
 
 Returns an HTTP redirect. Uses a 307 status code (Temporary Redirect) by default.
 
@@ -272,7 +272,7 @@ async def redirect_pydantic():
     return "https://docs.pydantic.dev/"
 '''
 
-### `StreamingResponse` { #streamingresponse }
+### `StreamingResponse`
 
 Takes an async generator or a normal generator/iterator (a function with `yield`) and streams the response body.
 
@@ -297,7 +297,7 @@ async def main():
 
 **Tip:** Instead of returning a `StreamingResponse` directly, you should probably follow the style in [Stream Data](./stream-data.md), it's much more convenient and handles cancellation behind the scenes for you.  If you are streaming JSON Lines, follow the [Stream JSON Lines](../tutorial/stream-json-lines.md) tutorial.
 
-### `FileResponse` { #fileresponse }
+### `FileResponse`
 
 Asynchronously streams a file as the response.
 
@@ -338,7 +338,7 @@ async def main():
 
 In this case, you can return the file path directly from your *path operation* function.
 
-## Custom response class { #custom-response-class }
+## Custom response class
 
 You can create your own custom response class, inheriting from `Response` and using it.
 
@@ -384,7 +384,7 @@ Now instead of returning:
 
 Of course, you will probably find much better ways to take advantage of this than formatting JSON. 😉
 
-### `orjson` or Response Model { #orjson-or-response-model }
+### `orjson` or Response Model
 
 If what you are looking for is performance, you are probably better off using a [Response Model](../tutorial/response-model.md) than an `orjson` response.
 
@@ -392,7 +392,7 @@ With a response model, FastAPI will use Pydantic to serialize the data to JSON, 
 
 And under the hood, Pydantic uses the same underlying Rust mechanisms as `orjson` to serialize to JSON, so you will already get the best performance with a response model.
 
-## Default response class { #default-response-class }
+## Default response class
 
 When creating a **FastAPI** class instance or an `APIRouter` you can specify which response class to use by default.
 
@@ -413,6 +413,6 @@ async def read_items():
 
 **Tip:** You can still override `response_class` in *path operations* as before.
 
-## Additional documentation { #additional-documentation }
+## Additional documentation
 
 You can also declare the media type and many other details in OpenAPI using `responses`: [Additional Responses in OpenAPI](additional-responses.md).

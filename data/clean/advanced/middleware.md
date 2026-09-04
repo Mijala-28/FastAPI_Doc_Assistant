@@ -1,4 +1,4 @@
-# Advanced Middleware { #advanced-middleware }
+# Advanced Middleware
 
 In the main tutorial you read how to add [Custom Middleware](../tutorial/middleware.md) to your application.
 
@@ -6,7 +6,7 @@ And then you also read how to handle [CORS with the `CORSMiddleware`](../tutoria
 
 In this section we'll see how to use other middlewares.
 
-## Adding ASGI middlewares { #adding-asgi-middlewares }
+## Adding ASGI middlewares
 
 As **FastAPI** is based on Starlette and implements the ASGI specification, you can use any ASGI middleware.
 
@@ -39,13 +39,13 @@ app.add_middleware(UnicornMiddleware, some_config="rainbow")
 
 `app.add_middleware()` receives a middleware class as the first argument and any additional arguments to be passed to the middleware.
 
-## Integrated middlewares { #integrated-middlewares }
+## Integrated middlewares
 
 **FastAPI** includes several middlewares for common use cases, we'll see next how to use them.
 
 **Note:** For the next examples, you could also use `from starlette.middleware.something import SomethingMiddleware`.  **FastAPI** provides several middlewares in `fastapi.middleware` just as a convenience for you, the developer. But most of the available middlewares come directly from Starlette.
 
-## `HTTPSRedirectMiddleware` { #httpsredirectmiddleware }
+## `HTTPSRedirectMiddleware`
 
 Enforces that all incoming requests must either be `https` or `wss`.
 
@@ -64,7 +64,7 @@ async def main():
     return {"message": "Hello World"}
 '''
 
-## `TrustedHostMiddleware` { #trustedhostmiddleware }
+## `TrustedHostMiddleware`
 
 Enforces that all incoming requests have a correctly set `Host` header, in order to guard against HTTP Host Header attacks.
 
@@ -90,7 +90,7 @@ The following arguments are supported:
 
 If an incoming request does not validate correctly then a `400` response will be sent.
 
-## `GZipMiddleware` { #gzipmiddleware }
+## `GZipMiddleware`
 
 Handles GZip responses for any request that includes `"gzip"` in the `Accept-Encoding` header.
 
@@ -114,7 +114,7 @@ The following arguments are supported:
 * `minimum_size` - Do not GZip responses that are smaller than this minimum size in bytes. Defaults to `500`.
 * `compresslevel` - Used during GZip compression. It is an integer ranging from 1 to 9. Defaults to `9`. Lower value results in faster compression but larger file sizes, while higher value results in slower compression but smaller file sizes.
 
-## Other middlewares { #other-middlewares }
+## Other middlewares
 
 There are many other ASGI middlewares.
 

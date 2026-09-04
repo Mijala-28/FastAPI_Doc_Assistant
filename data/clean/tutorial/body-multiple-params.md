@@ -1,8 +1,8 @@
-# Body - Multiple Parameters { #body-multiple-parameters }
+# Body - Multiple Parameters
 
 Now that we have seen how to use `Path` and `Query`, let's see more advanced uses of request body declarations.
 
-## Mix `Path`, `Query` and body parameters { #mix-path-query-and-body-parameters }
+## Mix `Path`, `Query` and body parameters
 
 First, of course, you can mix `Path`, `Query` and request body parameter declarations freely and **FastAPI** will know what to do.
 
@@ -38,7 +38,7 @@ async def update_item(
 
 **Note:** Notice that, in this case, the `item` that would be taken from the body is optional. As it has a `None` default value.
 
-## Multiple body parameters { #multiple-body-parameters }
+## Multiple body parameters
 
 In the previous example, the *path operations* would expect a JSON body with the attributes of an `Item`, like:
 
@@ -100,7 +100,7 @@ So, it will then use the parameter names as keys (field names) in the body, and 
 
 It will perform the validation of the compound data, and will document it like that for the OpenAPI schema and automatic docs.
 
-## Singular values in body { #singular-values-in-body }
+## Singular values in body
 
 The same way there is a `Query` and `Path` to define extra data for query and path parameters, **FastAPI** provides an equivalent `Body`.
 
@@ -156,7 +156,7 @@ In this case, **FastAPI** will expect a body like:
 
 Again, it will convert the data types, validate, document, etc.
 
-## Multiple body params and query { #multiple-body-params-and-query }
+## Multiple body params and query
 
 Of course, you can also declare additional query parameters whenever you need, additional to any body parameters.
 
@@ -203,7 +203,7 @@ async def update_item(
 
 **Note:** `Body` also has all the same extra validation and metadata parameters as `Query`, `Path` and others you will see later.
 
-## Embed a single body parameter { #embed-a-single-body-parameter }
+## Embed a single body parameter
 
 Let's say you only have a single `item` body parameter from a Pydantic model `Item`.
 
@@ -261,7 +261,7 @@ instead of:
 }
 ```
 
-## Recap { #recap }
+## Recap
 
 You can add multiple body parameters to your *path operation function*, even though a request can only have a single body.
 

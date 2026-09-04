@@ -1,4 +1,4 @@
-# Response Status Code { #response-status-code }
+# Response Status Code
 
 The same way you can specify a response model, you can also declare the HTTP status code used for the response with the parameter `status_code` in any of the *path operations*:
 
@@ -31,7 +31,7 @@ It will:
 
 **Note:** Some response codes (see the next section) indicate that the response does not have a body.  FastAPI knows this, and will produce OpenAPI docs that state there is no response body.
 
-## About HTTP status codes { #about-http-status-codes }
+## About HTTP status codes
 
 **Note:** If you already know what HTTP status codes are, skip to the next section.
 
@@ -54,7 +54,7 @@ In short:
 
 **Tip:** To know more about each status code and which code is for what, check the [MDN documentation about HTTP status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status).
 
-## Shortcut to remember the names { #shortcut-to-remember-the-names }
+## Shortcut to remember the names
 
 Let's see the previous example again:
 
@@ -88,6 +88,6 @@ They are just a convenience, they hold the same number, but that way you can use
 
 **Note:** You could also use `from starlette import status`.  **FastAPI** provides the same `starlette.status` as `fastapi.status` just as a convenience for you, the developer. But it comes directly from Starlette.
 
-## Changing the default { #changing-the-default }
+## Changing the default
 
 Later, in the [Advanced User Guide](../advanced/response-change-status-code.md), you will see how to return a different status code than the default you are declaring here.

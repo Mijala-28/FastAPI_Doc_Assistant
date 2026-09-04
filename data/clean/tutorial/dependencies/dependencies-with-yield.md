@@ -1,4 +1,4 @@
-# Dependencies with yield { #dependencies-with-yield }
+# Dependencies with yield
 
 FastAPI supports dependencies that do some extra steps after finishing.
 
@@ -8,7 +8,7 @@ To do this, use `yield` instead of `return`, and write the extra steps (code) af
 
 **Note:** Any function that is valid to use with:  * [`@contextlib.contextmanager`](https://docs.python.org/3/library/contextlib.html#contextlib.contextmanager) or * [`@contextlib.asynccontextmanager`](https://docs.python.org/3/library/contextlib.html#contextlib.asynccontextmanager)  would be valid to use as a **FastAPI** dependency.  In fact, FastAPI uses those two decorators internally.
 
-## A database dependency with `yield` { #a-database-dependency-with-yield }
+## A database dependency with `yield`
 
 For example, you could use this to create a database session and close it after finishing.
 
@@ -47,7 +47,7 @@ async def get_db():
 
 **Tip:** You can use `async` or regular functions.  **FastAPI** will do the right thing with each, the same as with normal dependencies.
 
-## A dependency with `yield` and `try` { #a-dependency-with-yield-and-try }
+## A dependency with `yield` and `try`
 
 If you use a `try` block in a dependency with `yield`, you'll receive any exception that was thrown when using the dependency.
 
@@ -66,7 +66,7 @@ async def get_db():
         db.close()
 '''
 
-## Sub-dependencies with `yield` { #sub-dependencies-with-yield }
+## Sub-dependencies with `yield`
 
 You can have sub-dependencies and "trees" of sub-dependencies of any size and shape, and any or all of them can use `yield`.
 
@@ -144,7 +144,7 @@ You can have any combinations of dependencies that you want.
 
 **Note:** This works thanks to Python's [Context Managers](https://docs.python.org/3/library/contextlib.html).  **FastAPI** uses them internally to achieve this.
 
-## Dependencies with `yield` and `HTTPException` { #dependencies-with-yield-and-httpexception }
+## Dependencies with `yield` and `HTTPException`
 
 You saw that you can use dependencies with `yield` and have `try` blocks that try to execute some code and then run some exit code after `finally`.
 
@@ -187,7 +187,7 @@ def get_item(item_id: str, username: Annotated[str, Depends(get_username)]):
 
 If you want to catch exceptions and create a custom response based on that, create a [Custom Exception Handler](../handling-errors.md#install-custom-exception-handlers).
 
-## Dependencies with `yield` and `except` { #dependencies-with-yield-and-except }
+## Dependencies with `yield` and `except`
 
 If you catch an exception using `except` in a dependency with `yield` and you don't raise it again (or raise a new exception), FastAPI won't be able to notice there was an exception, the same way that would happen with regular Python:
 
@@ -222,7 +222,7 @@ def get_item(item_id: str, username: Annotated[str, Depends(get_username)]):
 
 In this case, the client will see an *HTTP 500 Internal Server Error* response as it should, given that we are not raising an `HTTPException` or similar, but the server will **not have any logs** or any other indication of what was the error. 😱
 
-### Always `raise` in Dependencies with `yield` and `except` { #always-raise-in-dependencies-with-yield-and-except }
+### Always `raise` in Dependencies with `yield` and `except`
 
 If you catch an exception in a dependency with `yield`, unless you are raising another `HTTPException` or similar, **you should re-raise the original exception**.
 
@@ -260,7 +260,7 @@ def get_item(item_id: str, username: Annotated[str, Depends(get_username)]):
 
 Now the client will get the same *HTTP 500 Internal Server Error* response, but the server will have our custom `InternalError` in the logs. 😎
 
-## Execution of dependencies with `yield` { #execution-of-dependencies-with-yield }
+## Execution of dependencies with `yield`
 
 The sequence of execution is more or less like this diagram. Time flows from top to bottom. And each column is one of the parts interacting or executing code.
 
@@ -303,7 +303,7 @@ participant tasks as Background tasks
 
 **Tip:** If you raise any exception in the code from the *path operation function*, it will be passed to the dependencies with yield, including `HTTPException`. In most cases you will want to re-raise that same exception or a new one from the dependency with `yield` to make sure it's properly handled.
 
-## Early exit and `scope` { #early-exit-and-scope }
+## Early exit and `scope`
 
 Normally the exit code of dependencies with `yield` is executed **after the response** is sent to the client.
 
@@ -334,7 +334,7 @@ def get_user_me(username: Annotated[str, Depends(get_username, scope="function")
 
 If not specified and the dependency has `yield`, it will have a `scope` of `"request"` by default.
 
-### `scope` for sub-dependencies { #scope-for-sub-dependencies }
+### `scope` for sub-dependencies
 
 When you declare a dependency with a `scope="request"` (the default), any sub-dependency needs to also have a `scope` of `"request"`.
 
@@ -364,15 +364,15 @@ participant operation as Path Operation
     Note over dep_req: ✅ Dependency closed
 ```
 
-## Dependencies with `yield`, `HTTPException`, `except` and Background Tasks { #dependencies-with-yield-httpexception-except-and-background-tasks }
+## Dependencies with `yield`, `HTTPException`, `except` and Background Tasks
 
 Dependencies with `yield` have evolved over time to cover different use cases and fix some issues.
 
 If you want to see what has changed in different versions of FastAPI, you can read more about it in the advanced guide, in [Advanced Dependencies - Dependencies with `yield`, `HTTPException`, `except` and Background Tasks](../../advanced/advanced-dependencies.md#dependencies-with-yield-httpexception-except-and-background-tasks).
 
-## Context Managers { #context-managers }
+## Context Managers
 
-### What are "Context Managers" { #what-are-context-managers }
+### What are "Context Managers"
 
 "Context Managers" are any of those Python objects that you can use in a `with` statement.
 
@@ -390,7 +390,7 @@ When the `with` block finishes, it makes sure to close the file, even if there w
 
 When you create a dependency with `yield`, **FastAPI** will internally create a context manager for it, and combine it with some other related tools.
 
-### Using context managers in dependencies with `yield` { #using-context-managers-in-dependencies-with-yield }
+### Using context managers in dependencies with `yield`
 
 **Warning:** This is, more or less, an "advanced" idea.  If you are just starting with **FastAPI** you might want to skip it for now.
 

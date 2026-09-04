@@ -1,8 +1,8 @@
-# Body - Nested Models { #body-nested-models }
+# Body - Nested Models
 
 With **FastAPI**, you can define, validate, document, and use arbitrarily deeply nested models (thanks to Pydantic).
 
-## List fields { #list-fields }
+## List fields
 
 You can define an attribute to be a subtype. For example, a Python `list`:
 
@@ -27,11 +27,11 @@ async def update_item(item_id: int, item: Item):
 
 This will make `tags` be a list, although it doesn't declare the type of the elements of the list.
 
-## List fields with type parameter { #list-fields-with-type-parameter }
+## List fields with type parameter
 
 But Python has a specific way to declare lists with internal types, or "type parameters":
 
-### Declare a `list` with a type parameter { #declare-a-list-with-a-type-parameter }
+### Declare a `list` with a type parameter
 
 To declare types that have type parameters (internal types), like `list`, `dict`, `tuple`,
 pass the internal type(s) as "type parameters" using square brackets: `[` and `]`
@@ -65,7 +65,7 @@ async def update_item(item_id: int, item: Item):
     return results
 '''
 
-## Set types { #set-types }
+## Set types
 
 But then we think about it, and realize that tags shouldn't repeat, they would probably be unique strings.
 
@@ -98,7 +98,7 @@ And whenever you output that data, even if the source had duplicates, it will be
 
 And it will be annotated / documented accordingly too.
 
-## Nested Models { #nested-models }
+## Nested Models
 
 Each attribute of a Pydantic model has a type.
 
@@ -108,7 +108,7 @@ So, you can declare deeply nested JSON "objects" with specific attribute names, 
 
 All that, arbitrarily nested.
 
-### Define a submodel { #define-a-submodel }
+### Define a submodel
 
 For example, we can define an `Image` model:
 
@@ -136,7 +136,7 @@ async def update_item(item_id: int, item: Item):
     return results
 '''
 
-### Use the submodel as a type { #use-the-submodel-as-a-type }
+### Use the submodel as a type
 
 And then we can use it as the type of an attribute:
 
@@ -187,7 +187,7 @@ Again, doing just that declaration, with **FastAPI** you get:
 * Data validation
 * Automatic documentation
 
-## Special types and validation { #special-types-and-validation }
+## Special types and validation
 
 Apart from normal singular types like `str`, `int`, `float`, etc. you can use more complex singular types that inherit from `str`.
 
@@ -221,7 +221,7 @@ async def update_item(item_id: int, item: Item):
 
 The string will be checked to be a valid URL, and documented in JSON Schema / OpenAPI as such.
 
-## Attributes with lists of submodels { #attributes-with-lists-of-submodels }
+## Attributes with lists of submodels
 
 You can also use Pydantic models as subtypes of `list`, `set`, etc.:
 
@@ -277,7 +277,7 @@ This will expect (convert, validate, document, etc.) a JSON body like:
 
 **Note:** Notice how the `images` key now has a list of image objects.
 
-## Deeply nested models { #deeply-nested-models }
+## Deeply nested models
 
 You can define arbitrarily deeply nested models:
 
@@ -312,7 +312,7 @@ async def create_offer(offer: Offer):
 
 **Note:** Notice how `Offer` has a list of `Item`s, which in turn have an optional list of `Image`s
 
-## Bodies of pure lists { #bodies-of-pure-lists }
+## Bodies of pure lists
 
 If the top level value of the JSON body you expect is a JSON `array` (a Python `list`), you can declare the type in the parameter of the function, the same as in Pydantic models:
 
@@ -337,7 +337,7 @@ async def create_multiple_images(images: list[Image]):
     return images
 '''
 
-## Editor support everywhere { #editor-support-everywhere }
+## Editor support everywhere
 
 And you get editor support everywhere.
 
@@ -347,7 +347,7 @@ You couldn't get this kind of editor support if you were working directly with `
 
 But you don't have to worry about them either, incoming dicts are converted automatically and your output is converted automatically to JSON too.
 
-## Bodies of arbitrary `dict`s { #bodies-of-arbitrary-dicts }
+## Bodies of arbitrary `dict`s
 
 You can also declare a body as a `dict` with keys of some type and values of some other type.
 
@@ -375,7 +375,7 @@ async def create_index_weights(weights: dict[int, float]):
 
 **Tip:** Keep in mind that JSON only supports `str` as keys.  But Pydantic has automatic data conversion.  This means that, even though your API clients can only send strings as keys, as long as those strings contain pure integers, Pydantic will convert them and validate them.  And the `dict` you receive as `weights` will actually have `int` keys and `float` values.
 
-## Recap { #recap }
+## Recap
 
 With **FastAPI** you have the maximum flexibility provided by Pydantic models, while keeping your code simple, short and elegant.
 

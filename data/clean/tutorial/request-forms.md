@@ -1,10 +1,10 @@
-# Form Data { #form-data }
+# Form Data
 
 When you need to receive form fields instead of JSON, you can use `Form`.
 
 **Note:** To use forms, first install [`python-multipart`](https://github.com/Kludex/python-multipart).  Add it to your project:  ```console $ uv add python-multipart ```
 
-## Import `Form` { #import-form }
+## Import `Form`
 
 Import `Form` from `fastapi`:
 
@@ -20,7 +20,7 @@ async def login(username: Annotated[str, Form()], password: Annotated[str, Form(
     return {"username": username}
 '''
 
-## Define `Form` parameters { #define-form-parameters }
+## Define `Form` parameters
 
 Create form parameters the same way you would for `Body` or `Query`:
 
@@ -46,7 +46,7 @@ With `Form` you can declare the same configurations as with `Body` (and `Query`,
 
 **Tip:** To declare form bodies, you need to use `Form` explicitly, because without it the parameters would be interpreted as query parameters or body (JSON) parameters.
 
-## About "Form Fields" { #about-form-fields }
+## About "Form Fields"
 
 The way HTML forms (``) send the data to the server normally uses a "special" encoding for that data, it's different from JSON.
 
@@ -56,6 +56,6 @@ The way HTML forms (``) send the data to the server normally uses a "special" en
 
 **Warning:** You can declare multiple `Form` parameters in a *path operation*, but you can't also declare `Body` fields that you expect to receive as JSON, as the request will have the body encoded using `application/x-www-form-urlencoded` instead of `application/json`.  This is not a limitation of **FastAPI**, it's part of the HTTP protocol.
 
-## Recap { #recap }
+## Recap
 
 Use `Form` to declare form data input parameters.

@@ -1,4 +1,4 @@
-# Templates { #templates }
+# Templates
 
 You can use any template engine you want with **FastAPI**.
 
@@ -6,7 +6,7 @@ A common choice is Jinja2, the same one used by Flask and other tools.
 
 There are utilities to configure it easily that you can use directly in your **FastAPI** application (provided by Starlette).
 
-## Install dependencies { #install-dependencies }
+## Install dependencies
 
 Add `jinja2` to your project:
 
@@ -16,7 +16,7 @@ $ uv add jinja2
 ---> 100%
 ```
 
-## Using `Jinja2Templates` { #using-jinja2templates }
+## Using `Jinja2Templates`
 
 * Import `Jinja2Templates`.
 * Create a `templates` object that you can reuse later.
@@ -48,7 +48,7 @@ async def read_item(request: Request, id: str):
 
 **Note:** You could also use `from starlette.templating import Jinja2Templates`.  **FastAPI** provides the same `starlette.templating` as `fastapi.templating` just as a convenience for you, the developer. But most of the available responses come directly from Starlette. The same with `Request` and `StaticFiles`.
 
-## Writing templates { #writing-templates }
+## Writing templates
 
 Then you can write a template at `templates/item.html` with, for example:
 
@@ -56,7 +56,7 @@ Then you can write a template at `templates/item.html` with, for example:
 {!../../docs_src/templates/templates/item.html!}
 ```
 
-### Template Context Values { #template-context-values }
+### Template Context Values
 
 In the HTML that contains:
 
@@ -80,7 +80,7 @@ For example, with an ID of `42`, this would render:
 Item ID: 42
 ```
 
-### Template `url_for` Arguments { #template-url-for-arguments }
+### Template `url_for` Arguments
 
 You can also use `url_for()` inside of the template, it takes as arguments the same arguments that would be used by your *path operation function*.
 
@@ -102,7 +102,7 @@ For example, with an ID of `42`, this would render:
 
 ```
 
-## Templates and static files { #templates-and-static-files }
+## Templates and static files
 
 You can also use `url_for()` inside of the template, and use it, for example, with the `StaticFiles` you mounted with the `name="static"`.
 
@@ -118,6 +118,6 @@ In this example, it would link to a CSS file at `static/styles.css` with:
 
 And because you are using `StaticFiles`, that CSS file would be served automatically by your **FastAPI** application at the URL `/static/styles.css`.
 
-## More details { #more-details }
+## More details
 
 For more details, including how to test templates, check [Starlette's docs on templates](https://starlette.dev/templates/).

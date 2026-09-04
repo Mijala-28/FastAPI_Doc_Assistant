@@ -1,10 +1,10 @@
-# Request Forms and Files { #request-forms-and-files }
+# Request Forms and Files
 
 You can define files and form fields at the same time using `File` and `Form`.
 
 **Note:** To receive uploaded files and/or form data, first install [`python-multipart`](https://github.com/Kludex/python-multipart).  Add it to your project:  ```console $ uv add python-multipart ```
 
-## Import `File` and `Form` { #import-file-and-form }
+## Import `File` and `Form`
 
 '''python
 from typing import Annotated
@@ -26,7 +26,7 @@ async def create_file(
     }
 '''
 
-## Define `File` and `Form` parameters { #define-file-and-form-parameters }
+## Define `File` and `Form` parameters
 
 Create file and form parameters the same way you would for `Body` or `Query`:
 
@@ -56,6 +56,6 @@ And you can declare some of the files as `bytes` and some as `UploadFile`.
 
 **Warning:** You can declare multiple `File` and `Form` parameters in a *path operation*, but you can't also declare `Body` fields that you expect to receive as JSON, as the request will have the body encoded using `multipart/form-data` instead of `application/json`.  This is not a limitation of **FastAPI**, it's part of the HTTP protocol.
 
-## Recap { #recap }
+## Recap
 
 Use `File` and `Form` together when you need to receive data and files in the same request.

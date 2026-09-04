@@ -1,4 +1,4 @@
-# OAuth2 scopes { #oauth2-scopes }
+# OAuth2 scopes
 
 You can use OAuth2 scopes directly with **FastAPI**, they are integrated to work seamlessly.
 
@@ -12,7 +12,7 @@ In this section you will see how to manage authentication and authorization with
 
 **Warning:** This is a more or less advanced section. If you are just starting, you can skip it.  You don't necessarily need OAuth2 scopes, and you can handle authentication and authorization however you want.  But OAuth2 with scopes can be nicely integrated into your API (with OpenAPI) and your API docs.  Nevertheless, you still enforce those scopes, or any other security/authorization requirement, however you need, in your code.  In many cases, OAuth2 with scopes can be an overkill.  But if you know you need it, or you are curious, keep reading.
 
-## OAuth2 scopes and OpenAPI { #oauth2-scopes-and-openapi }
+## OAuth2 scopes and OpenAPI
 
 The OAuth2 specification defines "scopes" as a list of strings separated by spaces.
 
@@ -34,7 +34,7 @@ They are normally used to declare specific security permissions, for example:
 
 **Note:** In OAuth2 a "scope" is just a string that declares a specific permission required.  It doesn't matter if it has other characters like `:` or if it is a URL.  Those details are implementation specific.  For OAuth2 they are just strings.
 
-## Global view { #global-view }
+## Global view
 
 First, let's quickly see the parts that change from the examples in the main **Tutorial - User Guide** for [OAuth2 with Password (and hashing), Bearer with JWT tokens](../../tutorial/security/oauth2-jwt.md). Now using OAuth2 scopes:
 
@@ -208,7 +208,7 @@ async def read_system_status(current_user: Annotated[User, Depends(get_current_u
 
 Now let's review those changes step by step.
 
-## OAuth2 Security scheme { #oauth2-security-scheme }
+## OAuth2 Security scheme
 
 The first change is that now we are declaring the OAuth2 security scheme with two available scopes, `me` and `items`.
 
@@ -388,7 +388,7 @@ And you will be able to select which scopes you want to give access to: `me` and
 
 This is the same mechanism used when you give permissions while logging in with Facebook, Google, GitHub, etc:
 
-## JWT token with scopes { #jwt-token-with-scopes }
+## JWT token with scopes
 
 Now, modify the token *path operation* to return the scopes requested.
 
@@ -566,7 +566,7 @@ async def read_system_status(current_user: Annotated[User, Depends(get_current_u
     return {"status": "ok"}
 '''
 
-## Declare scopes in *path operations* and dependencies { #declare-scopes-in-path-operations-and-dependencies }
+## Declare scopes in *path operations* and dependencies
 
 Now we declare that the *path operation* for `/users/me/items/` requires the scope `items`.
 
@@ -754,7 +754,7 @@ async def read_system_status(current_user: Annotated[User, Depends(get_current_u
 
 **Note:** `Security` is actually a subclass of `Depends`, and it has just one extra parameter that we'll see later.  But by using `Security` instead of `Depends`, **FastAPI** will know that it can declare security scopes, use them internally, and document the API with OpenAPI.  But when you import `Query`, `Path`, `Depends`, `Security` and others from `fastapi`, those are actually functions that return special classes.
 
-## Use `SecurityScopes` { #use-securityscopes }
+## Use `SecurityScopes`
 
 Now update the dependency `get_current_user`.
 
@@ -936,7 +936,7 @@ async def read_system_status(current_user: Annotated[User, Depends(get_current_u
     return {"status": "ok"}
 '''
 
-## Use the `scopes` { #use-the-scopes }
+## Use the `scopes`
 
 The parameter `security_scopes` will be of type `SecurityScopes`.
 
@@ -1116,7 +1116,7 @@ async def read_system_status(current_user: Annotated[User, Depends(get_current_u
     return {"status": "ok"}
 '''
 
-## Verify the `username` and data shape { #verify-the-username-and-data-shape }
+## Verify the `username` and data shape
 
 We verify that we get a `username`, and extract the scopes.
 
@@ -1298,7 +1298,7 @@ async def read_system_status(current_user: Annotated[User, Depends(get_current_u
     return {"status": "ok"}
 '''
 
-## Verify the `scopes` { #verify-the-scopes }
+## Verify the `scopes`
 
 We now verify that all the scopes required, by this dependency and all the dependants (including *path operations*), are included in the scopes provided in the token received, otherwise raise an `HTTPException`.
 
@@ -1472,7 +1472,7 @@ async def read_system_status(current_user: Annotated[User, Depends(get_current_u
     return {"status": "ok"}
 '''
 
-## Dependency tree and scopes { #dependency-tree-and-scopes }
+## Dependency tree and scopes
 
 Let's review again this dependency tree and the scopes.
 
@@ -1499,7 +1499,7 @@ Here's what the hierarchy of dependencies and scopes looks like:
 
 **Tip:** The important and "magic" thing here is that `get_current_user` will have a different list of `scopes` to check for each *path operation*.  All depending on the `scopes` declared in each *path operation* and each dependency in the dependency tree for that specific *path operation*.
 
-## More details about `SecurityScopes` { #more-details-about-securityscopes }
+## More details about `SecurityScopes`
 
 You can use `SecurityScopes` at any point, and in multiple places, it doesn't have to be at the "root" dependency.
 
@@ -1509,7 +1509,7 @@ Because the `SecurityScopes` will have all the scopes declared by dependants, yo
 
 They will be checked independently for each *path operation*.
 
-## Check it { #check-it }
+## Check it
 
 If you open the API docs, you can authenticate and specify which scopes you want to authorize.
 
@@ -1519,7 +1519,7 @@ And if you select the scope `me` but not the scope `items`, you will be able to 
 
 That's what would happen to a third party application that tried to access one of these *path operations* with a token provided by a user, depending on how many permissions the user gave the application.
 
-## About third party integrations { #about-third-party-integrations }
+## About third party integrations
 
 In this example we are using the OAuth2 "password" flow.
 
@@ -1537,6 +1537,6 @@ The most secure is the code flow, but it's more complex to implement as it requi
 
 **FastAPI** includes utilities for all these OAuth2 authentication flows in `fastapi.security.oauth2`.
 
-## `Security` in decorator `dependencies` { #security-in-decorator-dependencies }
+## `Security` in decorator `dependencies`
 
 The same way you can define a `list` of `Depends` in the decorator's `dependencies` parameter (as explained in [Dependencies in path operation decorators](../../tutorial/dependencies/dependencies-in-path-operation-decorators.md)), you could also use `Security` with `scopes` there.

@@ -1,4 +1,4 @@
-# OpenAPI Webhooks { #openapi-webhooks }
+# OpenAPI Webhooks
 
 There are cases where you want to tell your API **users** that your app could call *their* app (sending a request) with some data, normally to **notify** of some type of **event**.
 
@@ -6,7 +6,7 @@ This means that instead of the normal process of your users sending requests to 
 
 This is normally called a **webhook**.
 
-## Webhooks steps { #webhooks-steps }
+## Webhooks steps
 
 The process normally is that **you define** in your code what is the message that you will send, the **body of the request**.
 
@@ -16,7 +16,7 @@ And **your users** define in some way (for example in a web dashboard somewhere)
 
 All the **logic** about how to register the URLs for webhooks and the code to actually send those requests is up to you. You write it however you want to in **your own code**.
 
-## Documenting webhooks with **FastAPI** and OpenAPI { #documenting-webhooks-with-fastapi-and-openapi }
+## Documenting webhooks with **FastAPI** and OpenAPI
 
 With **FastAPI**, using OpenAPI, you can define the names of these webhooks, the types of HTTP operations that your app can send (e.g. `POST`, `PUT`, etc.) and the request **bodies** that your app would send.
 
@@ -24,7 +24,7 @@ This can make it a lot easier for your users to **implement their APIs** to rece
 
 **Note:** Webhooks are available in OpenAPI 3.1.0 and above, supported by FastAPI `0.99.0` and above.
 
-## An app with webhooks { #an-app-with-webhooks }
+## An app with webhooks
 
 When you create a **FastAPI** application, there is a `webhooks` attribute that you can use to define *webhooks*, the same way you would define *path operations*, for example with `@app.webhooks.post()`.
 
@@ -61,7 +61,7 @@ Notice that with webhooks you are actually not declaring a *path* (like `/items/
 
 This is because it is expected that **your users** would define the actual **URL path** where they want to receive the webhook request in some other way (e.g. a web dashboard).
 
-### Check the docs { #check-the-docs }
+### Check the docs
 
 Now you can start your app and go to [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
 

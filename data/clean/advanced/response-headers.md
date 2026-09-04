@@ -1,6 +1,6 @@
-# Response Headers { #response-headers }
+# Response Headers
 
-## Use a `Response` parameter { #use-a-response-parameter }
+## Use a `Response` parameter
 
 You can declare a parameter of type `Response` in your *path operation function* (as you can do for cookies).
 
@@ -25,7 +25,7 @@ And if you declared a `response_model`, it will still be used to filter and conv
 
 You can also declare the `Response` parameter in dependencies, and set headers (and cookies) in them.
 
-## Return a `Response` directly { #return-a-response-directly }
+## Return a `Response` directly
 
 You can also add headers when you return a `Response` directly.
 
@@ -46,7 +46,7 @@ def get_headers():
 
 **Note:** You could also use `from starlette.responses import Response` or `from starlette.responses import JSONResponse`.  **FastAPI** provides the same `starlette.responses` as `fastapi.responses` just as a convenience for you, the developer. But most of the available responses come directly from Starlette.  And as the `Response` can be used frequently to set headers and cookies, **FastAPI** also provides it at `fastapi.Response`.
 
-## Custom Headers { #custom-headers }
+## Custom Headers
 
 Keep in mind that custom proprietary headers can be added [using the `X-` prefix](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers).
 

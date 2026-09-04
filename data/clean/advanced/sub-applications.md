@@ -1,12 +1,12 @@
-# Sub Applications - Mounts { #sub-applications-mounts }
+# Sub Applications - Mounts
 
 If you need to have two independent FastAPI applications, with their own independent OpenAPI and their own docs UIs, you can have a main app and "mount" one (or more) sub-application(s).
 
-## Mounting a **FastAPI** application { #mounting-a-fastapi-application }
+## Mounting a **FastAPI** application
 
 "Mounting" means adding a completely "independent" application in a specific path, that then takes care of handling everything under that path, with the _path operations_ declared in that sub-application.
 
-### Top-level application { #top-level-application }
+### Top-level application
 
 First, create the main, top-level, **FastAPI** application, and its *path operations*:
 
@@ -28,7 +28,7 @@ def read_sub():
 app.mount("/subapi", subapi)
 '''
 
-### Sub-application { #sub-application }
+### Sub-application
 
 Then, create your sub-application, and its *path operations*.
 
@@ -52,7 +52,7 @@ def read_sub():
 app.mount("/subapi", subapi)
 '''
 
-### Mount the sub-application { #mount-the-sub-application }
+### Mount the sub-application
 
 In your top-level application, `app`, mount the sub-application, `subapi`.
 
@@ -76,7 +76,7 @@ def read_sub():
 app.mount("/subapi", subapi)
 '''
 
-### Check the automatic API docs { #check-the-automatic-api-docs }
+### Check the automatic API docs
 
 Now, run the `fastapi` command:
 
@@ -96,7 +96,7 @@ You will see the automatic API docs for the sub-application, including only its 
 
 If you try interacting with any of the two user interfaces, they will work correctly, because the browser will be able to talk to each specific app or sub-app.
 
-### Technical Details: `root_path` { #technical-details-root-path }
+### Technical Details: `root_path`
 
 When you mount a sub-application as described above, FastAPI will take care of communicating the mount path for the sub-application using a mechanism from the ASGI specification called a `root_path`.
 

@@ -1,4 +1,4 @@
-# Middleware { #middleware }
+# Middleware
 
 You can add middleware to **FastAPI** applications.
 
@@ -13,7 +13,7 @@ A "middleware" is a function that works with every **request** before it is proc
 
 **Note:** If you have dependencies with `yield`, the exit code will run *after* the middleware.  If there were any background tasks (covered in the [Background Tasks](background-tasks.md) section, you will see it later), they will run *after* all the middleware.
 
-## Create a middleware { #create-a-middleware }
+## Create a middleware
 
 To create a middleware you use the decorator `@app.middleware("http")` on top of a function.
 
@@ -45,7 +45,7 @@ async def add_process_time_header(request: Request, call_next):
 
 **Note:** You could also use `from starlette.requests import Request`.  **FastAPI** provides it as a convenience for you, the developer. But it comes directly from Starlette.
 
-### Before and after the `response` { #before-and-after-the-response }
+### Before and after the `response`
 
 You can add code to be run with the `request`,  before any *path operation* receives it.
 
@@ -71,7 +71,7 @@ async def add_process_time_header(request: Request, call_next):
 
 **Tip:** Here we use [`time.perf_counter()`](https://docs.python.org/3/library/time.html#time.perf_counter) instead of `time.time()` because it can be more precise for these use cases. 🤓
 
-## Multiple middleware execution order { #multiple-middleware-execution-order }
+## Multiple middleware execution order
 
 When you add multiple middlewares using either `@app.middleware()` decorator or `app.add_middleware()` method, each new middleware wraps the application, forming a stack. The last middleware added is the *outermost*, and the first is the *innermost*.
 
@@ -94,7 +94,7 @@ This results in the following execution order:
 
 This stacking behavior ensures that middlewares are executed in a predictable and controllable order.
 
-## Other middlewares { #other-middlewares }
+## Other middlewares
 
 You can later read more about other middlewares in the [Advanced User Guide: Advanced Middleware](../advanced/middleware.md).
 

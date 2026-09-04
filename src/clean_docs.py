@@ -6,6 +6,7 @@ RAW_DIR = ROOT/ "data" /"raw"
 CLEAN_DIR = ROOT / "data" /"clean"
 CODE_SRC_DIR = ROOT / "docs_src"
 INCLUDE_RE = re.compile(r"\{\*\s*(\.\./\.\./docs_src/[^\s*]+)(?:\s+[^*]*)?\*\}")
+HEADING_ID_RE = re.compile(r"\s*\{\s*#[\w\-]+\s*\}")
 
 def resolve_code_include(match):
     rel_path = match.group(1).replace("../../docs_src/","")
@@ -43,6 +44,7 @@ def clean_markdown(text):
     lines = clean_admonitions(text.split("\n"))
     text = "\n".join(lines)
     text = re.sub(r"<[^>]+>", "", text)
+    text = HEADING_ID_RE.sub("", text)
     text = re.sub(r"\n{3,}", "\n\n", text)
     return text.strip() + "\n"
 

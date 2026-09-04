@@ -1,8 +1,8 @@
-# Body - Fields { #body-fields }
+# Body - Fields
 
 The same way you can declare additional validation and metadata in *path operation function* parameters with `Query`, `Path` and `Body`, you can declare validation and metadata inside of Pydantic models using Pydantic's `Field`.
 
-## Import `Field` { #import-field }
+## Import `Field`
 
 First, you have to import it:
 
@@ -30,7 +30,7 @@ async def update_item(item_id: int, item: Annotated[Item, Body(embed=True)]):
 
 **Warning:** Notice that `Field` is imported directly from `pydantic`, not from `fastapi` as are all the rest (`Query`, `Path`, `Body`, etc).
 
-## Declare model attributes { #declare-model-attributes }
+## Declare model attributes
 
 You can then use `Field` with model attributes:
 
@@ -62,7 +62,7 @@ async def update_item(item_id: int, item: Annotated[Item, Body(embed=True)]):
 
 **Tip:** Notice how each model's attribute with a type, default value and `Field` has the same structure as a *path operation function's* parameter, with `Field` instead of `Path`, `Query` and `Body`.
 
-## Add extra information { #add-extra-information }
+## Add extra information
 
 You can declare extra information in `Field`, `Query`, `Body`, etc. And it will be included in the generated JSON Schema.
 
@@ -70,7 +70,7 @@ You will learn more about adding extra information later in the docs, when learn
 
 **Warning:** Extra keys passed to `Field` will also be present in the resulting OpenAPI schema for your application. As these keys may not necessarily be part of the OpenAPI specification, some OpenAPI tools, for example [the OpenAPI validator](https://validator.swagger.io/), may not work with your generated schema.
 
-## Recap { #recap }
+## Recap
 
 You can use Pydantic's `Field` to declare extra validations and metadata for model attributes.
 

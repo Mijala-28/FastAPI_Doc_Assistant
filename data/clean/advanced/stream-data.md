@@ -1,4 +1,4 @@
-# Stream Data { #stream-data }
+# Stream Data
 
 If you want to stream data that can be structured as JSON, you should [Stream JSON Lines](../tutorial/stream-json-lines.md).
 
@@ -6,7 +6,7 @@ But if you want to **stream pure binary data** or strings, here's how you can do
 
 **Note:** Added in FastAPI 0.134.0.
 
-## Use Cases { #use-cases }
+## Use Cases
 
 You could use this if you want to stream pure strings, for example directly from the output of an **AI LLM** service.
 
@@ -14,7 +14,7 @@ You could also use it to stream **large binary files**, where you stream each ch
 
 You could also stream **video** or **audio** this way, it could even be generated as you process and send it.
 
-## A `StreamingResponse` with `yield` { #a-streamingresponse-with-yield }
+## A `StreamingResponse` with `yield`
 
 If you declare a `response_class=StreamingResponse` in your *path operation function*, you can use `yield` to send each chunk of data in turn.
 
@@ -79,7 +79,7 @@ def stream_story_no_async_no_annotation_bytes():
 
 FastAPI will give each chunk of data to the `StreamingResponse` as is, it won't try to convert it to JSON or anything similar.
 
-### Non-async *path operation functions* { #non-async-path-operation-functions }
+### Non-async *path operation functions*
 
 You can also use regular `def` functions (without `async`), and use `yield` the same way.
 
@@ -142,7 +142,7 @@ def stream_story_no_async_no_annotation_bytes():
         yield line.encode("utf-8")
 '''
 
-### No Annotation { #no-annotation }
+### No Annotation
 
 You don't really need to declare the return type annotation for streaming binary data.
 
@@ -209,7 +209,7 @@ def stream_story_no_async_no_annotation_bytes():
 
 This also means that with `StreamingResponse` you have the **freedom** and **responsibility** to produce and encode the data bytes exactly as you need them to be sent, independent of the type annotations. 🤓
 
-### Stream Bytes { #stream-bytes }
+### Stream Bytes
 
 One of the main use cases would be to stream `bytes` instead of strings, you can of course do it.
 
@@ -272,7 +272,7 @@ def stream_story_no_async_no_annotation_bytes():
         yield line.encode("utf-8")
 '''
 
-## A Custom `PNGStreamingResponse` { #a-custom-pngstreamingresponse }
+## A Custom `PNGStreamingResponse`
 
 In the examples above, the data bytes were streamed, but the response didn't have a `Content-Type` header, so the client didn't know what type of data it was receiving.
 
@@ -380,7 +380,7 @@ def stream_image_no_async_no_annotation():
             yield chunk
 '''
 
-### Simulate a File { #simulate-a-file }
+### Simulate a File
 
 In this example, we are simulating a file with `io.BytesIO`, which is a file-like object that lives only in memory, but lets us use the same interface.
 
@@ -441,7 +441,7 @@ By using a `with` block, we make sure that the file-like object is closed after 
 
 It wouldn't be that important in this specific example because it's a fake in-memory file (with `io.BytesIO`), but with a real file, it would be important to make sure the file is closed after the work with it is done.
 
-### Files and Async { #files-and-async }
+### Files and Async
 
 In most cases, file-like objects are not compatible with async and await by default.
 
@@ -504,7 +504,7 @@ def stream_image_no_async_no_annotation():
 
 **Tip:** If you need to call blocking code from inside of an async function, or an async function from inside of a blocking function, you could use [Asyncer](https://asyncer.tiangolo.com), a sibling library to FastAPI.
 
-### `yield from` { #yield-from }
+### `yield from`
 
 When you are iterating over something, like a file-like object, and then you are doing `yield` for each item, you could also use `yield from` to yield each item directly and skip the `for` loop.
 

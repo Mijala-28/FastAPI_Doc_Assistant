@@ -1,4 +1,4 @@
-# About HTTPS { #about-https }
+# About HTTPS
 
 It is easy to assume that HTTPS is something that is just "enabled" or not.
 
@@ -39,7 +39,7 @@ Some of the options you could use as a TLS Termination Proxy are:
 * Nginx
 * HAProxy
 
-## Let's Encrypt { #lets-encrypt }
+## Let's Encrypt
 
 Before Let's Encrypt, these **HTTPS certificates** were sold by trusted third parties.
 
@@ -53,11 +53,11 @@ The domains are securely verified and the certificates are generated automatical
 
 The idea is to automate the acquisition and renewal of these certificates so that you can have **secure HTTPS, for free, forever**.
 
-## HTTPS for Developers { #https-for-developers }
+## HTTPS for Developers
 
 Here's an example of how an HTTPS API could look, step by step, paying attention mainly to the ideas important for developers.
 
-### Domain Name { #domain-name }
+### Domain Name
 
 It would probably all start by you **acquiring** some **domain name**. Then, you would configure it in a DNS server (possibly your same cloud provider).
 
@@ -69,7 +69,7 @@ You would probably do this just once, the first time, when setting everything up
 
 **Tip:** This Domain Name part is way before HTTPS, but as everything depends on the domain and the IP address, it's worth mentioning it here.
 
-### DNS { #dns }
+### DNS
 
 Now let's focus on all the actual HTTPS parts.
 
@@ -77,7 +77,7 @@ First, the browser would check with the **DNS servers** what is the **IP for the
 
 The DNS servers would tell the browser to use some specific **IP address**. That would be the public IP address used by your server, that you configured in the DNS servers.
 
-### TLS Handshake Start { #tls-handshake-start }
+### TLS Handshake Start
 
 The browser would then communicate with that IP address on **port 443** (the HTTPS port).
 
@@ -85,7 +85,7 @@ The first part of the communication is just to establish the connection between 
 
 This interaction between the client and the server to establish the TLS connection is called the **TLS handshake**.
 
-### TLS with SNI Extension { #tls-with-sni-extension }
+### TLS with SNI Extension
 
 **Only one process** in the server can be listening on a specific **port** in a specific **IP address**. There could be other processes listening on other ports in the same IP address, but only one for each combination of IP address and port.
 
@@ -109,21 +109,21 @@ And that's what **HTTPS** is, it's just plain **HTTP** inside a **secure TLS con
 
 **Tip:** Notice that the encryption of the communication happens at the **TCP level**, not at the HTTP level.
 
-### HTTPS Request { #https-request }
+### HTTPS Request
 
 Now that the client and server (specifically the browser and the TLS Termination Proxy) have an **encrypted TCP connection**, they can start the **HTTP communication**.
 
 So, the client sends an **HTTPS request**. This is just an HTTP request through an encrypted TLS connection.
 
-### Decrypt the Request { #decrypt-the-request }
+### Decrypt the Request
 
 The TLS Termination Proxy would use the encryption agreed to **decrypt the request**, and would transmit the **plain (decrypted) HTTP request** to the process running the application (for example a process with Uvicorn running the FastAPI application).
 
-### HTTP Response { #http-response }
+### HTTP Response
 
 The application would process the request and send a **plain (unencrypted) HTTP response** to the TLS Termination Proxy.
 
-### HTTPS Response { #https-response }
+### HTTPS Response
 
 The TLS Termination Proxy would then **encrypt the response** using the cryptography agreed before (that started with the certificate for `someapp.example.com`), and send it back to the browser.
 
@@ -131,7 +131,7 @@ Next, the browser would verify that the response is valid and encrypted with the
 
 The client (browser) will know that the response comes from the correct server because it is using the cryptography they agreed using the **HTTPS certificate** before.
 
-### Multiple Applications { #multiple-applications }
+### Multiple Applications
 
 In the same server (or servers), there could be **multiple applications**, for example, other API programs or a database.
 
@@ -139,7 +139,7 @@ Only one process can be handling the specific IP and port (the TLS Termination P
 
 That way, the TLS Termination Proxy could handle HTTPS and certificates for **multiple domains**, for multiple applications, and then transmit the requests to the right application in each case.
 
-### Certificate Renewal { #certificate-renewal }
+### Certificate Renewal
 
 At some point in the future, each certificate would **expire** (about 3 months after acquiring it).
 
@@ -160,7 +160,7 @@ To do that, and to accommodate different application needs, there are several wa
 
 All this renewal process, while still serving the app, is one of the main reasons why you would want to have a **separate system to handle HTTPS** with a TLS Termination Proxy instead of just using the TLS certificates with the application server directly (e.g. Uvicorn).
 
-## Proxy Forwarded Headers { #proxy-forwarded-headers }
+## Proxy Forwarded Headers
 
 When using a proxy to handle HTTPS, your **application server** (for example Uvicorn via FastAPI CLI) doesn't know anything about the HTTPS process, it communicates with plain HTTP with the **TLS Termination Proxy**.
 
@@ -180,7 +180,7 @@ This would be useful for example to properly handle redirects.
 
 **Tip:** You can learn more about this in the documentation for [Behind a Proxy - Enable Proxy Forwarded Headers](../advanced/behind-a-proxy.md#enable-proxy-forwarded-headers)
 
-## Recap { #recap }
+## Recap
 
 Having **HTTPS** is very important, and quite **critical** in most cases. Most of the effort you as a developer have to put around HTTPS is just about **understanding these concepts** and how they work.
 

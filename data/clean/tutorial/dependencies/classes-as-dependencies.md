@@ -1,8 +1,8 @@
-# Classes as Dependencies { #classes-as-dependencies }
+# Classes as Dependencies
 
 Before diving deeper into the **Dependency Injection** system, let's upgrade the previous example.
 
-## A `dict` from the previous example { #a-dict-from-the-previous-example }
+## A `dict` from the previous example
 
 In the previous example, we were returning a `dict` from our dependency ("dependable"):
 
@@ -31,7 +31,7 @@ And we know that editors can't provide a lot of support (like completion) for `d
 
 We can do better...
 
-## What makes a dependency { #what-makes-a-dependency }
+## What makes a dependency
 
 Up to now you have seen dependencies declared as functions.
 
@@ -55,7 +55,7 @@ something(some_argument, some_keyword_argument="foo")
 
 then it is a "callable".
 
-## Classes as dependencies { #classes-as-dependencies_1 }
+## Classes as dependencies
 
 You might notice that to create an instance of a Python class, you use that same syntax.
 
@@ -168,7 +168,7 @@ In both cases, it will have:
 
 In both cases the data will be converted, validated, documented on the OpenAPI schema, etc.
 
-## Use it { #use-it }
+## Use it
 
 Now you can declare your dependency using this class.
 
@@ -199,7 +199,7 @@ async def read_items(commons: Annotated[CommonQueryParams, Depends(CommonQueryPa
 
 **FastAPI** calls the `CommonQueryParams` class. This creates an "instance" of that class and the instance will be passed as the parameter `commons` to your function.
 
-## Type annotation vs `Depends` { #type-annotation-vs-depends }
+## Type annotation vs `Depends`
 
 Notice how we write `CommonQueryParams` twice in the above code:
 
@@ -304,7 +304,7 @@ async def read_items(commons: Annotated[Any, Depends(CommonQueryParams)]):
 
 But declaring the type is encouraged as that way your editor will know what will be passed as the parameter `commons`, and then it can help you with code completion, type checks, etc:
 
-## Shortcut { #shortcut }
+## Shortcut
 
 But you see that we are having some code repetition here, writing `CommonQueryParams` twice:
 

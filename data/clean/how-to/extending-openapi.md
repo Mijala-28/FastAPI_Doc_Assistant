@@ -1,10 +1,10 @@
-# Extending OpenAPI { #extending-openapi }
+# Extending OpenAPI
 
 There are some cases where you might need to modify the generated OpenAPI schema.
 
 In this section you will see how.
 
-## The normal process { #the-normal-process }
+## The normal process
 
 The normal (default) process, is as follows.
 
@@ -31,13 +31,13 @@ And that function `get_openapi()` receives as parameters:
 
 **Note:** The parameter `summary` is available in OpenAPI 3.1.0 and above, supported by FastAPI 0.99.0 and above.
 
-## Overriding the defaults { #overriding-the-defaults }
+## Overriding the defaults
 
 Using the information above, you can use the same utility function to generate the OpenAPI schema and override each part that you need.
 
 For example, let's add [ReDoc's OpenAPI extension to include a custom logo](https://github.com/Redocly/redoc/blob/main/docs/redoc-vendor-extensions.md#x-logo).
 
-### Normal **FastAPI** { #normal-fastapi }
+### Normal **FastAPI**
 
 First, write all your **FastAPI** application as normally:
 
@@ -70,7 +70,7 @@ def custom_openapi():
 app.openapi = custom_openapi
 '''
 
-### Generate the OpenAPI schema { #generate-the-openapi-schema }
+### Generate the OpenAPI schema
 
 Then, use the same utility function to generate the OpenAPI schema, inside a `custom_openapi()` function:
 
@@ -103,7 +103,7 @@ def custom_openapi():
 app.openapi = custom_openapi
 '''
 
-### Modify the OpenAPI schema { #modify-the-openapi-schema }
+### Modify the OpenAPI schema
 
 Now you can add the ReDoc extension, adding a custom `x-logo` to the `info` "object" in the OpenAPI schema:
 
@@ -136,7 +136,7 @@ def custom_openapi():
 app.openapi = custom_openapi
 '''
 
-### Cache the OpenAPI schema { #cache-the-openapi-schema }
+### Cache the OpenAPI schema
 
 You can use the property `.openapi_schema` as a "cache", to store your generated schema.
 
@@ -173,7 +173,7 @@ def custom_openapi():
 app.openapi = custom_openapi
 '''
 
-### Override the method { #override-the-method }
+### Override the method
 
 Now you can replace the `.openapi()` method with your new function.
 
@@ -206,6 +206,6 @@ def custom_openapi():
 app.openapi = custom_openapi
 '''
 
-### Check it { #check-it }
+### Check it
 
 Once you go to [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc) you will see that you are using your custom logo (in this example, **FastAPI**'s logo):

@@ -1,8 +1,8 @@
-# Simple OAuth2 with Password and Bearer { #simple-oauth2-with-password-and-bearer }
+# Simple OAuth2 with Password and Bearer
 
 Now let's build from the previous chapter and add the missing parts to have a complete security flow.
 
-## Get the `username` and `password` { #get-the-username-and-password }
+## Get the `username` and `password`
 
 We are going to use **FastAPI** security utilities to get the `username` and `password`.
 
@@ -18,7 +18,7 @@ But for the login *path operation*, we need to use these names to be compatible 
 
 The spec also states that the `username` and `password` must be sent as form data (so, no JSON here).
 
-### `scope` { #scope }
+### `scope`
 
 The spec also says that the client can send another form field "`scope`".
 
@@ -34,11 +34,11 @@ They are normally used to declare specific security permissions, for example:
 
 **Note:** In OAuth2 a "scope" is just a string that declares a specific permission required.  It doesn't matter if it has other characters like `:` or if it is a URL.  Those details are implementation specific.  For OAuth2 they are just strings.
 
-## Code to get the `username` and `password` { #code-to-get-the-username-and-password }
+## Code to get the `username` and `password`
 
 Now let's use the utilities provided by **FastAPI** to handle this.
 
-### `OAuth2PasswordRequestForm` { #oauth2passwordrequestform }
+### `OAuth2PasswordRequestForm`
 
 First, import `OAuth2PasswordRequestForm`, and use it as a dependency with `Depends` in the *path operation* for `/token`:
 
@@ -143,7 +143,7 @@ async def read_users_me(
 
 **Note:** The `OAuth2PasswordRequestForm` is not a special class for **FastAPI** as is `OAuth2PasswordBearer`.  `OAuth2PasswordBearer` makes **FastAPI** know that it is a security scheme. So it is added that way to OpenAPI.  But `OAuth2PasswordRequestForm` is just a class dependency that you could have written yourself, or you could have declared `Form` parameters directly.  But as it's a common use case, it is provided by **FastAPI** directly, just to make it easier.
 
-### Use the form data { #use-the-form-data }
+### Use the form data
 
 **Tip:** The instance of the dependency class `OAuth2PasswordRequestForm` won't have an attribute `scope` with the long string separated by spaces, instead, it will have a `scopes` attribute with the actual list of strings for each scope sent.  We are not using `scopes` in this example, but the functionality is there if you need it.
 
@@ -240,7 +240,7 @@ async def read_users_me(
     return current_user
 '''
 
-### Check the password { #check-the-password }
+### Check the password
 
 At this point we have the user data from our database, but we haven't checked the password.
 
@@ -250,7 +250,7 @@ You should never save plaintext passwords, so, we'll use the (fake) password has
 
 If the passwords don't match, we return the same error.
 
-#### Password hashing { #password-hashing }
+#### Password hashing
 
 "Hashing" means: converting some content (a password in this case) into a sequence of bytes (just a string) that looks like gibberish.
 
@@ -258,7 +258,7 @@ Whenever you pass exactly the same content (exactly the same password) you get e
 
 But you cannot convert from the gibberish back to the password.
 
-##### Why use password hashing { #why-use-password-hashing }
+##### Why use password hashing
 
 If your database is stolen, the thief won't have your users' plaintext passwords, only the hashes.
 
@@ -351,7 +351,7 @@ async def read_users_me(
     return current_user
 '''
 
-#### About `**user_dict` { #about-user-dict }
+#### About `**user_dict`
 
 `UserInDB(**user_dict)` means:
 
@@ -369,7 +369,7 @@ UserInDB(
 
 **Note:** For a more complete explanation of `**user_dict` check back in [the documentation for **Extra Models**](../extra-models.md#about-user-in-model-dump).
 
-## Return the token { #return-the-token }
+## Return the token
 
 The response of the `token` endpoint must be a JSON object.
 
@@ -470,7 +470,7 @@ async def read_users_me(
 
 **Tip:** By the spec, you should return a JSON with an `access_token` and a `token_type`, the same as in this example.  This is something that you have to do yourself in your code, and make sure you use those JSON keys.  It's almost the only thing that you have to remember to do correctly yourself, to be compliant with the specifications.  For the rest, **FastAPI** handles it for you.
 
-## Update the dependencies { #update-the-dependencies }
+## Update the dependencies
 
 Now we are going to update our dependencies.
 
@@ -571,11 +571,11 @@ async def read_users_me(
 
 **Note:** The additional header `WWW-Authenticate` with value `Bearer` we are returning here is also part of the spec.  Any HTTP (error) status code 401 "UNAUTHORIZED" is supposed to also return a `WWW-Authenticate` header.  In the case of bearer tokens (our case), the value of that header should be `Bearer`.  You can actually skip that extra header and it would still work.  But it's provided here to be compliant with the specifications.  Also, there might be tools that expect and use it (now or in the future) and that might be useful for you or your users, now or in the future.  That's the benefit of standards...
 
-## See it in action { #see-it-in-action }
+## See it in action
 
 Open the interactive docs: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
 
-### Authenticate { #authenticate }
+### Authenticate
 
 Click the "Authorize" button.
 
@@ -587,7 +587,7 @@ Password: `secret`
 
 After authenticating in the system, you will see it like:
 
-### Get your own user data { #get-your-own-user-data }
+### Get your own user data
 
 Now use the operation `GET` with the path `/users/me`.
 
@@ -611,7 +611,7 @@ If you click the lock icon and logout, and then try the same operation again, yo
 }
 ```
 
-### Inactive user { #inactive-user }
+### Inactive user
 
 Now try with an inactive user, authenticate with:
 
@@ -629,7 +629,7 @@ You will get an "Inactive user" error, like:
 }
 ```
 
-## Recap { #recap }
+## Recap
 
 You now have the tools to implement a complete security system based on `username` and `password` for your API.
 
