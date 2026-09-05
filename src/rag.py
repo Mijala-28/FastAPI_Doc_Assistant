@@ -65,14 +65,19 @@ def generate_answer(query, k=4):
         "sources": results,
     }
 
-
 if __name__ == "__main__":
-    test_query = "How do I declare the type of path parameter?"
-    result = generate_answer(test_query, k=8)
-    print("Question:", test_query)
-    print("\nAnswer:\n", result["answer"])
-    print("\nSources:")
-    for s in result["sources"]:
-        print(f"  [{s['page_title']} - {s['section']}] {s['source_url']} (score: {s['score']:.3f})")
-         
+    test_queries = [
+        "How do I declare the type of a path parameter?",
+        "How do I add a custom exception handler?",
+        "How do I deploy FastAPI on AWS Lambda with a custom domain?",
+        "What is the capital of France?",
+    ]
+    for q in test_queries:
+        result = generate_answer(q, k=6)
+        print("=" * 60)
+        print("Question:", q)
+        print("\nAnswer:\n", result["answer"])
+        print("\nTop source:", result["sources"][0]["page_title"], "-", result["sources"][0]["section"])
+        print()
+
                
