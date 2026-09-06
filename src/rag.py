@@ -88,7 +88,6 @@ def generate_answer(query, history=None, k=4):
                     "sources": results,
                 }
             time.sleep(2 ** attempt)
-    )
     return {
         "answer": response.text,
         "sources": results,
