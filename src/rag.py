@@ -5,6 +5,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 from google import genai
 from sentence_transformers import SentenceTransformer
+import time
+from google.genai.errors import ServerError
 
 load_dotenv()
 
@@ -71,9 +73,21 @@ def generate_answer(query, history=None, k=4):
     results = retrieve(retrieval_query, k=k)
     context = build_context(results)
     prompt = build_prompt(query, context, history=history)
-    response = client.models.generate_content(
-        model=GEMINI_MODEL_NAME,
-        contents=prompt,
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            response = client.models.generate_content(
+                model=GEMINI_MODEL_NAME,
+                contents=prompt,
+            )
+            break
+        except ServerError:
+            if attempt == max_retries - 1:
+                return {
+                    "answer": "The AI service is temporarily overloaded. Please try asking again in a moment.",
+                    "sources": results,
+                }
+            time.sleep(2 ** attempt)
     )
     return {
         "answer": response.text,
