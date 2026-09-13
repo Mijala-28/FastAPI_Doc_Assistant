@@ -65,3 +65,4 @@ distinctive than domain-specific terms the docs actually use ("Swagger UI",
 - **Free-tier Gemini API** chosen deliberately for a portfolio project to
   avoid cost, with the tradeoff understood: not suitable for production
   traffic volume.
+  

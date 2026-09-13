@@ -9,7 +9,7 @@ CHUNKS_PATH = ROOT / "data" / "chunks.jsonl"
 INDEX_PATH = ROOT / "data" / "faiss.index"
 META_PATH = ROOT / "data" / "chunk_metadata.json"
 
-MODEL_NAME = "all-MiniLM-L6-v2"
+MODEL_NAME = "paraphrase-multilingual-MiniLM-L12-v2"
 
 def load_chunks():
     chunks = []

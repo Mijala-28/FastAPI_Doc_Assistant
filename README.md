@@ -5,7 +5,7 @@
 A RAG (Retrieval-Augmented Generation) chatbot that answers developer questions about FastAPI using **only** the official documentation — with citations to the exact doc section, and an honest "I don't have enough information" when the docs don't cover something.
 
 ## Why this exists
-Developers using FastAPI constantly hit specific questions ("how do I add a custom exception handler?", "how do I declare a path parameter with a type?"). Searching docs by hand is slow, and general-purpose chatbots can confidently make up framework-specific details that sound plausible but are wrong. This assistant answers grounded strictly in the current official docs and shows its sources, so answers are fast *and* verifiable — a pattern used in production by tools like Stripe's and Vercel's "Ask AI" docs features.
+Developers using FastAPI constantly hit specific questions ("how do I add a custom exception handler?", "how do I declare a path parameter with a type?"). Searching docs by hand is slow, and general-purpose chatbots can confidently make up framework-specific details that sound plausible but are wrong. Supports questions in multiple languages (tested with English and Nepali) — answers are generated in the same language as the question, while still grounded in the English documentation.
 
 ## Demo
 
@@ -14,7 +14,7 @@ Developers using FastAPI constantly hit specific questions ("how do I add a cust
 ## How it works
 
 1. **Data pipeline** — 110 pages of FastAPI's official docs (tutorial, advanced, how-to, deployment sections) are pulled from GitHub, cleaned (resolving custom code-include syntax, stripping HTML/admonition markup), and split into ~894 retrieval-sized chunks, each tagged with a source URL and section.
-2. **Embedding + retrieval** — Each chunk is embedded with `sentence-transformers` (all-MiniLM-L6-v2) and indexed in FAISS for fast semantic search.
+2.2. **Embedding + retrieval** — Each chunk is embedded with a multilingual `sentence-transformers` model (`paraphrase-multilingual-MiniLM-L12-v2`) and indexed in FAISS for fast semantic search. This means questions can be asked in languages other than English (tested with Nepali) while still retrieving from the English documentation correctly.
 3. **Answer generation** — A user's question is embedded the same way, FAISS retrieves the top-k most relevant chunks, and Google's Gemini API generates an answer using *only* those chunks, citing which excerpt supports each claim.
 4. **Conversation memory** — Follow-up questions ("what about for multiple exception types?") are resolved using recent conversation history, without letting the model treat its own earlier unverified claims as a source of truth.
 5. **Interface** — A Streamlit chat UI displays the answer with inline `[1]`, `[2]` citations and an expandable, numbered "View sources" panel linking back to the live FastAPI docs.
@@ -44,6 +44,25 @@ To run the app locally:
 ```bash
 streamlit run src/app.py
 ```
+## Multilingual support
+
+Added multilingual support by swapping the embedding model from
+`all-MiniLM-L6-v2` to `paraphrase-multilingual-MiniLM-L12-v2` (rebuilding
+the FAISS index), and adding one prompt rule instructing Gemini to respond
+in the same language the question was asked in, while still grounding
+answers in the English documentation.
+
+Tested with a Nepali question ("मैले FastAPI मा path parameter को type
+कसरी declare गर्ने?" — "How do I declare the type of a path parameter in
+FastAPI?"):
+- Retrieval correctly found the right English doc chunk (0.78 relevance,
+  comparable to English-language queries)
+- Gemini generated a fluent, correct Nepali answer with proper citations,
+  synthesizing details from multiple sources
+
+No separate translation step needed — the multilingual embedding model
+handles cross-lingual retrieval, and Gemini handles cross-lingual
+generation natively.
 
 ## Limitations & future improvements
 
@@ -56,4 +75,4 @@ See [`NOTES.md`](NOTES.md) for a detailed debugging log of real issues found and
 
 ## Tech stack
 
-Python · sentence-transformers · FAISS · Google Gemini API · Streamlit · Streamlit Community Cloud
+Python · sentence-transformers (multilingual) · FAISS · Google Gemini API · Streamlit · Streamlit Community Cloud

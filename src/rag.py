@@ -13,7 +13,7 @@ load_dotenv()
 ROOT = Path(__file__).resolve().parent.parent
 INDEX_PATH = ROOT / "data" / "faiss.index"
 META_PATH = ROOT / "data" / "chunk_metadata.json"
-EMBED_MODEL_NAME = "all-MiniLM-L6-v2"
+EMBED_MODEL_NAME = "paraphrase-multilingual-MiniLM-L12-v2"
 GEMINI_MODEL_NAME = "gemini-3.6-flash"
 
 client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
@@ -60,6 +60,7 @@ Rules:
 - If the excerpts do not contain enough information to answer the question, say "I don't have enough information in the documentation to answer that" instead of guessing.
 - Use the previous conversation only to understand what the user is referring to (e.g. "it", "that", "the same thing") - still answer strictly from the excerpts.
 - Be concise and direct.
+- Respond in the same language the user asked the question in, even though the documentation excerpts are in English.
 
 {history_text}Documentation excerpts:
 {context}
@@ -94,20 +95,14 @@ def generate_answer(query, history=None, k=4):
     }
 
 if __name__ == "__main__":
-    history = []
-    conversation = [
-        "How do I add a custom exception handler?",
-        "What about for multiple exception types?",
-        "Can I do the same thing for HTTP errors specifically?",
-    ]
-    for q in conversation:
-        result = generate_answer(q, history=history, k=6)
-        print("=" * 60)
-        print("User:", q)
-        print("\nAssistant:\n", result["answer"])
-        print("\nSources checked:")
+    
+        test_query = "मैले FastAPI मा path parameter को type कसरी declare गर्ने?"
+        result = generate_answer(test_query, k=6)
+        print("Question:", test_query)
+        print("\nAnswer:\n", result["answer"])
+        print("\nSources:")
         for s in result["sources"]:
-            print(f"  [{s['page_title']} - {s['section']}] (score: {s['score']:.3f})")
-        history.append({"role": "user", "content": q})
-        history.append({"role": "assistant", "content": result["answer"]})
-               
+             print(f"[{s['page_title']} - {s['section']}] (score: {s['score']: .3f})")
+
+        
+       
