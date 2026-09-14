@@ -5,11 +5,8 @@
 A RAG (Retrieval-Augmented Generation) chatbot that answers developer questions about FastAPI using **only** the official documentation — with citations to the exact doc section, and an honest "I don't have enough information" when the docs don't cover something.
 
 ## Why this exists
+
 Developers using FastAPI constantly hit specific questions ("how do I add a custom exception handler?", "how do I declare a path parameter with a type?"). Searching docs by hand is slow, and general-purpose chatbots can confidently make up framework-specific details that sound plausible but are wrong. Supports questions in multiple languages (tested with English and Nepali) — answers are generated in the same language as the question, while still grounded in the English documentation.
-
-## Demo
-
-*(Insert a short GIF or screen recording here showing a question, the cited answer, and the expanded "View sources" section)*
 
 ## How it works
 
@@ -21,7 +18,20 @@ Developers using FastAPI constantly hit specific questions ("how do I add a cust
 
 ## Project structure
 
-*(`data/raw/`, `data/clean/`, and `docs_src/` are git-ignored — regenerate them by running `clean_docs.py`, `chunk_docs.py`, and `build_index.py` in order.)*
+fastapi-docs-bot/
+├── data/
+│ ├── chunks.jsonl # chunked docs with citation metadata
+│ ├── faiss.index # vector index for retrieval
+│ └── chunk_metadata.json # text + source info per chunk
+├── src/
+│ ├── clean_docs.py # resolves code-includes, strips markup
+│ ├── chunk_docs.py # splits cleaned docs into sized chunks
+│ ├── build_index.py # generates embeddings, builds FAISS index
+│ ├── rag.py # retrieval + LLM answer generation + citations
+│ ├── app.py # Streamlit chat interface
+│ └── test_retrieval.py # standalone retrieval sanity check
+├── requirements.txt
+└── NOTES.md # debugging log and design decisions
 
 ## Setup
 
